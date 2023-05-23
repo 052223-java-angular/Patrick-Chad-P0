@@ -9,8 +9,7 @@ CREATE TABLE Users (id VARCHAR NOT NULL,
                     password VARCHAR NOT NULL,
                     cart_id  VARCHAR NOT NULL,
                     PRIMARY KEY (id)
-                    FOREIGN KEY cart_id REFERENCES cart(id)
-                    );
+                    FOREIGN KEY cart_id REFERENCES cart(id));
 
 CREATE TABLE Reviews(id VARCHAR NOT NULL, 
                      rating INT, 
@@ -19,8 +18,8 @@ CREATE TABLE Reviews(id VARCHAR NOT NULL,
                      user_id VARCHAR NOT NULL, 
                      product_id VARCHAR NOT NULL,
                      PRIMARY KEY(id)
-                     FOREIGN KEY user_id REFERENCES users(id));
-                     FOREIGN KEY product_id REFERENCES products(id);
+                     FOREIGN KEY user_id REFERENCES users(id)
+                     FOREIGN KEY product_id REFERENCES products(id));
 CREATE TABLE Products (id VARCHAR NOT NULL, 
                        name VARCHAR NOT NULL, 
                        description VARCHAR, 
