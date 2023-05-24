@@ -28,7 +28,7 @@ public class ConnectionFactory {
         return instance;
     }
 
-    private Connection getConnection(){
+    public Connection getConnection(){
         return conn;
     }
 
