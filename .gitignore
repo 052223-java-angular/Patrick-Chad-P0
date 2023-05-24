@@ -27,3 +27,5 @@ replay_pid*
 *.classpath
 *.project
 *.vs_code/
+
+.DS_Store
