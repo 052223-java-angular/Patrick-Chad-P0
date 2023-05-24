@@ -28,4 +28,4 @@ replay_pid*
 *.project
 *.vs_code/
 
-.DS_Store
+**/.DS_Store
