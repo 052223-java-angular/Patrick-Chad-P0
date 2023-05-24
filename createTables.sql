@@ -1,23 +1,24 @@
-DROP TABLE IF EXISTS Roles;
-DROP TABLE IF EXISTS Users;
-DROP TABLE IF EXISTS Reviews;
-DROP TABLE IF EXISTS Products;
-DROP TABLE IF EXISTS Cart;
+DROP TABLE IF EXISTS roles CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS reviews CASCADE;
+DROP TABLE IF EXISTS cart CASCADE;
 
-CREATE TABLE Roles (id VARCHAR NOT NULL,
+CREATE TABLE roles (id VARCHAR NOT NULL,
                     name VARCHAR NOT NULL,
                     user_id VARCHAR NOT NULL
                     PRIMARY KEY (id), 
-                    FOREIGN KEY (user_id) REFERENCES users(id));
+                    FOREIGN KEY (user_id) REFERENCES users(id)
+                   );
 
-CREATE TABLE Users (id VARCHAR NOT NULL, 
+CREATE TABLE users (id VARCHAR NOT NULL, 
                     username VARCHAR NOT NULL UNIQUE,
                     password VARCHAR NOT NULL,
                     cart_id  VARCHAR NOT NULL,
                     PRIMARY KEY (id)
-                    FOREIGN KEY cart_id REFERENCES cart(id));
+                    FOREIGN KEY (cart_id) REFERENCES cart(id)
+                );
 
-CREATE TABLE Reviews(id VARCHAR NOT NULL, 
+CREATE TABLE reviews(id VARCHAR NOT NULL, 
                      rating INT, 
                      user_id VARCHAR NOT NULL,
                      comment VARCHAR,
@@ -25,16 +26,19 @@ CREATE TABLE Reviews(id VARCHAR NOT NULL,
                      product_id VARCHAR NOT NULL,
                      PRIMARY KEY(id)
                      FOREIGN KEY user_id REFERENCES users(id)
-                     FOREIGN KEY product_id REFERENCES products(id));
-CREATE TABLE Products (id VARCHAR NOT NULL, 
+                     FOREIGN KEY product_id REFERENCES products(id)
+                    );
+CREATE TABLE products (id VARCHAR NOT NULL, 
                        name VARCHAR NOT NULL, 
                        description VARCHAR, 
                        price DOUBLE NOT NULL,
                        qty_on_hand INT DEFAULT 0
-                       PRIMARY KEY (id));
+                       PRIMARY KEY (id)
+                    );
 
-CREATE TABLE Cart (id, VARCHAR NOT NULL, 
+CREATE TABLE cart (id, VARCHAR NOT NULL, 
                    product_id VARCHAR NOT NULL,
                    PRIMARY KEY (id),
-                   FOREIGN KEY product_id REFERENCES products(id));
+                   FOREIGN KEY (product_id) REFERENCES products(id)
+                );
                     
