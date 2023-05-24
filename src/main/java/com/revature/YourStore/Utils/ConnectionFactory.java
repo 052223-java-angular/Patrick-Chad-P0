@@ -18,7 +18,7 @@ public class ConnectionFactory {
         conn = DriverManager.getConnection(props.getProperty("url"),props.getProperty("user"), props.getProperty("password"));
     }
 
-    /* ------- Methods ------- */
+    /* ------- Methods ------- */   
 
     public static ConnectionFactory getInstance() throws ClassNotFoundException, SQLException, IOException{
         if (instance == null || instance.getConnection().isClosed()){
