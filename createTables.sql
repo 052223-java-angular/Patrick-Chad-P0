@@ -1,3 +1,9 @@
+DROP TABLE IF EXISTS Roles;
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Reviews;
+DROP TABLE IF EXISTS Products;
+DROP TABLE IF EXISTS Cart;
+
 CREATE TABLE Roles (id VARCHAR NOT NULL,
                     name VARCHAR NOT NULL,
                     user_id VARCHAR NOT NULL
