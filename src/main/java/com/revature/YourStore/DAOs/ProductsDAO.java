@@ -57,15 +57,30 @@ public class ProductsDAO implements CrudDAO<Product> {
     }
     
     @Override
-    public Optional<Product> lookupByProductID(String id) {
+    public Optional<Product> lookupByProductName(String name) {
         Product product = new Product();
 
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
             String sql = "SELECT * FROM product WHERE name=?";
+            try(PreparedStatement ps = conn.prepareStatement(sql)){
+                ps.setString(1, name);
+                try(ResultSet rs = ps.executeQuery()){
+                    if(rs.next()){
+                        product.setId(rs.getString("id"));
+                        product.setName(rs.getString("name"));
+                        product.setDescription(rs.getString("description"));
+                        product.setPrice(rs.getDouble("price"));
 
-            
+                        return Optional.of(product);
+                        //products.add(product);
+                    }
+                }
+            }
+
+
+
         } catch(SQLException e){
-            throw new RuntimeException("Unable to connect to database.");
+            throw new RuntimeException("Unable to connect to database. Error code: " + e.getErrorCode());
         } catch(IOException e){
             throw new RuntimeException("Unable to find application.properties");
         } catch(ClassNotFoundException e){
