@@ -13,7 +13,7 @@ public class UserService {
     private final UserDAO userdao;
     private final RoleService roleservice;
 
-    public UserService(UserDAO userdao, RoleService roleservice)
+    private UserService(UserDAO userdao, RoleService roleservice)
     {
         this.userdao = userdao;
         this.roleservice = roleservice;
@@ -56,4 +56,7 @@ public class UserService {
    {
         return password.equals(confirmPassword);
    }
+
+   public get
+
 }

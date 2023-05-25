@@ -24,7 +24,7 @@ public class UserDAO implements CrudDAO<User>{
     public Optional<User> findUserByUsername(String username)
     {
         
-        try(Connection conn = (Connection) ConnectionFactory.getInstance())
+        try(Connection conn = ConnectionFactory.getInstance().getConnection())
         {
            String sql = "SELECT * FROM Users WHERE username = ?";
 
@@ -123,5 +123,26 @@ public class UserDAO implements CrudDAO<User>{
     public Optional<User> lookupByProductName(String name) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'lookupByProductName'");
+    }
+
+
+    public Optional<User> findUserAndReturnRoleID(String username) 
+    {
+        try(Connection conn = ConnectionFactory.getInstance().getConnection())
+        {
+            
+        }
+        catch(ClassNotFoundException e)
+        {
+            throw new RuntimeException("Unable to load jdbc");
+        }
+        catch(SQLException e)
+        {
+            throw new RuntimeException("Cannot connect to db. Please try again");
+        }
+        catch(IOException e)
+        {
+            throw new RuntimeException("Cannot find application.properties");
+        }
     }
 }
