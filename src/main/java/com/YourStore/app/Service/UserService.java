@@ -2,7 +2,10 @@ package com.YourStore.app.Service;
 
 import java.util.Optional;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.YourStore.app.DAO.UserDAO;
+import com.YourStore.app.Model.Role;
 import com.YourStore.app.Model.User;
 
 public class UserService {
@@ -14,6 +17,17 @@ public class UserService {
         this.userdao = userdao;
         this.roleservice = roleservice;
     }
+
+    public User register(String username, String password)
+    {
+        Role foundRole = roleservice.findByName("USER");
+        String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
+        User newUser = new User(username, hashed, foundRole.getId());
+        userdao.update(newUser);
+
+        
+    }
+
 
    public boolean isValidUsername(String username)
    {
