@@ -1,4 +1,4 @@
-package com.YourStore.app.Service;
+package com.revature.ecommerce.services;
 
 import java.util.Optional;
 

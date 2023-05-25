@@ -1,4 +1,4 @@
-package com.YourStore.app.Exceptions;
+package com.revature.ecommerce.utils.exceptions;
 
 public class RoleNotFoundException extends RuntimeException{
 

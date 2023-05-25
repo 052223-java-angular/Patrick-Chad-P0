@@ -1,28 +1,22 @@
-package com.YourStore.app.DAO;
+package com.revature.ecommerce.daos;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.YourStore.app.Model.User;
-import com.YourStore.app.Utils.ConnectionFactory;
+import com.revature.ecommerce.models.User;
+import com.revature.ecommerce.utils.ConnectionFactory;
 
 public class UserDAO implements CrudDAO<User>{
-    /*private final ConnectionFactory conn;
 
-    private UserDAO(ConnectionFactory conn)
-    {
-        this.conn = conn;
-    }*/
-
-    
     @Override
     public void update(User user){
-        try(Connection conn = (Connection) ConnectionFactory.getInstance())
+        try(Connection conn = ConnectionFactory.getInstance().getConnection())
         {
             String sql = "INSERT INTO users (id, username, password) VALUES (?, ? ,? );";
 
@@ -104,22 +98,30 @@ public class UserDAO implements CrudDAO<User>{
     }
 
 
-    
-    
-        
-        
-    
+    @Override
+    public void lookupUser(String username, String password) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'lookupUser'");
+    }
 
 
-    
-
-    
-
-
-
-   
-    
+    @Override
+    public List<User> lookupProducts() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'lookupProducts'");
+    }
 
 
+    @Override
+    public void save(User obj) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'save'");
+    }
 
+
+    @Override
+    public Optional<User> lookupByProductName(String name) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'lookupByProductName'");
+    }
 }

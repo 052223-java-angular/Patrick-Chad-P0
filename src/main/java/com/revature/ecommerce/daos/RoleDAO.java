@@ -1,4 +1,4 @@
-package com.YourStore.app.DAO;
+package com.revature.ecommerce.daos;
 
 import java.io.IOException;
 import java.sql.Connection;

@@ -1,16 +1,20 @@
-package com.YourStore.app.Model;
+package com.revature.ecommerce.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
 @NoArgsConstructor
-@Getter
+@AllArgsConstructor
 @Setter
-public class Role {
+@Getter
+public class User {
     private String id;
-    private String name;
-    private String user_id;
+    private String username;
+    private String password;
+
+    
 }
+
+
