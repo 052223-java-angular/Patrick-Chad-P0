@@ -1,6 +1,6 @@
 package com.YourStore.app.Service;
 
-import com.YourStore.app.Model.RoleDAO;
+import com.YourStore.app.DAO.RoleDAO;
 
 import lombok.AllArgsConstructor;
 
