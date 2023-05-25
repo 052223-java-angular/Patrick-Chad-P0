@@ -24,6 +24,8 @@ public class UserService {
         String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
         User newUser = new User(username, hashed, foundRole.getId());
         userdao.update(newUser);
+        return newUser;
+
 
         
     }
@@ -45,7 +47,10 @@ public class UserService {
         
         return false;
    }
-
+    public boolean isValidPassword(String password)
+    {
+         return password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$");
+    }
    public boolean isSamePassword(String password, String confirmPassword)
    {
         return password.equals(confirmPassword);
