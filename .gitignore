@@ -29,3 +29,8 @@ replay_pid*
 *.vs_code/
 
 **/.DS_Store
+
+target/
+*.properties
+*.DS_Store
+*.vscode
