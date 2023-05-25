@@ -1,5 +1,7 @@
 DROP TABLE IF EXISTS Roles CASCADE;
 
+DROP TABLE IF EXISTS Categories CASCADE;
+
 DROP TABLE IF EXISTS Products CASCADE;
 
 DROP TABLE IF EXISTS Cart CASCADE;
@@ -13,12 +15,19 @@ CREATE TABLE Roles (
     name VARCHAR NOT NULL
 );
 
+CREATE TABLE Categories (
+    id VARCHAR NOT NULL PRIMARY KEY,
+    name VARCHAR NOT NULL
+);
+
 CREATE TABLE Products (
     id VARCHAR NOT NULL PRIMARY KEY,
     name VARCHAR NOT NULL,
     description VARCHAR,
     price DECIMAL NOT NULL,
-    qty_on_hand INT DEFAULT 0
+    qty_on_hand INT DEFAULT 0,
+    category_id VARCHAR NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 
 CREATE TABLE Cart (
