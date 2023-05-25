@@ -18,6 +18,7 @@ public class ProductScreen implements IScreen {
         String input = "";
         exit:{
             while(true){
+                // print menu
                 clearScreen();
                 System.out.println("Welcome to YourStore where we have everything you don't want!");
                 System.out.println("\n [1] Search products by name");
@@ -26,7 +27,7 @@ public class ProductScreen implements IScreen {
                 System.out.println(" [x] Exit: ");
         
                 System.out.print("\nEnter: ");
-                input = scan.nextLine();
+                input = scan.nextLine(); // get user input
 
                 if (input == "x") {
                     // exit menu
@@ -49,8 +50,49 @@ public class ProductScreen implements IScreen {
                         Product prod = new Product();
                         prod = prodServ.getProductsByName(input);
                         clearScreen();
-                        System.out.println("\n --- Product Listing ---");
-                        System.out.println("Pruduct Name: " + prod.getName());
+                        if (prod.getId() == null){
+                            // no item found
+                            System.out.println("No product found. Press enter to continue...");
+                            scan.nextLine();
+                        } else {
+                            // item found
+                            System.out.println("\n --- Product Listing ---");
+                            System.out.println("Product Name: " + prod.getName());
+                            System.out.println("Product Description: " + prod.getDescription());
+                            System.out.println("Product Price: $" + prod.getPrice());
+                            System.out.print("\nWould you like to add to your cart? (y/n): ");
+                            input = scan.nextLine();
+
+                            addtocart:{
+                                while(true){
+                                    switch (input){
+                                        case "y":
+                                            // add to cart  
+                                            int qty = 0;                                  
+                                            System.out.print("Please enter desired quantity: ");
+                                            input = scan.nextLine(); 
+                                            qty = Integer.parseInt(input);
+
+                                            // TODO: send item to cart items
+                                            System.out.println("added " + qty + " to your cart. Press enter to continue....");
+                                            scan.nextLine();                       
+                                        
+                                            break addtocart;
+                                        case "n":
+                                            // reload menu
+                                            System.out.println("Item not added to cart. Press enter to continue....");
+                                            scan.nextLine();
+        
+                                        break addtocart;
+                                        default:
+                                            System.out.println("Invalid entry. Must select (y/n). Press enter to continue....");
+                                            scan.nextLine();
+                                        break;
+                                    }
+                                }
+                            }
+                            
+                        }                        
                         break;
                     case "2":
                         // search products by category
@@ -60,6 +102,9 @@ public class ProductScreen implements IScreen {
                         break;
                 
                     default:
+                        clearScreen();  
+                        System.out.println("Option mush be 1,2,3 or x! Press enter to continue");
+                        scan.nextLine();
                         break;
                 }
             }
