@@ -2,6 +2,7 @@ package com.revature.ecommerce.daos;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import com.revature.ecommerce.models.Product;
@@ -78,7 +79,9 @@ public class ProductsDAO implements CrudDAO<Product> {
             }
 
 
-
+        } catch(NoSuchElementException e){
+            System.out.println("No such item found. Press Enter to continue....");
+            
         } catch(SQLException e){
             throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
         } catch(IOException e){
@@ -86,6 +89,7 @@ public class ProductsDAO implements CrudDAO<Product> {
         } catch(ClassNotFoundException e){
             throw new RuntimeException("Unable to load jdbc");
         }
+        
         return Optional.empty();
     }
 
