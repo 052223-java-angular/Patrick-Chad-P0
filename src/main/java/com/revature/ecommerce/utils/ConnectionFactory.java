@@ -14,8 +14,8 @@ public class ConnectionFactory {
     private ConnectionFactory() throws ClassNotFoundException, IOException, SQLException{
         Class.forName("org.postgresql.Driver");
         Properties props = getProperties();
-
-        conn = DriverManager.getConnection(props.getProperty("url"),props.getProperty("user"), props.getProperty("password"));
+        conn = DriverManager.getConnection(props.getProperty("url"), props.getProperty("username"),
+                props.getProperty("password"));
     }
 
     /* ------- Methods ------- */   
@@ -40,6 +40,7 @@ public class ConnectionFactory {
             if(istream == null){
                 throw new IOException("Application.properties could not be found");
             }
+            props.load(istream);
         }
 
         return props;

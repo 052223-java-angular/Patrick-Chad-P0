@@ -61,7 +61,7 @@ public class ProductsDAO implements CrudDAO<Product> {
         Product product = new Product();
 
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
-            String sql = "SELECT * FROM product WHERE name=?";
+            String sql = "SELECT * FROM products WHERE name=?";
             try(PreparedStatement ps = conn.prepareStatement(sql)){
                 ps.setString(1, name);
                 try(ResultSet rs = ps.executeQuery()){
@@ -80,7 +80,7 @@ public class ProductsDAO implements CrudDAO<Product> {
 
 
         } catch(SQLException e){
-            throw new RuntimeException("Unable to connect to database. Error code: " + e.getErrorCode());
+            throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
         } catch(IOException e){
             throw new RuntimeException("Unable to find application.properties");
         } catch(ClassNotFoundException e){

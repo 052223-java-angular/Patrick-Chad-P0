@@ -4,9 +4,10 @@ import java.util.Optional;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-import com.YourStore.app.DAO.UserDAO;
-import com.YourStore.app.Model.Role;
-import com.YourStore.app.Model.User;
+import com.revature.ecommerce.daos.UserDAO;
+import com.revature.ecommerce.models.Role;
+import com.revature.ecommerce.models.User;
+
 
 public class UserService {
     private final UserDAO userdao;
