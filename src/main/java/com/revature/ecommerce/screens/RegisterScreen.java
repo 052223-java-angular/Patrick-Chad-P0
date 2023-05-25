@@ -1,4 +1,4 @@
-/* TODO: uncomment this before push 
+
 package com.revature.ecommerce.screens;
 
 import java.util.Scanner;
@@ -12,7 +12,7 @@ public class RegisterScreen implements IScreen{
     private final RouterService routerservice;
     private Session session;
     
-    private RegisterScreen(UserService userservice, RouterService routerservice)
+    public RegisterScreen(UserService userservice, RouterService routerservice)
     {
         this.userservice = userservice;
         this.routerservice = routerservice;
@@ -130,4 +130,4 @@ public class RegisterScreen implements IScreen{
 
 
 }
- */
+ 

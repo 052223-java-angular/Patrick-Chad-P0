@@ -16,7 +16,8 @@ public class UserDAO implements CrudDAO<User>{
 
     @Override
     public void update(User user){
-       
+       // TODO Auto-generated method stub
+       throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
 
