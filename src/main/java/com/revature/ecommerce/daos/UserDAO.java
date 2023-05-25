@@ -16,31 +16,7 @@ public class UserDAO implements CrudDAO<User>{
 
     @Override
     public void update(User user){
-        try(Connection conn = ConnectionFactory.getInstance().getConnection())
-        {
-            String sql = "INSERT INTO users (id, username, password) VALUES (?, ? ,? );";
-
-            try(PreparedStatement ps = conn.prepareStatement(sql))
-            {
-                ps.setString(1, UUID.randomUUID().toString());
-                ps.setString(2, user.getUsername());
-                ps.setString(3, user.getPassword());
-                ps.executeUpdate();
-            }
-            
-        }
-        catch(SQLException e)
-        {
-            throw new RuntimeException("Not able to connect to the database");
-        }
-        catch(ClassNotFoundException e)
-        {
-            throw new RuntimeException("Unable to load jdbc");
-        }
-        catch(IOException e)
-        {
-            throw new RuntimeException("Cannot find application.properties");
-        }
+       
     }
 
 
@@ -113,9 +89,32 @@ public class UserDAO implements CrudDAO<User>{
 
 
     @Override
-    public void save(User obj) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+    public void save(User user) {
+        try(Connection conn = ConnectionFactory.getInstance().getConnection())
+        {
+            String sql = "INSERT INTO users (id, username, password) VALUES (?, ? ,? );";
+
+            try(PreparedStatement ps = conn.prepareStatement(sql))
+            {
+                ps.setString(1, UUID.randomUUID().toString());
+                ps.setString(2, user.getUsername());
+                ps.setString(3, user.getPassword());
+                ps.executeUpdate();
+            }
+            
+        }
+        catch(SQLException e)
+        {
+            throw new RuntimeException("Not able to connect to the database");
+        }
+        catch(ClassNotFoundException e)
+        {
+            throw new RuntimeException("Unable to load jdbc");
+        }
+        catch(IOException e)
+        {
+            throw new RuntimeException("Cannot find application.properties");
+        }
     }
 
 
