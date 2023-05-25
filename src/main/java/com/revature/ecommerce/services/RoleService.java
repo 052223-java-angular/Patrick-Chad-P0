@@ -2,9 +2,9 @@ package com.revature.ecommerce.services;
 
 import java.util.Optional;
 
-import com.YourStore.app.DAO.RoleDAO;
-import com.YourStore.app.Exceptions.RoleNotFoundException;
-import com.YourStore.app.Model.Role;
+import com.revature.ecommerce.daos.RoleDAO;
+import com.revature.ecommerce.models.Role;
+import com.revature.ecommerce.utils.exceptions.RoleNotFoundException;
 
 import lombok.AllArgsConstructor;
 

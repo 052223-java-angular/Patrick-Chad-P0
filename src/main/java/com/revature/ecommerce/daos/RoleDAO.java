@@ -7,8 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import com.YourStore.app.Model.Role;
-import com.YourStore.app.Utils.ConnectionFactory;
+import com.revature.ecommerce.models.Role;
+import com.revature.ecommerce.utils.ConnectionFactory;
+
 
 public class RoleDAO {
 
