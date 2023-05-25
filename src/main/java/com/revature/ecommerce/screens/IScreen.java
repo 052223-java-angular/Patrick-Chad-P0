@@ -1,4 +1,4 @@
-package com.revature.YourStore.Screens;
+package com.revature.ecommerce.screens;
 
 import java.util.Scanner;
 

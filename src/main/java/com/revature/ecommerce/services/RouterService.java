@@ -1,9 +1,9 @@
-package com.revature.YourStore.Services;
+package com.revature.ecommerce.services;
 
 import java.util.Scanner;
 
-import com.revature.YourStore.Screens.HomeScreen;
-import com.revature.YourStore.Screens.ProductScreen;
+import com.revature.ecommerce.screens.HomeScreen;
+import com.revature.ecommerce.screens.ProductScreen;
 
 public class RouterService {
     ProductService prodServ = new ProductService();
