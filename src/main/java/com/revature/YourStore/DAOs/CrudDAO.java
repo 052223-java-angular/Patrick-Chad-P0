@@ -1,5 +1,14 @@
-package com.YourStore.app.DAO;
 
+package com.revature.YourStore.DAOs;
+
+
+
+//package com.revature.YourStore.DAOs;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.revature.YourStore.Models.Product;
 
 
 public interface CrudDAO<T> {
@@ -8,11 +17,19 @@ public interface CrudDAO<T> {
     void update(T obj) ;
 
    
+
     void delete(T obj);
 
 
 
     
+
+    void lookupUser(String username, String password);
+
+    List<T> lookupProducts();
+
+    Optional<Product> lookupByProductName(String name);
+
 
 
     
