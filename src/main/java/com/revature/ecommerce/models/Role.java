@@ -1,20 +1,16 @@
-package com.revature.YourStore.Models;
+package com.revature.ecommerce.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
-public class Product {
+public class Role {
     private String id;
     private String name;
-    private String description;
-    private double price;
-    private int qty_on_hand;
+    private String user_id;
 }

@@ -1,10 +1,10 @@
-package com.revature.YourStore.Screens;
+package com.revature.ecommerce.screens;
 
 import java.util.Scanner;
 
-import com.revature.YourStore.Models.Product;
-import com.revature.YourStore.Services.ProductService;
-import com.revature.YourStore.Services.RouterService;
+import com.revature.ecommerce.models.Product;
+import com.revature.ecommerce.services.ProductService;
+import com.revature.ecommerce.services.RouterService;
 
 import lombok.AllArgsConstructor;
 

@@ -1,9 +1,9 @@
-package com.revature.YourStore.Services;
+package com.revature.ecommerce.services;
 
 import java.util.Optional;
 
-import com.revature.YourStore.DAOs.ProductsDAO;
-import com.revature.YourStore.Models.Product;
+import com.revature.ecommerce.daos.ProductsDAO;
+import com.revature.ecommerce.models.Product;
 
 public class ProductService {
     ProductsDAO prodDAO = new ProductsDAO();

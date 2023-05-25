@@ -1,10 +1,10 @@
-package com.revature.YourStore;
+package com.revature.ecommerce;
 
 import java.util.Scanner;
 
-import com.revature.YourStore.Services.RouterService;
+import com.revature.ecommerce.services.RouterService;
 
-public class YourStore {
+public class Ecommerce {
   public static void main(String args[]) {
     Scanner scan = new Scanner(System.in);
     RouterService router = new RouterService();

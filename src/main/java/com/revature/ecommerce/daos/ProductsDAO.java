@@ -1,19 +1,19 @@
-package com.revature.YourStore.DAOs;
+package com.revature.ecommerce.daos;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+
+import com.revature.ecommerce.models.Product;
+import com.revature.ecommerce.utils.ConnectionFactory;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.revature.YourStore.Models.Product;
-import com.revature.YourStore.Utils.ConnectionFactory;
-
 public class ProductsDAO implements CrudDAO<Product> {
-
     @Override
     public void update(Product obj) {
         // TODO Auto-generated method stub
@@ -87,5 +87,17 @@ public class ProductsDAO implements CrudDAO<Product> {
             throw new RuntimeException("Unable to load jdbc");
         }
         return Optional.empty();
+    }
+
+    @Override
+    public void delete(Product obj) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    }
+
+    @Override
+    public void save(Product obj) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'save'");
     }
 }
