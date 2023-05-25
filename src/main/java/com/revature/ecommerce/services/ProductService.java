@@ -1,5 +1,6 @@
 package com.revature.ecommerce.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.revature.ecommerce.daos.ProductsDAO;
@@ -14,12 +15,18 @@ public class ProductService {
         
         Optional<Product> productOpt = prodDAO.lookupByProductName(name);
 
-        product = productOpt.get();
-        
+        if (productOpt.isPresent()){
+            product = productOpt.get(); 
+        }
+                
         return product;
     }
 
     // get products by category
+    public List<Product> getProductsByCategory(String category){
+
+        return null;
+    }
 
     // get products by price range
     

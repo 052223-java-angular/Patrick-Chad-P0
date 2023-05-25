@@ -22,6 +22,6 @@ public class Session {
     public void setSession(User user) {
         this.id = user.getId();
         this.username = user.getUsername();
-        this.roleId = user.getRoleId();
+        //this.roleId = user.getRoleId();
     }
 }
