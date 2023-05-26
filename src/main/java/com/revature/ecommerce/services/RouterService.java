@@ -7,6 +7,7 @@ import com.revature.ecommerce.daos.UserDAO;
 import com.revature.ecommerce.screens.HomeScreen;
 import com.revature.ecommerce.screens.LoginScreen;
 import com.revature.ecommerce.screens.ProductScreen;
+import com.revature.ecommerce.screens.RegisterScreen;
 
 public class RouterService {
     ProductService prodServ = new ProductService();
@@ -20,10 +21,11 @@ public class RouterService {
                 new ProductScreen(this, prodServ).start(scan);
                 break;
             case "/login":
-                //new LoginScreen(new UserService(new UserDAO(), new RoleService(new RoleDAO()))).start(scan);
+                LoginScreen.getInstance();
                 break;
             case "/register":
-               
+               RegisterScreen.getInstance();
+               break;
             default:
                 break;
         }
