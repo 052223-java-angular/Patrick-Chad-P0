@@ -13,13 +13,14 @@ import com.revature.ecommerce.models.User;
 import com.revature.ecommerce.utils.ConnectionFactory;
 
 public class UserDAO implements CrudDAO<User>{
-
+    
     @Override
     public void update(User user){
        // TODO Auto-generated method stub
        throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
+   
 
     public Optional<User> findUserByUsername(String username)
     {
@@ -130,7 +131,27 @@ public class UserDAO implements CrudDAO<User>{
     {
         try(Connection conn = ConnectionFactory.getInstance().getConnection())
         {
-            
+            String sql = "SELECT id, username FROM users WHERE username = ?";
+
+            try(PreparedStatement ps = conn.prepareStatement(sql))
+            {
+                ps.setString(1, username);
+
+                try(ResultSet rs = ps.executeQuery(sql))
+                {
+                    if(rs.next())
+                    {
+                        User user = new User();
+                        user.setId(rs.getString("id"));
+                        user.setUsername(rs.getString("username"));
+                        return Optional.of(user);
+                    }
+                    else
+                    {
+                        return Optional.empty();
+                    }
+                }
+            }
         }
         catch(ClassNotFoundException e)
         {

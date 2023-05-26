@@ -1,8 +1,10 @@
 
 package com.revature.ecommerce.screens;
 
+import java.util.Optional;
 import java.util.Scanner;
 
+import com.revature.ecommerce.models.User;
 import com.revature.ecommerce.services.UserService;
 
 public class LoginScreen implements IScreen{
@@ -41,6 +43,7 @@ public class LoginScreen implements IScreen{
                     break exit;
                 }
 
+                break;
 
             }
 
@@ -50,8 +53,11 @@ public class LoginScreen implements IScreen{
 
         }
 
-
         
+
+       
+
+
     }
 
     public String getUsername(Scanner scan)
@@ -106,6 +112,11 @@ public class LoginScreen implements IScreen{
       return password;
     }
 
+
+   public Optional<User> lookupUserIdAndUsername(String username, String password)
+   {
+        
+   }
 
 
 

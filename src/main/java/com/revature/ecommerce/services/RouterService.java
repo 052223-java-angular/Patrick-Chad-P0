@@ -20,10 +20,10 @@ public class RouterService {
                 new ProductScreen(this, prodServ).start(scan);
                 break;
             case "/login":
-                new LoginScreen(new UserService(new UserDAO(), new RoleService(new RoleDAO()))).start(scan);
+                //new LoginScreen(new UserService(new UserDAO(), new RoleService(new RoleDAO()))).start(scan);
                 break;
             case "/register":
-                new RegisterScreen(new)
+               
             default:
                 break;
         }

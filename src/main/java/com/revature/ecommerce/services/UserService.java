@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import com.revature.ecommerce.daos.RoleDAO;
 import com.revature.ecommerce.daos.UserDAO;
 import com.revature.ecommerce.models.Role;
 import com.revature.ecommerce.models.User;
@@ -12,11 +13,23 @@ import com.revature.ecommerce.models.User;
 public class UserService {
     private final UserDAO userdao;
     private final RoleService roleservice;
+    private static  UserService instance;
 
     private UserService(UserDAO userdao, RoleService roleservice)
     {
         this.userdao = userdao;
         this.roleservice = roleservice;
+    }
+
+
+    public static UserService getInstance()
+    {
+        if(instance == null)
+        {
+            instance = new UserService(new UserDAO(), new RoleService(new RoleDAO()));
+        }
+
+        return instance;
     }
 
     public User register(String username, String password)
@@ -28,7 +41,6 @@ public class UserService {
         return newUser;
 
 
-        
     }
 
 
@@ -57,6 +69,7 @@ public class UserService {
         return password.equals(confirmPassword);
    }
 
-   public get
+   
+
 
 }
