@@ -11,6 +11,7 @@ public class RegisterScreen implements IScreen{
     private final UserService userservice;
     private final RouterService routerservice;
     private Session session;
+    private static RegisterScreen instance;
     
     private RegisterScreen(UserService userservice, RouterService routerservice)
     {
@@ -18,7 +19,15 @@ public class RegisterScreen implements IScreen{
         this.routerservice = routerservice;
     }
 
-    
+    public static RegisterScreen getInstance()
+    {
+        if(instance == null)
+        {
+            instance = new RegisterScreen(UserService.getInstance(), new RouterService());
+        }
+
+        return instance;
+    }
 
 
     
@@ -127,6 +136,8 @@ public class RegisterScreen implements IScreen{
         
         return password;
     }
+
+   
 
     private void clearScreen() {
         System.out.print("\033[H\033[2J");

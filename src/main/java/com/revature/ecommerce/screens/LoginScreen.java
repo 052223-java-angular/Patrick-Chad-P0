@@ -9,12 +9,22 @@ import com.revature.ecommerce.services.UserService;
 
 public class LoginScreen implements IScreen{
     private final UserService userservice;
+    private static LoginScreen instance;
 
-    public LoginScreen(UserService userservice)
+    private LoginScreen(UserService userservice)
     {
         this.userservice = userservice;
     }
 
+    public static LoginScreen getInstance()
+    {
+        if(instance == null)
+        {
+            instance = new LoginScreen(UserService.getInstance());
+        }
+
+        return instance;
+    }
 
 
     @Override
@@ -27,7 +37,7 @@ public class LoginScreen implements IScreen{
             while(true)
             {
                 clearScreen();
-                System.out.println("Login");
+                System.out.println("Login:");
 
                 username = getUsername(scan);
 
@@ -113,10 +123,10 @@ public class LoginScreen implements IScreen{
     }
 
 
-   public Optional<User> lookupUserIdAndUsername(String username, String password)
+   /*public Optional<User> lookupUserIdAndUsername(String username, String password)
    {
         
-   }
+   }*/
 
 
 
