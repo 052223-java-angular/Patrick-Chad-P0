@@ -92,68 +92,73 @@ public class ProductScreen implements IScreen {
                         
                         break;
                     case "2":
-                        clearScreen();
-                        // search products by name
-                        logger.info("User selected search by product name.");
-                        System.out.print("Enter name of product [enter x to exit]: ");
-                        input = scan.nextLine();
+                        productNameExit:{
+                            while(true){
+                                clearScreen();
+                                // search products by name
+                                logger.info("User selected search by product name.");
+                                System.out.print("Enter name of product [enter x to exit]: ");
+                                input = scan.nextLine();
 
-                        // if user wishes to exit
-                        if (input.equalsIgnoreCase("x")) {
-                            router.navigate("/products", scan);
-                        }
-
-                        // if user enters product name
-                        Product prod = new Product();
-                        prod = prodServ.getProductsByName(input);
-                        clearScreen();
-                        if (prod.getId() == null){
-                            // no item found
-                            System.out.println("No product found. Press enter to continue...");
-                            scan.nextLine();
-                        } else {
-                            addtocart:{
-                                while(true){
-                                    // item found
-                                    System.out.println("\n --- Product Listing ---");
-                                    System.out.println("Product Name: " + prod.getName());
-                                    System.out.println("Product Description: " + prod.getDescription());
-                                    System.out.println("Product Price: $" + prod.getPrice());
-                                    System.out.print("\nWould you like to add to your cart? (y/n): ");
-                                    input = scan.nextLine();
-
-                                    switch (input){
-                                        case "y":
-                                            // add to cart  
-                                            int qty = 0;                                  
-                                            System.out.print("Please enter desired quantity: ");
-                                            input = scan.nextLine(); 
-                                            qty = Integer.parseInt(input);
-
-                                            // TODO: send item to cart items
-                                            System.out.println("added " + qty + " to your cart. Press enter to continue....");
-                                            scan.nextLine();                       
-                                        
-                                            break addtocart;
-                                        case "n":
-                                            // reload menu
-                                            System.out.println("Item not added to cart. Press enter to continue....");
-                                            scan.nextLine();
-        
-                                        break addtocart;
-                                        default:
-                                            System.out.println("Invalid entry. Must select (y/n). Press enter to continue....");
-                                            scan.nextLine();
-                                        break;
-                                    }
+                                // if user wishes to exit
+                                if (input.equalsIgnoreCase("x")) {
+                                    router.navigate("/products", scan);
+                                    break productNameExit;
                                 }
-                            }
+
+                                // if user enters product name
+                                Product prod = new Product();
+                                prod = prodServ.getProductsByName(input);
+                                clearScreen();
+                                if (prod.getId() == null){
+                                    // no item found
+                                    System.out.println("No product found. Press enter to continue...");
+                                    scan.nextLine();
+                                } else {
+                                    addtocart:{
+                                        while(true){
+                                            // item found
+                                            System.out.println("\n --- Product Listing ---");
+                                            System.out.println("Product Name: " + prod.getName());
+                                            System.out.println("Product Description: " + prod.getDescription());
+                                            System.out.println("Product Price: $" + prod.getPrice());
+                                            System.out.print("\nWould you like to add to your cart? (y/n): ");
+                                            input = scan.nextLine();
+
+                                            switch (input){
+                                                case "y":
+                                                    // add to cart  
+                                                    int qty = 0;                                  
+                                                    System.out.print("Please enter desired quantity: ");
+                                                    input = scan.nextLine(); 
+                                                    qty = Integer.parseInt(input);
+
+                                                    // TODO: send item to cart items
+                                                    System.out.println("added " + qty + " to your cart. Press enter to continue....");
+                                                    scan.nextLine();                       
+                                        
+                                                    break addtocart;
+                                                case "n":
+                                                    // reload menu
+                                                    System.out.println("Item not added to cart. Press enter to continue....");
+                                                    scan.nextLine();
+        
+                                                    break addtocart;
+                                                default:
+                                                    System.out.println("Invalid entry. Must select (y/n). Press enter to continue....");
+                                                    scan.nextLine();
+                                                    break;
+                                            }
+                                        }
+                                    }
                             
-                        }  
-                        // if user wishes to exit
-                        if (input.equalsIgnoreCase("x")) {
-                            router.navigate("/products", scan);
-                        }                      
+                                }  
+                                // if user wishes to exit
+                                if (input.equalsIgnoreCase("x")) {
+                                    router.navigate("/products", scan);
+                                }                
+                            }
+                        }      
                         break;
                     case "3":
                         // search products by category

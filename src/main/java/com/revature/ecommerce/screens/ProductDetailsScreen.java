@@ -16,7 +16,7 @@ public class ProductDetailsScreen implements IScreen {
     //private final RouterService router;
     //private final ProductService prodServ;
     private static final Logger logger = LogManager.getLogger(ProductScreen.class);
-    
+
     public void display(Scanner scan, Product prod){
         String input = "";
         clearScreen();
@@ -24,7 +24,7 @@ public class ProductDetailsScreen implements IScreen {
         System.out.println("\n --- Product Listing ---");
         System.out.println("Product Name: " + prod.getName());
         System.out.println("Product Description: " + prod.getDescription());
-        System.out.println("Product Price: $" + prod.getPrice());
+        System.out.println("Product Price: $" + String.format("%1$.2f",prod.getPrice()));
         System.out.print("\nWould you like to add to your cart? (y/n): ");
         input = scan.nextLine();
 
