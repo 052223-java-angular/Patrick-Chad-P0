@@ -53,10 +53,16 @@ public class RegisterScreen implements IScreen{
                 {
                     break exit;
                 }
-                
-                
+
+
+                break;
             }
+            
+            
         }
+
+        userservice.register(username, password);
+        
     }
 
     public String getUsername(Scanner scanner)
@@ -66,10 +72,11 @@ public class RegisterScreen implements IScreen{
         while(true)
         {
             System.out.println("Enter a username: (or press x to quit)");
-            scanner.nextLine();
+            username = scanner.nextLine();
 
             if(username.equalsIgnoreCase("x"))
             {
+                System.out.println("Returning x");
                 return "x";
             }
 
@@ -77,12 +84,18 @@ public class RegisterScreen implements IScreen{
             {
                 clearScreen();
                 System.out.println("Username is not valid");
+                System.out.println("Press Enter to continue. . .");
+                scanner.nextLine();
+                continue;
             }
 
             if(!userservice.isUniqueUsername(username))
             {
                 clearScreen();
                 System.out.println("Username is already taken. Please choose another one");
+                System.out.println("Press Enter to continue. . .");
+                scanner.nextLine();
+                continue;
             }
             break;
         }
@@ -137,7 +150,7 @@ public class RegisterScreen implements IScreen{
         return password;
     }
 
-   
+    
 
     private void clearScreen() {
         System.out.print("\033[H\033[2J");

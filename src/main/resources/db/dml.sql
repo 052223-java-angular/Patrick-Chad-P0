@@ -24,3 +24,6 @@ VALUES
         1,
         'bdae5526-4e75-4a54-bda7-186788317888'
     );
+
+
+INSERT INTO roles (id, name) VALUES (1, "USER");
