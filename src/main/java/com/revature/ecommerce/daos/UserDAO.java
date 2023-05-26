@@ -13,17 +13,19 @@ import com.revature.ecommerce.models.User;
 import com.revature.ecommerce.utils.ConnectionFactory;
 
 public class UserDAO implements CrudDAO<User>{
-
+    
     @Override
     public void update(User user){
-       
+       // TODO Auto-generated method stub
+       throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
+   
 
     public Optional<User> findUserByUsername(String username)
     {
         
-        try(Connection conn = (Connection) ConnectionFactory.getInstance())
+        try(Connection conn = ConnectionFactory.getInstance().getConnection())
         {
            String sql = "SELECT * FROM Users WHERE username = ?";
 
@@ -122,5 +124,46 @@ public class UserDAO implements CrudDAO<User>{
     public Optional<User> lookupByProductName(String name) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'lookupByProductName'");
+    }
+
+
+    public Optional<User> findUserAndReturnRoleID(String username) 
+    {
+        try(Connection conn = ConnectionFactory.getInstance().getConnection())
+        {
+            String sql = "SELECT id, username FROM users WHERE username = ?";
+
+            try(PreparedStatement ps = conn.prepareStatement(sql))
+            {
+                ps.setString(1, username);
+
+                try(ResultSet rs = ps.executeQuery(sql))
+                {
+                    if(rs.next())
+                    {
+                        User user = new User();
+                        user.setId(rs.getString("id"));
+                        user.setUsername(rs.getString("username"));
+                        return Optional.of(user);
+                    }
+                    else
+                    {
+                        return Optional.empty();
+                    }
+                }
+            }
+        }
+        catch(ClassNotFoundException e)
+        {
+            throw new RuntimeException("Unable to load jdbc");
+        }
+        catch(SQLException e)
+        {
+            throw new RuntimeException("Cannot connect to db. Please try again");
+        }
+        catch(IOException e)
+        {
+            throw new RuntimeException("Cannot find application.properties");
+        }
     }
 }
