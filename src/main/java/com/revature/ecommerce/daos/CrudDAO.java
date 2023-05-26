@@ -12,8 +12,6 @@ public interface CrudDAO<T> {
     
     void lookupUser(String username, String password);
 
-    List<T> lookupProducts();
 
-    Optional<T> lookupByProductName(String name);
 
 }
