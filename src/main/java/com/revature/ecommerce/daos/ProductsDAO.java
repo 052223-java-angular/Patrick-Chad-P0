@@ -27,7 +27,7 @@ public class ProductsDAO implements CrudDAO<Product> {
         throw new UnsupportedOperationException("Unimplemented method 'lookupUser'");
     }
 
-    @Override
+    
     public List<Product> lookupProducts() {
         List<Product> products = new LinkedList<Product>();
 
@@ -36,7 +36,7 @@ public class ProductsDAO implements CrudDAO<Product> {
 
             try(PreparedStatement ps = conn.prepareStatement(sql)){
                 try(ResultSet rs = ps.executeQuery()){
-                    if(rs.next()){
+                    while(rs.next()){
                         Product product = new Product();
                         product.setId(rs.getString("id"));
                         product.setName(rs.getString("name"));
@@ -47,6 +47,7 @@ public class ProductsDAO implements CrudDAO<Product> {
                     }
                 }
             }
+            
             return products;
         } catch(SQLException e){
             throw new RuntimeException("Unable to connect to database.");
@@ -57,7 +58,7 @@ public class ProductsDAO implements CrudDAO<Product> {
         }
     }
     
-    @Override
+    
     public Optional<Product> lookupByProductName(String name) {
         Product product = new Product();
 
@@ -103,5 +104,11 @@ public class ProductsDAO implements CrudDAO<Product> {
     public void save(Product obj) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'save'");
+    }
+
+
+    public List<Product> lookupByCategory(String category) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'lookupByCategory'");
     }
 }

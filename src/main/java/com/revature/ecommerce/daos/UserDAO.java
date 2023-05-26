@@ -82,13 +82,6 @@ public class UserDAO implements CrudDAO<User>{
 
 
     @Override
-    public List<User> lookupProducts() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'lookupProducts'");
-    }
-
-
-    @Override
     public void save(User user) {
         try(Connection conn = ConnectionFactory.getInstance().getConnection())
         {
@@ -115,12 +108,5 @@ public class UserDAO implements CrudDAO<User>{
         {
             throw new RuntimeException("Cannot find application.properties");
         }
-    }
-
-
-    @Override
-    public Optional<User> lookupByProductName(String name) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'lookupByProductName'");
     }
 }
