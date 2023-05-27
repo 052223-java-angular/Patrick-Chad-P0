@@ -1,0 +1,65 @@
+DROP TABLE IF EXISTS Roles CASCADE;
+
+DROP TABLE IF EXISTS Categories CASCADE;
+
+DROP TABLE IF EXISTS Products CASCADE;
+
+DROP TABLE IF EXISTS Cart CASCADE;
+
+DROP TABLE IF EXISTS Users CASCADE;
+
+DROP TABLE IF EXISTS Reviews CASCADE;
+
+DROP TABLE IF EXISTS CartItems CASCADE;
+
+CREATE TABLE Roles (
+    id VARCHAR NOT NULL PRIMARY KEY,
+    name VARCHAR NOT NULL
+);
+
+CREATE TABLE Categories (
+    id VARCHAR NOT NULL PRIMARY KEY,
+    name VARCHAR NOT NULL
+);
+
+CREATE TABLE Products (
+    id VARCHAR NOT NULL PRIMARY KEY,
+    name VARCHAR NOT NULL,
+    description VARCHAR,
+    price DECIMAL NOT NULL,
+    qty_on_hand INT DEFAULT 0,
+    category_id VARCHAR NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES categories(id)
+);
+
+CREATE TABLE Users (
+    id VARCHAR NOT NULL PRIMARY KEY,
+    username VARCHAR NOT NULL UNIQUE,
+    password VARCHAR NOT NULL
+);
+
+CREATE TABLE Cart (
+    id VARCHAR NOT NULL PRIMARY KEY,
+    user_id VARCHAR NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE Reviews (
+    id VARCHAR NOT NULL PRIMARY KEY,
+    rating INT,
+    COMMENT VARCHAR,
+    user_id VARCHAR NOT NULL,
+    product_id VARCHAR NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+CREATE TABLE CartItems(
+    id VARCHAR NOT NULL PRIMARY KEY,
+    qty INT NOT NULL,
+    price DECIMAL NOT NULL,
+    cart_id VARCHAR NOT NULL,
+    product_id VARCHAR NOT NULL,
+    FOREIGN KEY (cart_id) REFERENCES cart(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);

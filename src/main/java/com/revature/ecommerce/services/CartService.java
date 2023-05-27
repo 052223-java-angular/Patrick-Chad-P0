@@ -28,6 +28,11 @@ public class CartService {
     return cart.getId();
   }
 
+  public static void setId(String user_id)
+  {
+     cart.setUser_id(user_id);
+  }
+
 
 
     

@@ -92,14 +92,13 @@ public class UserDAO implements CrudDAO<User>{
         try(Connection conn = ConnectionFactory.getInstance().getConnection())
         {
             System.out.println("Connection in UserDAO:" + conn);
-            String sql = "INSERT INTO users (id, username, password, cart_id) VALUES (?, ? ,? ,?);";
+            String sql = "INSERT INTO users (id, username, password) VALUES (?, ? ,?);";
 
             try(PreparedStatement ps = conn.prepareStatement(sql))
             {
                 ps.setString(1, UUID.randomUUID().toString());
                 ps.setString(2, user.getUsername());
                 ps.setString(3, user.getPassword());
-                ps.setString(4, CartService.getCartId());
                 ps.executeUpdate();
             }
             

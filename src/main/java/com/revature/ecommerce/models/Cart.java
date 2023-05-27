@@ -11,5 +11,5 @@ import lombok.Setter;
 @Setter
 public class Cart {
     private String id;
-    private String product_id;
+    private String user_id;
 }
