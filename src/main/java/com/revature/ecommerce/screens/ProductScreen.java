@@ -199,8 +199,45 @@ public class ProductScreen implements IScreen {
                                     // valid entry
                                     Category cat = new Category();
                                     cat = cats.get(Integer.parseInt(input) - 1);
-
+                                    
+                                    List<Product> catProducts = new ArrayList<Product>();
+                                    catProducts = prodServ.getProductsByCategory(cat.getId());
                                      
+                                    menuExit:{
+                                        while(true){
+                                            //loop through products and output each product
+                                            int catIndex = 0;
+                                            clearScreen();
+                                            System.out.println("----------- Products -----------");
+                                            //System.out.println("\n");
+                                            for (Product product : catProducts) {
+                                                System.out.println("[" + ++catIndex + "] " + product.getName());
+                                            }
+            
+                                            //let user select which item to view
+                                            System.out.print("\n Select which product to view. Enter x to exit: ");
+                                            input = scan.nextLine();
+            
+                                            // if user wishes to exit
+                                            if (input.equalsIgnoreCase("x")) {
+                                                router.navigate("/products", scan);
+                                            }
+            
+                                            //validate numeric entry
+                                            if(isNumeric(input) && Integer.parseInt(input) <= catProducts.size()){
+                                                // valid entry
+                                                Product selectedProd = new Product();
+                                                selectedProd = catProducts.get(Integer.parseInt(input) - 1);
+            
+                                                detailScreen.display(scan, selectedProd); 
+                                                break menuExit;
+                                            } else {
+                                                // invalid entry
+                                                System.out.println("Invalid Entry. Press Enter to continue...");
+                                                scan.nextLine();
+                                            }
+                                        }
+                                    }
                                     break categoryExit;
                                 } else {
                                     // invalid entry
