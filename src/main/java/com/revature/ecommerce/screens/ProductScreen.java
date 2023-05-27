@@ -7,6 +7,7 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.revature.ecommerce.models.Category;
 import com.revature.ecommerce.models.Product;
 import com.revature.ecommerce.services.ProductService;
 import com.revature.ecommerce.services.RouterService;
@@ -162,10 +163,54 @@ public class ProductScreen implements IScreen {
                         break;
                     case "3":
                         // search products by category
+                        logger.info("User selected search products by category.");
+                        categoryExit:{   
+                            while (true){
+                                // if user wishes to exit
+                                if (input.equalsIgnoreCase("x")) {
+                                    //router.navigate("/products", scan);
+                                    break categoryExit;
+                                }
 
-                        // if user wishes to exit
-                        if (input.equalsIgnoreCase("x")) {
-                            router.navigate("/products", scan);
+                                // search database and return all categories
+                                List<Category> cats = new ArrayList<Category>();
+                                cats = prodServ.getAllCategories();
+
+                                // display categories
+                                clearScreen();
+                                System.out.println("----------- Categories -----------");
+                                int index = 0;
+                                for (Category cat : cats) {
+                                    System.out.println("[" + ++index + "] " + cat.getName());
+                                }
+
+                                //let user select which item to view
+                                System.out.print("\n Select which category to view. Enter x to exit: ");
+                                input = scan.nextLine();
+
+                                // accept user choice
+                                // if user wishes to exit
+                                if (input.equalsIgnoreCase("x")) {
+                                    router.navigate("/products", scan);
+                                }
+
+                                //validate numeric entry
+                                if(isNumeric(input) && Integer.parseInt(input) <= cats.size()){
+                                    // valid entry
+                                    Category cat = new Category();
+                                    cat = cats.get(Integer.parseInt(input) - 1);
+
+                                     
+                                    break categoryExit;
+                                } else {
+                                    // invalid entry
+                                    System.out.println("Invalid Entry. Press Enter to continue...");
+                                    scan.nextLine();
+                                }
+                                // search database for items in that category
+                                // display products
+                                // TODO: Add to cart
+                            }
                         }
                         break;
                     case "4":

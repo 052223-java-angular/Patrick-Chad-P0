@@ -2,9 +2,9 @@ package com.revature.ecommerce.daos;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import com.revature.ecommerce.models.Category;
 import com.revature.ecommerce.models.Product;
 import com.revature.ecommerce.utils.ConnectionFactory;
 
@@ -14,7 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ProductsDAO implements CrudDAO<Product> {
+public class ProductDAO implements CrudDAO<Product> {
     @Override
     public void update(Product obj) {
         // TODO Auto-generated method stub
@@ -27,6 +27,7 @@ public class ProductsDAO implements CrudDAO<Product> {
         throw new UnsupportedOperationException("Unimplemented method 'lookupUser'");
     }
 
+    
     
     public List<Product> lookupProducts() {
         List<Product> products = new LinkedList<Product>();
@@ -60,7 +61,7 @@ public class ProductsDAO implements CrudDAO<Product> {
     
     
     public Optional<Product> lookupByProductName(String name) {
-        Product product = new Product();
+        
 
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
             String sql = "SELECT * FROM products WHERE name=?";
@@ -68,20 +69,20 @@ public class ProductsDAO implements CrudDAO<Product> {
                 ps.setString(1, name);
                 try(ResultSet rs = ps.executeQuery()){
                     if(rs.next()){
+                        Product product = new Product();
                         product.setId(rs.getString("id"));
                         product.setName(rs.getString("name"));
                         product.setDescription(rs.getString("description"));
                         product.setPrice(rs.getDouble("price"));
 
                         return Optional.of(product);
-                        //products.add(product);
                     }
                 }
             }
 
 
-        } catch(NoSuchElementException e){
-            System.out.println("No such item found. Press Enter to continue....");
+        // } catch(NoSuchElementException e){
+        //     System.out.println("No such item found. Press Enter to continue....");
             
         } catch(SQLException e){
             throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
@@ -107,8 +108,39 @@ public class ProductsDAO implements CrudDAO<Product> {
     }
 
 
-    public List<Product> lookupByCategory(String category) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'lookupByCategory'");
+    public List<Optional<Product>> lookupByCategory(String category) {
+        //connect to database
+        //create prepared statement
+        //execute statement
+        try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+            String sql = "SELECT * FROM products WHERE category=?";
+            try(PreparedStatement ps = conn.prepareStatement(sql)){
+                ps.setString(1, category);
+                try(ResultSet rs = ps.executeQuery()){
+                    List<Optional<Product>> prods= new LinkedList<Optional<Product>>();
+                    if(rs.next()){
+                        Product product = new Product();
+                        product.setId(rs.getString("id"));
+                        product.setName(rs.getString("name"));
+                        product.setDescription(rs.getString("description"));
+                        product.setPrice(rs.getDouble("price"));
+
+                        prods.add(Optional.of(product));
+                    }
+                    return prods;
+                }
+            }
+
+        // } catch(NoSuchElementException e){
+        //     System.out.println("No such item found. Press Enter to continue....");
+            
+        } catch(SQLException e){
+            throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
+        } catch(IOException e){
+            throw new RuntimeException("Unable to find application.properties");
+        } catch(ClassNotFoundException e){
+            throw new RuntimeException("Unable to load jdbc");
+        }
+        //return Optional.empty();
     }
 }
