@@ -45,16 +45,21 @@ public class ProductService {
     // get products by category
     public List<Product> getProductsByCategory(String category){
         List<Product> listProducts = new ArrayList<Product>();
+        Product prod = new Product();
 
-        //Optional<Product> productOpt = prodDAO.lookupByCategory(category);
-        //if (productOpt.isPresent()){
-            //for (Product product : listProducts) {
-                
-            //}
-            //listProducts = productOpt.get(); 
-        //}
+        List<Optional<Product>> productsOpt = prodDAO.lookupByCategory(category);
+        if (productsOpt.isEmpty()){
+            return null; 
+        } else {
+            int i = 0;
+            for (Optional<Product> productOpt : productsOpt) {
+                productOpt = productsOpt.get(i++);
+                prod = productOpt.get();
+                listProducts.add(prod);
+            } 
 
-        return null;
+            return listProducts;  
+        }        
     }
 
     // get products by price range

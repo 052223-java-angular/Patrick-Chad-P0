@@ -113,12 +113,13 @@ public class ProductDAO implements CrudDAO<Product> {
         //create prepared statement
         //execute statement
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
-            String sql = "SELECT * FROM products WHERE category=?";
+            String sql = "SELECT * FROM products WHERE category_id=?";
+            List<Optional<Product>> prods= new LinkedList<Optional<Product>>();
             try(PreparedStatement ps = conn.prepareStatement(sql)){
                 ps.setString(1, category);
                 try(ResultSet rs = ps.executeQuery()){
-                    List<Optional<Product>> prods= new LinkedList<Optional<Product>>();
-                    if(rs.next()){
+                    
+                    while(rs.next()){
                         Product product = new Product();
                         product.setId(rs.getString("id"));
                         product.setName(rs.getString("name"));
@@ -127,8 +128,8 @@ public class ProductDAO implements CrudDAO<Product> {
 
                         prods.add(Optional.of(product));
                     }
-                    return prods;
                 }
+                return prods;
             }
 
         // } catch(NoSuchElementException e){
