@@ -21,7 +21,8 @@ public class RouterService {
                 new ProductScreen(this, prodServ).start(scan);
                 break;
             case "/login":
-                LoginScreen.getInstance();
+                LoginScreen login = LoginScreen.getInstance();
+                login.start(scan);
                 break;
             case "/register":
                RegisterScreen.getInstance();

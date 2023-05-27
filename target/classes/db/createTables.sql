@@ -4,11 +4,13 @@ DROP TABLE IF EXISTS Categories CASCADE;
 
 DROP TABLE IF EXISTS Products CASCADE;
 
-DROP TABLE IF EXISTS Cart CASCADE;
+DROP TABLE IF EXISTS Carts CASCADE;
 
 DROP TABLE IF EXISTS Users CASCADE;
 
 DROP TABLE IF EXISTS Reviews CASCADE;
+
+DROP TABLE IF EXISTS CartItems CASCADE;
 
 CREATE TABLE Roles (
     id VARCHAR NOT NULL PRIMARY KEY,
@@ -30,18 +32,16 @@ CREATE TABLE Products (
     FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 
-CREATE TABLE Cart (
-    id VARCHAR NOT NULL PRIMARY KEY,
-    product_id VARCHAR NOT NULL,
-    FOREIGN KEY (product_id) REFERENCES products(id)
-);
-
 CREATE TABLE Users (
     id VARCHAR NOT NULL PRIMARY KEY,
     username VARCHAR NOT NULL UNIQUE,
-    PASSWORD VARCHAR NOT NULL,
-    cart_id VARCHAR NOT NULL,
-    FOREIGN KEY (cart_id) REFERENCES cart(id)
+    PASSWORD VARCHAR NOT NULL
+);
+
+CREATE TABLE Carts (
+    id VARCHAR NOT NULL PRIMARY KEY,
+    user_id VARCHAR NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE Reviews (
@@ -51,5 +51,15 @@ CREATE TABLE Reviews (
     user_id VARCHAR NOT NULL,
     product_id VARCHAR NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+CREATE TABLE CartItems(
+    id VARCHAR NOT NULL PRIMARY KEY,
+    qty INT NOT NULL,
+    price DECIMAL NOT NULL,
+    cart_id VARCHAR NOT NULL,
+    product_id VARCHAR NOT NULL,
+    FOREIGN KEY (cart_id) REFERENCES carts(id),
     FOREIGN KEY (product_id) REFERENCES products(id)
 );

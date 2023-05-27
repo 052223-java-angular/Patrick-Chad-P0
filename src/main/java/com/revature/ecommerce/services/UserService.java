@@ -1,6 +1,7 @@
 package com.revature.ecommerce.services;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -13,7 +14,7 @@ import com.revature.ecommerce.models.User;
 public class UserService {
     private final UserDAO userdao;
     private final RoleService roleservice;
-    private static  UserService instance;
+    private static UserService instance;
 
     private UserService(UserDAO userdao, RoleService roleservice)
     {
@@ -24,8 +25,10 @@ public class UserService {
 
     public static UserService getInstance()
     {
+        System.out.println("In UserService.getInstance()");
         if(instance == null)
         {
+            System.out.println("UserService instance null. Creating new userInstance");
             instance = new UserService(new UserDAO(), new RoleService(new RoleDAO()));
         }
 
@@ -36,17 +39,18 @@ public class UserService {
     {
         Role foundRole = roleservice.findByName("USER");
         String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
-        User newUser = new User(username, hashed, foundRole.getId());
-        userdao.update(newUser);
+        User newUser = new User(UUID.randomUUID().toString(),username, hashed);
+        userdao.save(newUser);
         return newUser;
 
 
     }
 
 
+
    public boolean isValidUsername(String username)
    {
-     return username.matches("^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$");
+    return username.matches("^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$");
    }
 
    public boolean isUniqueUsername(String username)
@@ -62,12 +66,14 @@ public class UserService {
    }
     public boolean isValidPassword(String password)
     {
-         return password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$");
+        return password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$");
     }
    public boolean isSamePassword(String password, String confirmPassword)
    {
         return password.equals(confirmPassword);
    }
+
+   
 
    
 

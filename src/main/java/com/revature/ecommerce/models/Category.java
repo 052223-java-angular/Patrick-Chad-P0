@@ -4,13 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Role {
-    private String id;
-    private String name;
-    //private String user_id;
+@ToString
+public class Category {
+    String id;
+    String name;
 }

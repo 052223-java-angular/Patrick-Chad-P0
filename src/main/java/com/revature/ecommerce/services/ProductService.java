@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.revature.ecommerce.daos.ProductsDAO;
+import com.revature.ecommerce.daos.CategoryDAO;
+import com.revature.ecommerce.daos.ProductDAO;
+import com.revature.ecommerce.models.Category;
 import com.revature.ecommerce.models.Product;
 
 public class ProductService {
-    ProductsDAO prodDAO = new ProductsDAO();
+    ProductDAO prodDAO = new ProductDAO();
+    CategoryDAO catDAO = new CategoryDAO();
     
     // browse products
     public List<Product> getAllProducts(){
@@ -30,11 +33,26 @@ public class ProductService {
         return product;
     }
 
+    // get all categories
+    public List<Category> getAllCategories(){
+        List<Category> cats = new ArrayList<Category>();
+
+        cats = catDAO.getAllCategories();
+
+        return cats;
+    }
+
     // get products by category
     public List<Product> getProductsByCategory(String category){
         List<Product> listProducts = new ArrayList<Product>();
 
-        listProducts = prodDAO.lookupByCategory(category);
+        //Optional<Product> productOpt = prodDAO.lookupByCategory(category);
+        //if (productOpt.isPresent()){
+            //for (Product product : listProducts) {
+                
+            //}
+            //listProducts = productOpt.get(); 
+        //}
 
         return null;
     }

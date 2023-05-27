@@ -85,8 +85,10 @@ public class UserDAO implements CrudDAO<User>{
 
     @Override
     public void save(User user) {
+        System.out.println("In save");
         try(Connection conn = ConnectionFactory.getInstance().getConnection())
         {
+            System.out.println("Connection in UserDAO:" + conn);
             String sql = "INSERT INTO users (id, username, password) VALUES (?, ? ,? );";
 
             try(PreparedStatement ps = conn.prepareStatement(sql))
@@ -100,6 +102,7 @@ public class UserDAO implements CrudDAO<User>{
         }
         catch(SQLException e)
         {
+           
             throw new RuntimeException("Not able to connect to the database");
         }
         catch(ClassNotFoundException e)

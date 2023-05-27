@@ -14,7 +14,7 @@ import com.revature.ecommerce.utils.ConnectionFactory;
 public class RoleDAO {
 
     public Optional<Role> findByName(String name) {
-        try(Connection conn = (Connection)ConnectionFactory.getInstance())
+        try(Connection conn = ConnectionFactory.getInstance().getConnection())
         {
             String sql = "SELECT * FROM roles WHERE name = ?";
 
@@ -29,7 +29,7 @@ public class RoleDAO {
                         Role role = new Role();
                         role.setId(rs.getString("id"));
                         role.setName(rs.getString("name"));
-                        role.setUser_id(rs.getString("user_id"));
+                        //role.setUser_id(rs.getString("user_id"));
                         return Optional.of(role);
                     }
                 }

@@ -17,6 +17,8 @@ public class HomeScreen implements IScreen {
         clearScreen();
         System.out.println("Welcome to YourStore where we have everything you don't want!");
         System.out.println("\n [1] Products");
+        System.out.println("[2] Login");
+        System.out.println("[3] Register");
 
         System.out.print("\nEnter: ");
         input = scan.nextLine();
@@ -25,6 +27,10 @@ public class HomeScreen implements IScreen {
             case "1":
                 router.navigate("/products", scan);
                 break;
+            case "2":
+                LoginScreen.getInstance().start(scan);
+            case "3": 
+                RegisterScreen.getInstance().start(scan);
             default:
                 break;
         }

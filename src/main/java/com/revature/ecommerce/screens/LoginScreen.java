@@ -18,8 +18,10 @@ public class LoginScreen implements IScreen{
 
     public static LoginScreen getInstance()
     {
+        System.out.println("In LoginScreen.getInstance()");
         if(instance == null)
         {
+            System.out.println("Instance null. Creating new instance");
             instance = new LoginScreen(UserService.getInstance());
         }
 
@@ -41,25 +43,24 @@ public class LoginScreen implements IScreen{
 
                 username = getUsername(scan);
 
-                if(username.equalsIgnoreCase("x"))
+                if(username.equals("x"))
                 {
+                    System.out.println("About to break");
                     break exit;
                 }
 
+                System.out.println("Calling getpassword");
                 password = getPassword(scan);
 
-                if(username.equalsIgnoreCase("x"))
-                {
+                if(password.equals("x"))
+                {  
+                    System.out.println("About to break");
                     break exit;
                 }
 
                 break;
 
             }
-
-
-
-
 
         }
 
@@ -72,6 +73,7 @@ public class LoginScreen implements IScreen{
 
     public String getUsername(Scanner scan)
     {
+        System.out.println("In getUsername");
         String username = "";
 
         while(true)
@@ -83,6 +85,7 @@ public class LoginScreen implements IScreen{
 
             if(!userservice.isValidUsername(username))
             {
+                
                 clearScreen();
                 System.out.println("Username needs to be 8-20 characters long.");
                 System.out.print("\nPress enter to continue...");
