@@ -1,10 +1,10 @@
 
 package com.revature.ecommerce.screens;
 
-import java.util.Optional;
+
 import java.util.Scanner;
 
-import com.revature.ecommerce.models.User;
+
 import com.revature.ecommerce.services.UserService;
 
 public class LoginScreen implements IScreen{

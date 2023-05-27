@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.revature.ecommerce.models.Cart;
 import com.revature.ecommerce.models.User;
+import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.utils.ConnectionFactory;
 
 public class UserDAO implements CrudDAO<User>{
@@ -85,17 +87,19 @@ public class UserDAO implements CrudDAO<User>{
 
     @Override
     public void save(User user) {
+        CartService.createCart();
         System.out.println("In save");
         try(Connection conn = ConnectionFactory.getInstance().getConnection())
         {
             System.out.println("Connection in UserDAO:" + conn);
-            String sql = "INSERT INTO users (id, username, password) VALUES (?, ? ,? );";
+            String sql = "INSERT INTO users (id, username, password, cart_id) VALUES (?, ? ,? ,?);";
 
             try(PreparedStatement ps = conn.prepareStatement(sql))
             {
                 ps.setString(1, UUID.randomUUID().toString());
                 ps.setString(2, user.getUsername());
                 ps.setString(3, user.getPassword());
+                ps.setString(4, CartService.getCartId());
                 ps.executeUpdate();
             }
             
@@ -103,7 +107,9 @@ public class UserDAO implements CrudDAO<User>{
         catch(SQLException e)
         {
            
+            e.printStackTrace();
             throw new RuntimeException("Not able to connect to the database");
+            
         }
         catch(ClassNotFoundException e)
         {

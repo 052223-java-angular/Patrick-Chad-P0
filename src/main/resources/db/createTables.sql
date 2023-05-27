@@ -10,9 +10,18 @@ DROP TABLE IF EXISTS Users CASCADE;
 
 DROP TABLE IF EXISTS Reviews CASCADE;
 
+CREATE TABLE Users (
+    id VARCHAR NOT NULL PRIMARY KEY,
+    username VARCHAR NOT NULL UNIQUE,
+    password VARCHAR NOT NULL
+);
+
+
 CREATE TABLE Roles (
     id VARCHAR NOT NULL PRIMARY KEY,
-    name VARCHAR NOT NULL
+    name VARCHAR NOT NULL,
+    user_id VARCHAR not NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE Categories (
@@ -32,22 +41,21 @@ CREATE TABLE Products (
 
 CREATE TABLE Cart (
     id VARCHAR NOT NULL PRIMARY KEY,
+    count INT DEFAULT 1,
     product_id VARCHAR NOT NULL,
-    FOREIGN KEY (product_id) REFERENCES products(id)
+    user_id VARCHAR NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES products(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+
+    
 );
 
-CREATE TABLE Users (
-    id VARCHAR NOT NULL PRIMARY KEY,
-    username VARCHAR NOT NULL UNIQUE,
-    PASSWORD VARCHAR NOT NULL,
-    cart_id VARCHAR NOT NULL,
-    FOREIGN KEY (cart_id) REFERENCES cart(id)
-);
+
 
 CREATE TABLE Reviews (
     id VARCHAR NOT NULL PRIMARY KEY,
     rating INT,
-    COMMENT VARCHAR,
+    comment VARCHAR,
     user_id VARCHAR NOT NULL,
     product_id VARCHAR NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),

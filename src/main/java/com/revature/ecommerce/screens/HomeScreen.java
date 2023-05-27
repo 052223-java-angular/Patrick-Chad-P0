@@ -2,6 +2,7 @@ package com.revature.ecommerce.screens;
 
 import java.util.Scanner;
 
+import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.services.RouterService;
 
 import lombok.AllArgsConstructor;
@@ -28,9 +29,13 @@ public class HomeScreen implements IScreen {
                 router.navigate("/products", scan);
                 break;
             case "2":
+                CartService.createCart();
                 LoginScreen.getInstance().start(scan);
+                
             case "3": 
+                CartService.createCart();
                 RegisterScreen.getInstance().start(scan);
+                
             default:
                 break;
         }

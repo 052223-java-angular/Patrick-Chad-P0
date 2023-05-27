@@ -11,6 +11,8 @@ import com.revature.ecommerce.screens.RegisterScreen;
 
 public class RouterService {
     ProductService prodServ = new ProductService();
+
+    
     
     public void navigate(String path, Scanner scan){
         switch(path){
