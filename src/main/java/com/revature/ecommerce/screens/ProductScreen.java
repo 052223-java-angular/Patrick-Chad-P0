@@ -39,10 +39,10 @@ public class ProductScreen implements IScreen {
                 System.out.print("\nEnter: ");
                 input = scan.nextLine(); // get user input
 
-                /* if (input.equals("x")) {
+                if (input.equalsIgnoreCase("x")) {
                     // exit menu
                     break exit;
-                } */
+                } 
         
                 switch (input) {
                     case "x":
