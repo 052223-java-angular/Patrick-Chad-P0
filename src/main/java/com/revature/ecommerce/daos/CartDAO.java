@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import com.revature.ecommerce.models.Cart;
 
@@ -27,7 +28,7 @@ public class CartDAO implements CrudDAO<Cart>{
     }
 
     @Override
-    public void lookupUser(String username, String password) {
+    public Optional<Cart> lookupUser(String username, String password) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'lookupUser'");
     }

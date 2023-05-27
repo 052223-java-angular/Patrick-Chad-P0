@@ -17,10 +17,12 @@ public class CartService {
 
   public static void createCart()
   {
+
     String cart_id = UUID.randomUUID().toString();
     String hashed_cart_id = BCrypt.hashpw(cart_id, BCrypt.gensalt());
     cart = new Cart();
     cart.setId(hashed_cart_id);
+    System.out.println("Cart created");
   }
 
   public static String getCartId()

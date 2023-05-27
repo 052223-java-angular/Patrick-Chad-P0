@@ -34,13 +34,14 @@ public class RegisterScreen implements IScreen{
 
     @Override
     public void start(Scanner scan) {
+        System.out.println("In RegisterScreen.start()");
         String username = "";
         String password = "";
 
         exit:{
             while(true)
             {
-                clearScreen();
+                //clearScreen();
                 System.out.println("Welcome to the register screen");
                 username = getUsername(scan);
                 if(username.equalsIgnoreCase("x"))

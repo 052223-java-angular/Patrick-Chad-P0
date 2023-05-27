@@ -29,13 +29,11 @@ public class HomeScreen implements IScreen {
                 router.navigate("/products", scan);
                 break;
             case "2":
-                CartService.createCart();
                 LoginScreen.getInstance().start(scan);
-                
+                break;
             case "3": 
-                CartService.createCart();
                 RegisterScreen.getInstance().start(scan);
-                
+                break;
             default:
                 break;
         }

@@ -23,10 +23,10 @@ public class ConnectionFactory {
     public static ConnectionFactory getInstance() throws ClassNotFoundException, SQLException, IOException{
         if (instance == null || instance.getConnection().isClosed()){
             instance = new ConnectionFactory();
-           System.out.println("ConnectionFactory null. Instantiating new ConnectionFactory");
+           //System.out.println("ConnectionFactory null. Instantiating new ConnectionFactory");
         }
 
-        System.out.println("Connection in ConnectionFactory:" + instance);
+        //System.out.println("Connection in ConnectionFactory:" + instance);
         return instance;
     }
 

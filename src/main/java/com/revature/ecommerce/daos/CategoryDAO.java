@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import com.revature.ecommerce.models.Category;
 import com.revature.ecommerce.utils.ConnectionFactory;
@@ -32,7 +33,7 @@ public class CategoryDAO implements CrudDAO<Category> {
     }
 
     @Override
-    public void lookupUser(String username, String password) {
+    public Optional<Category>lookupUser(String username, String password) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'lookupUser'");
     }

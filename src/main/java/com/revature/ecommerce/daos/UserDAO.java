@@ -79,19 +79,59 @@ public class UserDAO implements CrudDAO<User>{
 
 
     @Override
-    public void lookupUser(String username, String password) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'lookupUser'");
+    public Optional<User> lookupUser(String username, String password) {
+         try(Connection conn = ConnectionFactory.getInstance().getConnection())
+         {
+            String sql = "SELECT * FROM Users WHERE username = ? AND password = ?";
+            try(PreparedStatement ps = conn.prepareStatement(sql))
+            {
+               ps.setString(1, username);
+               ps.setString(2, password);
+
+               try(ResultSet rs = ps.executeQuery())
+               {
+                    if(rs.next())
+                    {
+                        System.out.println("rs hasNext");
+                        User user = new User();
+                        user.setId(rs.getString("id"));
+                        user.setUsername(rs.getString("username"));
+                        user.setPassword(rs.getString("password"));
+                        return Optional.of(user);
+                    }
+
+                    return Optional.empty();
+               }
+
+            }
+
+
+         }
+         catch(SQLException e)
+         {
+            e.printStackTrace();
+            throw new RuntimeException("Caught SQLException");
+         }
+         catch(IOException e)
+         {
+            e.printStackTrace();
+            throw new RuntimeException("Caught IOException");
+         }
+         catch(ClassNotFoundException e)
+         {
+             e.printStackTrace();
+             throw new RuntimeException("Caught ClassNotFoundException");
+         }
     }
 
 
     @Override
     public void save(User user) {
-        CartService.createCart();
+       
         System.out.println("In save");
         try(Connection conn = ConnectionFactory.getInstance().getConnection())
         {
-            System.out.println("Connection in UserDAO:" + conn);
+            //System.out.println("Connection in UserDAO:" + conn);
             String sql = "INSERT INTO users (id, username, password) VALUES (?, ? ,?);";
 
             try(PreparedStatement ps = conn.prepareStatement(sql))

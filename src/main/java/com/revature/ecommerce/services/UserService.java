@@ -46,6 +46,11 @@ public class UserService {
 
     }
 
+    public Optional<User> callLookupUser(String username, String password)
+    {
+        return userdao.lookupUser(username, password);
+    }
+
     
 
 
@@ -73,6 +78,11 @@ public class UserService {
    public boolean isSamePassword(String password, String confirmPassword)
    {
         return password.equals(confirmPassword);
+   }
+
+   public UserDAO getUserDAO()
+   {
+     return userdao;
    }
 
    
