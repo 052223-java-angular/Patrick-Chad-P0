@@ -197,19 +197,20 @@ public class ProductScreen implements IScreen {
                                 //validate numeric entry
                                 if(isNumeric(input) && Integer.parseInt(input) <= cats.size()){
                                     // valid entry
+                                    // search database for items in that category
                                     Category cat = new Category();
                                     cat = cats.get(Integer.parseInt(input) - 1);
                                     
                                     List<Product> catProducts = new ArrayList<Product>();
                                     catProducts = prodServ.getProductsByCategory(cat.getId());
-                                     
+                                    System.out.println(catProducts);
                                     menuExit:{
                                         while(true){
                                             //loop through products and output each product
                                             int catIndex = 0;
                                             clearScreen();
                                             System.out.println("----------- Products -----------");
-                                            //System.out.println("\n");
+                                            
                                             for (Product product : catProducts) {
                                                 System.out.println("[" + ++catIndex + "] " + product.getName());
                                             }
@@ -244,8 +245,7 @@ public class ProductScreen implements IScreen {
                                     System.out.println("Invalid Entry. Press Enter to continue...");
                                     scan.nextLine();
                                 }
-                                // search database for items in that category
-                                // display products
+                                
                                 // TODO: Add to cart
                             }
                         }
