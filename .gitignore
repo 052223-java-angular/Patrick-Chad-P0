@@ -26,5 +26,11 @@ replay_pid*
 *.settings/
 *.classpath
 *.project
+*.vs_code/
 
-.DS_Store
+**/.DS_Store
+
+target/
+*.properties
+*.DS_Store
+*.vscode
