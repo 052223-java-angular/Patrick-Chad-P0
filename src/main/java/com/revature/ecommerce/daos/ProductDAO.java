@@ -20,7 +20,7 @@ public class ProductDAO implements CrudDAO<Product> {
     }
 
     @Override
-    public Optional<Product> lookupUser(String username, String password) {
+    public Optional<Product> lookupUser(String username) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'lookupUser'");
     }

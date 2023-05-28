@@ -48,7 +48,7 @@ public class UserService {
 
     public Optional<User> callLookupUser(String username, String password)
     {
-        return userdao.lookupUser(username, password);
+        return userdao.lookupUser(username);
     }
 
     
