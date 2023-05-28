@@ -16,9 +16,10 @@ public class HomeScreen implements IScreen {
 
         clearScreen();
         System.out.println("Welcome to YourStore where we have everything you don't want!");
-        System.out.println("\n [1] Products");
-        System.out.println("[2] Login");
-        System.out.println("[3] Register");
+        
+        System.out.println(" [1] Login");
+        System.out.println(" [2] Register");
+        //System.out.println(" [3] Products");
 
         System.out.print("\nEnter: ");
         input = scan.nextLine();
