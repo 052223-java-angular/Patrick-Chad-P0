@@ -5,6 +5,8 @@ package com.revature.ecommerce.screens;
 import java.util.Optional;
 import java.util.Scanner;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.revature.ecommerce.daos.UserDAO;
 import com.revature.ecommerce.models.User;
 import com.revature.ecommerce.services.CartService;
@@ -59,7 +61,7 @@ public class LoginScreen implements IScreen{
                 }
 
 
-                Optional<User> user = lookupUserIdAndUsername(username, password);
+                Optional<User> user = userservice.callLookupUser(username);
                 System.out.println("User.isEmpty()? " + user.isEmpty());
 
                 if(user.isEmpty())
@@ -71,9 +73,19 @@ public class LoginScreen implements IScreen{
                 else
                 {
                     User usr = user.get();
-                    CartService.createCart();
-                    System.out.println("Welcome to YourStore, " + usr.getUsername() + "!");
-                    new RouterService().navigate("/products", scan);
+                    if(BCrypt.checkpw(password, usr.getPassword()))
+                    {
+                        CartService.createCart();
+                        System.out.println("Welcome to YourStore, " + usr.getUsername() + "!");
+                        new RouterService().navigate("/products", scan);
+                    }
+                    else
+                    {
+                        System.out.println("Password is incorrect");
+                        System.out.println("Press Enter to continue. . . ");
+                        scan.nextLine();
+                        continue;
+                    }
 
                 }
 

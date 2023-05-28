@@ -28,7 +28,7 @@ public class CartDAO implements CrudDAO<Cart>{
     }
 
     @Override
-    public Optional<Cart> lookupUser(String username, String password) {
+    public Optional<Cart> lookupUser(String username) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'lookupUser'");
     }

@@ -33,7 +33,7 @@ public class CategoryDAO implements CrudDAO<Category> {
     }
 
     @Override
-    public Optional<Category>lookupUser(String username, String password) {
+    public Optional<Category>lookupUser(String username) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'lookupUser'");
     }
