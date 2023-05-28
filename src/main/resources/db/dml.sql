@@ -1,5 +1,5 @@
 INSERT INTO
-    yourstore.categories (id, "name")
+    ecommerence.categories (id, "name")
 VALUES
     (
         '9cf471f4-5540-4b03-87c4-e6fe73397744',
@@ -15,7 +15,7 @@ VALUES
     );
 
 INSERT INTO
-    yourstore.products (
+    ecommerence.products (
         id,
         "name",
         description,
@@ -33,7 +33,12 @@ VALUES
         '9cf471f4-5540-4b03-87c4-e6fe73397744'
     );
 
+<<<<<<< HEAD
 INSERT INTO
     roles (id, name)
 VALUES
     (1, 'USER');
+=======
+
+INSERT INTO roles (id, "name") VALUES (1, 'USER');
+>>>>>>> f76a99ccb0babe62d76891a47d4c267f9573989e

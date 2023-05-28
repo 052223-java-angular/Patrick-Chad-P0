@@ -9,6 +9,7 @@ import com.revature.ecommerce.services.RouterService;
 
 public class Ecommerce {
   private static final Logger logger = LogManager.getLogger(Ecommerce.class);
+  
   public static void main(String args[]) {
     logger.info("------------------ START APPLICATION -----------------------------");
     Scanner scan = new Scanner(System.in);
@@ -17,4 +18,7 @@ public class Ecommerce {
     logger.info("------------------ END APPLICATION -----------------------------");
     scan.close();
   }
+
+  
+
 }

@@ -5,17 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
+@Getter 
 @Setter
-@Getter
-public class User {
+public class Cart {
     private String id;
-    private String username;
-    private String password;
-    //private String role_id;
-
-    
+    private String user_id;
 }
-
-
