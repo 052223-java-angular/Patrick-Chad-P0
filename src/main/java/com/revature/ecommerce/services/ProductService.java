@@ -63,5 +63,24 @@ public class ProductService {
     }
 
     // get products by price range
+    public List<Product> getProductsByPriceRange(Double min, Double max){
+        List<Product> listProducts = new ArrayList<Product>();
+        Product prod = new Product();
+
+        List<Optional<Product>> productsOpt = prodDAO.lookupByPriceRange(min, max);
+        if (productsOpt.isEmpty()){
+            return null; 
+        } else {
+            int i = 0;
+            for (Optional<Product> productOpt : productsOpt) {
+                productOpt = productsOpt.get(i++);
+                prod = productOpt.get();
+                listProducts.add(prod);
+            } 
+
+            return listProducts;  
+        }   
+
+    }
     
 }

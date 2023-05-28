@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-import com.revature.ecommerce.models.Category;
 import com.revature.ecommerce.models.Product;
 import com.revature.ecommerce.utils.ConnectionFactory;
 
@@ -17,18 +16,22 @@ import java.sql.SQLException;
 public class ProductDAO implements CrudDAO<Product> {
     @Override
     public void update(Product obj) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
     public void lookupUser(String username, String password) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'lookupUser'");
     }
 
     
-    
+    /*
+    *   Parameters: none
+
+        Purpose: this routine is used to query the database to get a list of items.
+
+        Return: This routine will return a List<Product>.
+    */
     public List<Product> lookupProducts() {
         List<Product> products = new LinkedList<Product>();
 
@@ -43,6 +46,7 @@ public class ProductDAO implements CrudDAO<Product> {
                         product.setName(rs.getString("name"));
                         product.setDescription(rs.getString("description"));
                         product.setPrice(rs.getDouble("price"));
+                        product.setQty_on_hand(rs.getInt("qty_on_hand"));
 
                         products.add(product);
                     }
@@ -60,6 +64,13 @@ public class ProductDAO implements CrudDAO<Product> {
     }
     
     
+    /*
+    *   Parameters: name - String - This is the name of the product to search for.
+
+        Purpose: this routine is used to query the database to get a specific item by name.
+
+        Return: This routine will return an Optional<Product>.
+    */
     public Optional<Product> lookupByProductName(String name) {
         
 
@@ -74,16 +85,12 @@ public class ProductDAO implements CrudDAO<Product> {
                         product.setName(rs.getString("name"));
                         product.setDescription(rs.getString("description"));
                         product.setPrice(rs.getDouble("price"));
+                        product.setQty_on_hand(rs.getInt("qty_on_hand"));
 
                         return Optional.of(product);
                     }
                 }
-            }
-
-
-        // } catch(NoSuchElementException e){
-        //     System.out.println("No such item found. Press Enter to continue....");
-            
+            }            
         } catch(SQLException e){
             throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
         } catch(IOException e){
@@ -97,44 +104,46 @@ public class ProductDAO implements CrudDAO<Product> {
 
     @Override
     public void delete(Product obj) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
 
     @Override
     public void save(Product obj) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'save'");
     }
 
 
+    /*
+    *   Parameters: category - String - Name of the selected category that will be used in the query
+
+        Purpose: This routine will pull data based on the selected category and return a list of products.
+
+        Return: This routine will return an Optional<Product> List.
+    */
     public List<Optional<Product>> lookupByCategory(String category) {
-        //connect to database
-        //create prepared statement
-        //execute statement
+        // connect to database
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
             String sql = "SELECT * FROM products WHERE category_id=?";
             List<Optional<Product>> prods= new LinkedList<Optional<Product>>();
+            // create prepared statement
             try(PreparedStatement ps = conn.prepareStatement(sql)){
                 ps.setString(1, category);
+                // execute statement
                 try(ResultSet rs = ps.executeQuery()){
-                    
+                    // add item to list
                     while(rs.next()){
                         Product product = new Product();
                         product.setId(rs.getString("id"));
                         product.setName(rs.getString("name"));
                         product.setDescription(rs.getString("description"));
                         product.setPrice(rs.getDouble("price"));
+                        product.setQty_on_hand(rs.getInt("qty_on_hand"));
 
                         prods.add(Optional.of(product));
                     }
                 }
                 return prods;
-            }
-
-        // } catch(NoSuchElementException e){
-        //     System.out.println("No such item found. Press Enter to continue....");
-            
+            }            
         } catch(SQLException e){
             throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
         } catch(IOException e){
@@ -142,6 +151,52 @@ public class ProductDAO implements CrudDAO<Product> {
         } catch(ClassNotFoundException e){
             throw new RuntimeException("Unable to load jdbc");
         }
-        //return Optional.empty();
+    }
+
+    /*
+    *   Parameters: min - double - used to determine minumun bound of range
+                    max - double - used to determine maximum bound of range
+
+        Purpose: this routine is used to query the database to get a list of products
+                    based on a price range set by the min and max parameters. If no
+                    products exist in that price range, routine should return an empty list.
+
+        Return: This routine will return an Optional<Product> List.
+    */
+    public List<Optional<Product>> lookupByPriceRange(double min, double max) {
+        // connect to database
+        try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+            String sql = "SELECT * FROM products WHERE price>=? AND price<=?";
+            List<Optional<Product>> prods= new LinkedList<Optional<Product>>();
+
+            // create prepared statement
+            try(PreparedStatement ps = conn.prepareStatement(sql)){
+                ps.setDouble(1, min);
+                ps.setDouble(2, max);
+
+                // execute statement
+                try(ResultSet rs = ps.executeQuery()){
+                    
+                    // add item to list
+                    while(rs.next()){
+                        Product product = new Product();
+                        product.setId(rs.getString("id"));
+                        product.setName(rs.getString("name"));
+                        product.setDescription(rs.getString("description"));
+                        product.setPrice(rs.getDouble("price"));
+                        product.setQty_on_hand(rs.getInt("qty_on_hand"));
+
+                        prods.add(Optional.of(product));
+                    }
+                }
+                return prods;
+            }
+        } catch(SQLException e){
+            throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
+        } catch(IOException e){
+            throw new RuntimeException("Unable to find application.properties");
+        } catch(ClassNotFoundException e){
+            throw new RuntimeException("Unable to load jdbc");
+        }
     }
 }
