@@ -7,15 +7,22 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.revature.ecommerce.daos.CartDAO;
+import com.revature.ecommerce.daos.OrderDAO;
+import com.revature.ecommerce.daos.ProductDAO;
 import com.revature.ecommerce.models.Product;
 import com.revature.ecommerce.models.Review;
 import com.revature.ecommerce.services.ReviewService;
+import com.revature.ecommerce.services.CartService;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class ProductDetailsScreen implements IScreen {
     Scanner scan;
+    //private final RouterService router;
+    //private final ProductService prodServ;
+    private static final CartService cartservice = CartService.callCartServiceConstructor(new ProductDAO(), new OrderDAO(), new CartDAO());
     private static final Logger logger = LogManager.getLogger(ProductScreen.class);
 
     public void display(Product prod){
@@ -41,6 +48,7 @@ public class ProductDetailsScreen implements IScreen {
                         qty = Integer.parseInt(input);
 
                         // TODO: send item to cart items
+                        cartservice.addToCart(prod, qty);
                         System.out.println("added " + qty + " to your cart. Press enter to continue....");
                         scan.nextLine();                       
                     

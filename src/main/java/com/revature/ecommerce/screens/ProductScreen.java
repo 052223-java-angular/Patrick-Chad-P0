@@ -7,8 +7,12 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.revature.ecommerce.daos.CartDAO;
+import com.revature.ecommerce.daos.OrderDAO;
+import com.revature.ecommerce.daos.ProductDAO;
 import com.revature.ecommerce.models.Category;
 import com.revature.ecommerce.models.Product;
+import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.services.ProductService;
 import com.revature.ecommerce.services.RouterService;
 
@@ -24,9 +28,11 @@ public class ProductScreen implements IScreen {
     private final ProductService prodServ;
     private static final Logger logger = LogManager.getLogger(ProductScreen.class);
     
+    
     @Override
     public void start(Scanner scan) {
         ProductDetailsScreen detailScreen = new ProductDetailsScreen(scan);
+        CartService cartservice = CartService.callCartServiceConstructor(new ProductDAO(), new OrderDAO(), new CartDAO());
         String input = "";
         logger.info("Navigated to Products screen.");
         exit:{
@@ -38,16 +44,16 @@ public class ProductScreen implements IScreen {
                 System.out.println(" [2] Search products by name");
                 System.out.println(" [3] Search products by category");
                 System.out.println(" [4] Search products by price range");
-                System.out.println(" [5] Write Review");
+                System.out.println("[5] View Cart");
                 System.out.println(" [x] Exit: ");
         
                 System.out.print("\nEnter: ");
                 input = scan.nextLine(); // get user input
 
-                if (input.equals("x")) {
+                if (input.equalsIgnoreCase("x")) {
                     // exit menu
                     break exit;
-                }
+                } 
         
                 switch (input) {
                     case "1":
@@ -128,8 +134,8 @@ public class ProductScreen implements IScreen {
                                                     System.out.print("Please enter desired quantity: ");
                                                     input = scan.nextLine(); 
                                                     qty = Integer.parseInt(input);
-
-                                                    // send item to cart items
+                                                    // TODO: send item to cart items
+                                                    cartservice.addToCart(prod, qty);
                                                     System.out.println("added " + qty + " to your cart. Press enter to continue....");
                                                     scan.nextLine();                       
                                         
@@ -242,7 +248,7 @@ public class ProductScreen implements IScreen {
                                     // invalid entry
                                     System.out.println("Invalid Entry. Press Enter to continue...");
                                     scan.nextLine();
-                                }
+                                }                                
                             }
                         }
                         break;
@@ -310,7 +316,9 @@ public class ProductScreen implements IScreen {
 
                             }
                         }
-
+                    case "5":
+                        CartService.callGetCartItems(CartService.getCartId());
+                    break;  
                         
                     default:
                         // invalid input
@@ -318,6 +326,8 @@ public class ProductScreen implements IScreen {
                         System.out.println("Option mush be 1,2,3,4 or x! Press enter to continue");
                         scan.nextLine();
                         break;
+
+                    
                 }
             }
         }

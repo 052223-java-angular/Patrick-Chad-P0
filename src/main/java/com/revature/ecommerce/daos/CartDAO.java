@@ -5,28 +5,42 @@ import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.revature.ecommerce.models.Cart;
+import com.revature.ecommerce.utils.ConnectionFactory;
 import com.revature.ecommerce.models.Product;
 import com.revature.ecommerce.models.User;
 import com.revature.ecommerce.utils.ConnectionFactory;
 
-public class CartDAO implements CrudDAO<Cart>{
+public class CartDAO implements CrudDAO<Cart>
+{
 
     @Override
     public void save(Cart obj) {
+<<<<<<< HEAD
         throw new UnsupportedOperationException("Unimplemented method 'update'");
+=======
+        //TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented Method 'save'");
+>>>>>>> 7b0ca9de6f6bb5c02b5cc5d6346ce24cc12f2e8f
     }
 
     @Override
-    public void update(Cart obj) {
+    public void update(Cart cart) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        throw new UnsupportedOperationException("Unimplemented Method 'update'");
     }
+       
+    
 
     @Override
     public void delete(Cart obj) {
@@ -117,6 +131,54 @@ public class CartDAO implements CrudDAO<Cart>{
         } catch(IOException e){
             throw new RuntimeException("Unable to find application.properties");
         } catch(ClassNotFoundException e){
+            throw new RuntimeException("Unable to load jdbc");
+        }
+    }
+
+
+    public void addToCart(Product product, int quantity)
+    {
+        try(Connection conn = ConnectionFactory.getInstance().getConnection())
+        {
+            //String sql = "INSERT INTO cartitems()"
+        }
+        catch(SQLException e){
+            throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
+        } 
+        catch(IOException e)
+        {
+            throw new RuntimeException("Unable to find application.properties");
+        } 
+        catch(ClassNotFoundException e)
+        {
+            throw new RuntimeException("Unable to load jdbc");
+        }
+
+    }
+
+    public void addCartToDB(Cart cart, String user_id)
+    {
+        try(Connection conn = ConnectionFactory.getInstance().getConnection())
+        {
+            String sql = "INSERT INTO cart(id, user_id) VALUES (?,?)";
+
+            try(PreparedStatement ps = conn.prepareStatement(sql))
+            {
+                ps.setString(1, cart.getId());
+                ps.setString(2, user_id);
+                ps.executeUpdate();
+                System.out.println("Added cart to database");
+            }
+        }   
+        catch(SQLException e){
+            throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
+        } 
+        catch(IOException e)
+        {
+            throw new RuntimeException("Unable to find application.properties");
+        } 
+        catch(ClassNotFoundException e)
+        {
             throw new RuntimeException("Unable to load jdbc");
         }
     }

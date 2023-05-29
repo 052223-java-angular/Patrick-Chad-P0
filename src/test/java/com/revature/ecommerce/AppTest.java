@@ -37,7 +37,7 @@ public class AppTest{
     public void setup(){
         //initialze user and cart
         userService.register("testUser", BCrypt.hashpw("Passw0rd", BCrypt.gensalt()));
-        CartService.createCart();
+        //CartService.createCart();
         MockitoAnnotations.openMocks(this);
     }
 
