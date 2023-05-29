@@ -1,17 +1,12 @@
 package com.revature.ecommerce.services;
 
+import com.revature.ecommerce.screens.*;
+import com.revature.ecommerce.utils.Session;
+
 import java.util.Scanner;
-
-
-import com.revature.ecommerce.screens.HomeScreen;
-import com.revature.ecommerce.screens.LoginScreen;
-import com.revature.ecommerce.screens.ProductScreen;
-import com.revature.ecommerce.screens.RegisterScreen;
 
 public class RouterService {
     ProductService prodServ = new ProductService();
-
-    
     
     public void navigate(String path, Scanner scan){
         System.out.println("In routerService.navigate()");
@@ -29,6 +24,9 @@ public class RouterService {
             case "/register":
                RegisterScreen rs = RegisterScreen.getInstance();
                rs.start(scan);
+               break;
+            case "/user":
+                new UserScreen(this).start(scan);
                break;
             default:
                 break;
