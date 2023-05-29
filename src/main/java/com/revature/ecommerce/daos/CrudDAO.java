@@ -10,7 +10,7 @@ public interface CrudDAO<T> {
 
     void delete(T obj);
     
-    void lookupUser(String username, String password);
+    Optional<T> lookupUser(String username);
 
 
 

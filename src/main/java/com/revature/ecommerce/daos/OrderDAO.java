@@ -5,58 +5,50 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 
-import com.revature.ecommerce.models.Category;
+import com.revature.ecommerce.models.Order;
 import com.revature.ecommerce.utils.ConnectionFactory;
 
-public class CategoryDAO implements CrudDAO<Category> {
+public class OrderDAO implements CrudDAO<Order>{
 
     @Override
-    public void save(Category obj) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
-    }
-
-    @Override
-    public void update(Category obj) {
+    public void save(Order order) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
-    public void delete(Category obj) {
+    public void update(Order obj) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    }
+
+    @Override
+    public void delete(Order obj) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
 
     @Override
-    public Optional<Category>lookupUser(String username) {
+    public Optional<Order> lookupUser(String username) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'lookupUser'");
     }
 
-    public List<Category> getAllCategories(){
-        List<Category> cats = new LinkedList<Category>();
+    public Order saveOrder(Order order){
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
-            String sql = "SELECT * FROM categories";
-
+            String sql = "INSERT INTO orders (id,order_date,user_id,cart_id) values (?,?,?,?)";
             try(PreparedStatement ps = conn.prepareStatement(sql)){
-                try(ResultSet rs = ps.executeQuery()){
-                    while(rs.next()){
-                        Category category = new Category();
-                        category.setId(rs.getString("id"));
-                        category.setName(rs.getString("name"));
-
-                        cats.add(category);
-                    }
-                    return cats; 
-                }
+                ps.setString(1, order.getId());
+                ps.setDate(2, order.getOrder_date());
+                ps.setString(3, order.getUser_id());
+                ps.setString(4, order.getCart_id());
+                ps.executeUpdate();                
             }
-        } catch(SQLException e){
-            throw new RuntimeException("Unable to connect to database.");
+            return order;
+        }catch(SQLException e){
+            throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
         } catch(IOException e){
             throw new RuntimeException("Unable to find application.properties");
         } catch(ClassNotFoundException e){

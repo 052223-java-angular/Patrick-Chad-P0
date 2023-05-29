@@ -1,18 +1,15 @@
 package com.revature.ecommerce.services;
 
-import java.util.Scanner;
+import com.revature.ecommerce.screens.*;
+import com.revature.ecommerce.utils.Session;
 
-import com.revature.ecommerce.daos.RoleDAO;
-import com.revature.ecommerce.daos.UserDAO;
-import com.revature.ecommerce.screens.HomeScreen;
-import com.revature.ecommerce.screens.LoginScreen;
-import com.revature.ecommerce.screens.ProductScreen;
-import com.revature.ecommerce.screens.RegisterScreen;
+import java.util.Scanner;
 
 public class RouterService {
     ProductService prodServ = new ProductService();
     
     public void navigate(String path, Scanner scan){
+        System.out.println("In routerService.navigate()");
         switch(path){
             case "/home":
                 new HomeScreen(this).start(scan);
@@ -25,7 +22,11 @@ public class RouterService {
                 login.start(scan);
                 break;
             case "/register":
-               RegisterScreen.getInstance();
+               RegisterScreen rs = RegisterScreen.getInstance();
+               rs.start(scan);
+               break;
+            case "/user":
+                new UserScreen(this).start(scan);
                break;
             default:
                 break;

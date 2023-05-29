@@ -20,7 +20,7 @@ public class ProductDAO implements CrudDAO<Product> {
     }
 
     @Override
-    public void lookupUser(String username, String password) {
+    public Optional<Product> lookupUser(String username) {
         throw new UnsupportedOperationException("Unimplemented method 'lookupUser'");
     }
 
@@ -191,6 +191,36 @@ public class ProductDAO implements CrudDAO<Product> {
                 }
                 return prods;
             }
+        } catch(SQLException e){
+            throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
+        } catch(IOException e){
+            throw new RuntimeException("Unable to find application.properties");
+        } catch(ClassNotFoundException e){
+            throw new RuntimeException("Unable to load jdbc");
+        }
+    }
+
+    /*
+    *   Parameters: products - List<Product>
+
+        Purpose: This routine will update quantities in the database.
+
+        Return: none
+    */
+    public void updateCartQtys(Product product){
+        // connect to database
+        try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+            String sql = "UPDATE products SET qty_on_hand=? WHERE id=?";
+
+            // create prepared statement
+            try(PreparedStatement ps = conn.prepareStatement(sql)){
+                ps.setInt(1, product.getQty_on_hand());
+                ps.setString(2, product.getId());
+                
+                //execute update
+                ps.executeUpdate();
+            }
+        
         } catch(SQLException e){
             throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
         } catch(IOException e){

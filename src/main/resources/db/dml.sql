@@ -1,5 +1,5 @@
 INSERT INTO
-    yourstore.categories (id, "name")
+    categories (id, name)
 VALUES
     (
         '9cf471f4-5540-4b03-87c4-e6fe73397744',
@@ -15,9 +15,9 @@ VALUES
     );
 
 INSERT INTO
-    yourstore.products (
+    ecommerence.products (
         id,
-        "name",
+        name,
         description,
         price,
         qty_on_hand,
@@ -37,3 +37,17 @@ INSERT INTO
     roles (id, name)
 VALUES
     (1, 'USER');
+
+INSERT INTO
+    users (id, username, PASSWORD)
+VALUES
+    (
+        '1f4a8076-39c6-4da3-9bec-71050be6cebd',
+        crotruck,
+        '$2a$10$kvW4.zeLjnHc6082d/1VGu.vvB7kKN0U7yXJjsE9my3x7Hh55853u'
+    );
+
+INSERT INTO
+    carts (id, user_id)
+VALUES
+    ('1', '1f4a8076-39c6-4da3-9bec-71050be6cebd')
