@@ -7,6 +7,9 @@ import java.util.Scanner;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import com.revature.ecommerce.daos.CartDAO;
+import com.revature.ecommerce.daos.OrderDAO;
+import com.revature.ecommerce.daos.ProductDAO;
 import com.revature.ecommerce.daos.UserDAO;
 import com.revature.ecommerce.models.User;
 import com.revature.ecommerce.services.CartService;
@@ -18,6 +21,8 @@ import com.revature.ecommerce.utils.Session;
 public class LoginScreen implements IScreen{
     private final UserService userservice;
     private static LoginScreen instance;
+    private static CartService cartservice = CartService.callCartServiceConstructor(new ProductDAO(),new OrderDAO() ,new CartDAO());
+   
 
     private LoginScreen(UserService userservice)
     {
@@ -78,6 +83,8 @@ public class LoginScreen implements IScreen{
                     if(BCrypt.checkpw(password, usr.getPassword()))
                     {
                         CartService.createCart();
+                        CartService.addCartToDB(CartService.getCart(), usr.getId());
+                        
                         //System.out.println("Welcome to YourStore, " + usr.getUsername() + "!");
                         new RouterService().navigate("/user", scan);
                     }

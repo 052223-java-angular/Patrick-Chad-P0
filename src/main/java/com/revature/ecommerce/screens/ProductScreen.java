@@ -8,6 +8,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.revature.ecommerce.daos.CartDAO;
+import com.revature.ecommerce.daos.OrderDAO;
+import com.revature.ecommerce.daos.ProductDAO;
 import com.revature.ecommerce.models.Category;
 import com.revature.ecommerce.models.Product;
 import com.revature.ecommerce.services.CartService;
@@ -27,10 +29,11 @@ public class ProductScreen implements IScreen {
     private final ProductService prodServ;
     private static final Logger logger = LogManager.getLogger(ProductScreen.class);
     
+    
     @Override
     public void start(Scanner scan) {
         ProductDetailsScreen detailScreen = new ProductDetailsScreen();
-        CartService cartservice = CartService.callCartServiceConstructor(new CartDAO());
+        CartService cartservice = CartService.callCartServiceConstructor(new ProductDAO(), new OrderDAO(), new CartDAO());
         String input = "";
         logger.info("Navigated to Products screen.");
         exit:{
@@ -317,7 +320,9 @@ public class ProductScreen implements IScreen {
 
                             }
                         }
-
+                    case "5":
+                        CartService.callGetCartItems(CartService.getCartId());
+                    break;  
                         
                     default:
                         // invalid input
@@ -326,8 +331,7 @@ public class ProductScreen implements IScreen {
                         scan.nextLine();
                         break;
 
-                    case "5":
-                        
+                    
                 }
             }
         }
