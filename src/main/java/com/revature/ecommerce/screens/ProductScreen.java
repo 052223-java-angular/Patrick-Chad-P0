@@ -7,8 +7,10 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.revature.ecommerce.daos.CartDAO;
 import com.revature.ecommerce.models.Category;
 import com.revature.ecommerce.models.Product;
+import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.services.ProductService;
 import com.revature.ecommerce.services.RouterService;
 
@@ -27,6 +29,7 @@ public class ProductScreen implements IScreen {
     @Override
     public void start(Scanner scan) {
         ProductDetailsScreen detailScreen = new ProductDetailsScreen();
+        CartService cartservice = CartService.callCartServiceConstructor(new CartDAO());
         String input = "";
         logger.info("Navigated to Products screen.");
         exit:{
@@ -127,8 +130,8 @@ public class ProductScreen implements IScreen {
                                                     System.out.print("Please enter desired quantity: ");
                                                     input = scan.nextLine(); 
                                                     qty = Integer.parseInt(input);
-
                                                     // TODO: send item to cart items
+                                                    cartservice.addToCart(prod, qty);
                                                     System.out.println("added " + qty + " to your cart. Press enter to continue....");
                                                     scan.nextLine();                       
                                         

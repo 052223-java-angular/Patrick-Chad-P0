@@ -75,10 +75,17 @@ public class LoginScreen implements IScreen{
                   User usr = user.get();
                   if(BCrypt.checkpw(password, usr.getPassword()))
                   {
-                    
                         CartService.createCart();
+                        CartService.addCartToDB(CartService.getCartId(), usr.getId());
                         System.out.println("Welcome to YourStore, " + usr.getUsername() + "!");
                         new RouterService().navigate("/products", scan);
+                  }
+                  else
+                  {
+                     System.out.println("Password is incorrect. Please try again");
+                     System.out.println("Press Enter to Continue . . .");
+                     scan.nextLine();
+                     continue;
                   }
 
                 }
