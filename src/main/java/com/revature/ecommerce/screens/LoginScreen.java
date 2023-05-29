@@ -12,6 +12,7 @@ import com.revature.ecommerce.models.User;
 import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.services.RouterService;
 import com.revature.ecommerce.services.UserService;
+import com.revature.ecommerce.utils.Session;
 
 public class LoginScreen implements IScreen{
     private final UserService userservice;

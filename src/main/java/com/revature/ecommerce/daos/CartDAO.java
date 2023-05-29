@@ -1,16 +1,18 @@
 package com.revature.ecommerce.daos;
 
 import java.io.IOException;
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import com.revature.ecommerce.models.Cart;
-import com.revature.ecommerce.models.Product;
-import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.utils.ConnectionFactory;
 
 public class CartDAO implements CrudDAO<Cart>
@@ -41,6 +43,7 @@ public class CartDAO implements CrudDAO<Cart>
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'lookupUser'");
     }
+
 
     public void addToCart(Product product, int quantity)
     {
@@ -137,17 +140,8 @@ public class CartDAO implements CrudDAO<Cart>
             throw new RuntimeException("IOException caught at CartDAO.update()");
         }
     }
+
+   
+   
+    
 }
-
-    
-
-
-
-
-
-
-
-   
-   
-    
-
