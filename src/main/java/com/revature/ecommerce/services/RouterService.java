@@ -22,12 +22,12 @@ public class RouterService {
                 login.start(scan);
                 break;
             case "/register":
-               RegisterScreen rs = RegisterScreen.getInstance();
-               rs.start(scan);
-               break;
+                RegisterScreen rs = RegisterScreen.getInstance();
+                rs.start(scan);
+                break;   
             case "/user":
                 new UserScreen(this).start(scan);
-               break;
+                break;
             default:
                 break;
         }

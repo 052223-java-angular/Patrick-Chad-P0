@@ -1,6 +1,7 @@
 package com.revature.ecommerce.services;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,6 +82,26 @@ public class ProductService {
             return listProducts;  
         }   
 
+    }
+
+    public List<Product> getListOfProductsPurchased(String user_id)
+    {
+        List<Optional<Product>> productsOpt = new LinkedList<Optional<Product>>();
+        List<Product> listProducts = new LinkedList<Product>();
+        Product prod = new Product();
+        productsOpt = prodDAO.getListOfProductsPurchased(user_id);
+        if (productsOpt.isEmpty()){
+            return null; 
+        } else {
+            int i = 0;
+            for (Optional<Product> productOpt : productsOpt) {
+                productOpt = productsOpt.get(i++);
+                prod = productOpt.get();
+                listProducts.add(prod);
+            } 
+
+            return listProducts;  
+        }   
     }
     
 }

@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.revature.ecommerce.models.Review;
 import com.revature.ecommerce.utils.ConnectionFactory;
@@ -16,7 +17,26 @@ public class ReviewDAO implements CrudDAO<Review> {
 
     @Override
     public void save(Review obj) {
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+        //save review;
+        try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+            String sql = "INSERT INTO reviews (id,rating,comment,user_id,product_id) VALUES (?,?,?,?,?,?)";
+            try(PreparedStatement ps = conn.prepareStatement(sql)){
+                ps.setString(1, UUID.randomUUID().toString());
+                ps.setInt(1, obj.getRating());
+                ps.setString(3, obj.getComment());
+                ps.setString(4, obj.getUser_id());
+                ps.setString(5, obj.getProduct_id());
+
+                //execute query
+                ps.executeUpdate();
+            }
+        } catch(SQLException e){
+            throw new RuntimeException("Unable to connect to database.");
+        } catch(IOException e){
+            throw new RuntimeException("Unable to find application.properties");
+        } catch(ClassNotFoundException e){
+            throw new RuntimeException("Unable to load jdbc");
+        }
     }
 
     @Override
@@ -34,8 +54,8 @@ public class ReviewDAO implements CrudDAO<Review> {
         throw new UnsupportedOperationException("Unimplemented method 'lookupUser'");
     }
 
-    public List<Review> getReviews(String product_id){
-        List<Review> reviews = new LinkedList<Review>();
+    public List<Optional<Review>> getReviews(String product_id){
+        List<Optional<Review>> optReviews= new LinkedList<Optional<Review>>();
 
         //connect to database
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
@@ -53,11 +73,11 @@ public class ReviewDAO implements CrudDAO<Review> {
                         review.setUser_id(rs.getString("user_id"));
                         review.setProduct_id(rs.getString("product_id"));
 
-                        reviews.add(review);
+                        optReviews.add(Optional.of(review));
                     }
                 }
             }
-            return reviews;
+            return optReviews;
         } catch(SQLException e){
             throw new RuntimeException("Unable to connect to database.");
         } catch(IOException e){

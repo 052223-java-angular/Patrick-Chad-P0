@@ -7,6 +7,7 @@ import com.revature.ecommerce.services.RouterService;
 import com.revature.ecommerce.utils.Session;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 public class UserScreen implements IScreen {
@@ -23,6 +24,7 @@ public class UserScreen implements IScreen {
         System.out.println(" [1] View Products");
         System.out.println(" [2] View Cart");
         System.out.println(" [3] Orders");
+        System.out.println(" [4] Leave review");
         System.out.println(" [x] Exit");
 
         System.out.print("\nEnter: ");
@@ -37,6 +39,9 @@ public class UserScreen implements IScreen {
                 break;
             case "3": 
                 RegisterScreen.getInstance().start(scan);
+                break;
+            case "4":
+                router.navigate("/reviews",scan);
                 break;
             default:
                 break;

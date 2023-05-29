@@ -12,13 +12,14 @@ import java.util.Optional;
 
 import com.revature.ecommerce.models.Cart;
 import com.revature.ecommerce.models.Product;
+import com.revature.ecommerce.models.User;
 import com.revature.ecommerce.utils.ConnectionFactory;
 
 public class CartDAO implements CrudDAO<Cart>{
 
     @Override
     public void save(Cart obj) {
-        
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override

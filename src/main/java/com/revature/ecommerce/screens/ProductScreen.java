@@ -11,7 +11,6 @@ import com.revature.ecommerce.models.Category;
 import com.revature.ecommerce.models.Product;
 import com.revature.ecommerce.services.ProductService;
 import com.revature.ecommerce.services.RouterService;
-import com.revature.ecommerce.utils.Session;
 
 import lombok.AllArgsConstructor;
 
@@ -27,7 +26,7 @@ public class ProductScreen implements IScreen {
     
     @Override
     public void start(Scanner scan) {
-        ProductDetailsScreen detailScreen = new ProductDetailsScreen();
+        ProductDetailsScreen detailScreen = new ProductDetailsScreen(scan);
         String input = "";
         logger.info("Navigated to Products screen.");
         exit:{
@@ -39,6 +38,7 @@ public class ProductScreen implements IScreen {
                 System.out.println(" [2] Search products by name");
                 System.out.println(" [3] Search products by category");
                 System.out.println(" [4] Search products by price range");
+                System.out.println(" [5] Write Review");
                 System.out.println(" [x] Exit: ");
         
                 System.out.print("\nEnter: ");
@@ -76,7 +76,7 @@ public class ProductScreen implements IScreen {
                                     Product selectedProd = new Product();
                                     selectedProd = products.get(Integer.parseInt(input) - 1);
 
-                                    detailScreen.display(scan, selectedProd); 
+                                    detailScreen.display(selectedProd); 
                                     break menuExit;
                                 } else {
                                     // invalid entry
@@ -129,7 +129,7 @@ public class ProductScreen implements IScreen {
                                                     input = scan.nextLine(); 
                                                     qty = Integer.parseInt(input);
 
-                                                    // TODO: send item to cart items
+                                                    // send item to cart items
                                                     System.out.println("added " + qty + " to your cart. Press enter to continue....");
                                                     scan.nextLine();                       
                                         
@@ -228,7 +228,7 @@ public class ProductScreen implements IScreen {
                                                 Product selectedProd = new Product();
                                                 selectedProd = catProducts.get(Integer.parseInt(input) - 1);
             
-                                                detailScreen.display(scan, selectedProd); 
+                                                detailScreen.display(selectedProd); 
                                                 break menuExit;
                                             } else {
                                                 // invalid entry
@@ -243,8 +243,6 @@ public class ProductScreen implements IScreen {
                                     System.out.println("Invalid Entry. Press Enter to continue...");
                                     scan.nextLine();
                                 }
-                                
-                                // TODO: Add to cart
                             }
                         }
                         break;
@@ -302,7 +300,7 @@ public class ProductScreen implements IScreen {
                                     Product selectedProd = new Product();
                                     selectedProd = priceProds.get(Integer.parseInt(input) - 1);
 
-                                    detailScreen.display(scan, selectedProd); 
+                                    detailScreen.display(selectedProd); 
                                     break priceExit;
                                 } else {
                                     // invalid entry
@@ -368,6 +366,7 @@ public class ProductScreen implements IScreen {
         }
         try {
             int i = Integer.parseInt(strNum);
+            logger.info("IsNumeric StrNum: " + i);
         } catch (NumberFormatException nfe) {
             return false;
         }

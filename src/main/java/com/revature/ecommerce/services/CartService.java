@@ -1,14 +1,7 @@
 package com.revature.ecommerce.services;
 
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
     
@@ -27,8 +20,6 @@ import com.revature.ecommerce.models.Product;
 import com.revature.ecommerce.models.User;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 
 @AllArgsConstructor
 public class CartService {
@@ -58,7 +49,7 @@ public class CartService {
     cart.setUser_id(user_id);
   }
 
-  public Order Checkout(Scanner scan, Cart cart){
+  public Order Checkout(Scanner scan, Cart cart, User user){
     logger.info("Checkout Process");
     Order order = new Order();
     String input = "";
@@ -97,6 +88,10 @@ public class CartService {
             order = orderDAO.saveOrder(order);
 
             System.out.print("Order placed. Press enter to continue.....");
+
+            //create new cart for customer
+            createCart();
+            //addCartToDB(cart,user.getId());
             scan.nextLine();
             break cartInput;
           case "n":

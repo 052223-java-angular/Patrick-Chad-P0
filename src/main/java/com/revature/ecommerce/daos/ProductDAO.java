@@ -229,4 +229,52 @@ public class ProductDAO implements CrudDAO<Product> {
             throw new RuntimeException("Unable to load jdbc");
         }
     }
+
+    /*
+    *   Parameters: min - double - used to determine minumun bound of range
+                    max - double - used to determine maximum bound of range
+
+        Purpose: this routine is used to query the database to get a list of products
+                    based on a price range set by the min and max parameters. If no
+                    products exist in that price range, routine should return an empty list.
+
+        Return: This routine will return an Optional<Product> List.
+    */
+    public List<Optional<Product>> getListOfProductsPurchased(String user_id) {
+        // connect to database
+        try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+            String sql = "SELECT products.id, products.name FROM ((products " +
+                            "INNER JOIN cartitems ON products.id  = cartitems.product_id) " + 
+                            "INNER JOIN orders ON cartitems.cart_id  = orders.cart_id) where orders.user_id = ?";
+            List<Optional<Product>> prods= new LinkedList<Optional<Product>>();
+
+            // create prepared statement
+            try(PreparedStatement ps = conn.prepareStatement(sql)){
+                ps.setString(1, user_id);
+
+                // execute statement
+                try(ResultSet rs = ps.executeQuery()){
+                    
+                    // add item to list
+                    while(rs.next()){
+                        Product product = new Product();
+                        product.setId(rs.getString("id"));
+                        product.setName(rs.getString("name"));
+                        product.setDescription(rs.getString("description"));
+                        product.setPrice(rs.getDouble("price"));
+                        product.setQty_on_hand(rs.getInt("qty_on_hand"));
+
+                        prods.add(Optional.of(product));
+                    }
+                }
+                return prods;
+            }
+        } catch(SQLException e){
+            throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
+        } catch(IOException e){
+            throw new RuntimeException("Unable to find application.properties");
+        } catch(ClassNotFoundException e){
+            throw new RuntimeException("Unable to load jdbc");
+        }
+    }
 }
