@@ -41,6 +41,7 @@ public class ProductScreen implements IScreen {
                 System.out.println(" [2] Search products by name");
                 System.out.println(" [3] Search products by category");
                 System.out.println(" [4] Search products by price range");
+                System.out.println("[5] View Cart");
                 System.out.println(" [x] Exit: ");
         
                 System.out.print("\nEnter: ");
@@ -247,6 +248,7 @@ public class ProductScreen implements IScreen {
                                 }
                                 
                                 // TODO: Add to cart
+                                
                             }
                         }
                         break;
@@ -322,6 +324,9 @@ public class ProductScreen implements IScreen {
                         System.out.println("Option mush be 1,2,3,4 or x! Press enter to continue");
                         scan.nextLine();
                         break;
+
+                    case "5":
+                        
                 }
             }
         }

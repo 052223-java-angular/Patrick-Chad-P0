@@ -3,7 +3,7 @@ package com.revature.ecommerce.daos;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
@@ -89,6 +89,36 @@ public class CartDAO implements CrudDAO<Cart>
                 ps.setString(1, CartService.getCartId());
                 ps.setString(2, user_id);
                 ps.executeUpdate();
+            }
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            throw new RuntimeException("SQLException caught at CartDAO.update()");
+        }
+        catch(ClassNotFoundException e)
+        {
+            e.printStackTrace();
+            throw new RuntimeException("ClassNotFoundException caught at CartDAO.update()");
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+            throw new RuntimeException("IOException caught at CartDAO.update()");
+        }
+    }
+
+    public ResultSet viewCart()
+    {
+        try(Connection conn = ConnectionFactory.getInstance().getConnection())
+        {
+            String sql = "SELECT name, quantity, price FROM cartitems";
+            try(PreparedStatement ps = conn.prepareStatement(sql))
+            {   
+                try(ResultSet rs = ps.executeQuery())
+                {
+                    return rs;
+                }
             }
         }
         catch(SQLException e)

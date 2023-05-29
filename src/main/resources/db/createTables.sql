@@ -56,6 +56,7 @@ CREATE TABLE Reviews (
 
 CREATE TABLE CartItems(
     id VARCHAR NOT NULL PRIMARY KEY,
+    name VARCHAR NOT NULL,
     qty INT NOT NULL,
     price DECIMAL NOT NULL,
     cart_id VARCHAR NOT NULL,
