@@ -13,6 +13,7 @@ import com.revature.ecommerce.models.Product;
 import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.services.ProductService;
 import com.revature.ecommerce.services.RouterService;
+import com.revature.ecommerce.utils.Session;
 
 import lombok.AllArgsConstructor;
 
@@ -36,7 +37,7 @@ public class ProductScreen implements IScreen {
             while(true){
                 // print menu
                 clearScreen();
-                System.out.println("Welcome to YourStore where we have everything you don't want!");
+                System.out.println("Welcome to YourStore where we have everything you don't need!");
                 System.out.println("\n [1] Browse Products");
                 System.out.println(" [2] Search products by name");
                 System.out.println(" [3] Search products by category");

@@ -4,35 +4,39 @@ import java.util.Scanner;
 
 import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.services.RouterService;
+import com.revature.ecommerce.utils.Session;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class HomeScreen implements IScreen {
+public class UserScreen implements IScreen {
     private final RouterService router;
+    //private final Session session;
 
     @Override
     public void start(Scanner scan) {
         String input = "";
 
         clearScreen();
-        System.out.println("Welcome to YourStore where we have everything you don't want!");
+        System.out.println("Welcome to YourStore where we have everything you don't need!");
         
-        System.out.println(" [1] Login");
-        System.out.println(" [2] Register");
-        //System.out.println(" [3] Products");
+        System.out.println(" [1] View Products");
+        System.out.println(" [2] View Cart");
+        System.out.println(" [3] Orders");
+        System.out.println(" [x] Exit");
 
         System.out.print("\nEnter: ");
         input = scan.nextLine();
 
         switch(input.toLowerCase()){
             case "1":
-                LoginScreen.getInstance().start(scan);
-                //router.navigate("/user", scan);
+                router.navigate("/products", scan);
                 break;
-            case "2": 
+            case "2":
+                LoginScreen.getInstance().start(scan);
+                break;
+            case "3": 
                 RegisterScreen.getInstance().start(scan);
-                //router.navigate("/user", scan);
                 break;
             default:
                 break;

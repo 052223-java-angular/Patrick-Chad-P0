@@ -13,6 +13,7 @@ import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.services.RouterService;
 import com.revature.ecommerce.services.UserService;
 import com.revature.ecommerce.utils.Session;
+import com.revature.ecommerce.utils.Session;
 
 public class LoginScreen implements IScreen{
     private final UserService userservice;
@@ -73,21 +74,20 @@ public class LoginScreen implements IScreen{
                 }
                 else
                 {
-                  User usr = user.get();
-                  if(BCrypt.checkpw(password, usr.getPassword()))
-                  {
+                    User usr = user.get();
+                    if(BCrypt.checkpw(password, usr.getPassword()))
+                    {
                         CartService.createCart();
-                        CartService.addCartToDB(CartService.getCartId(), usr.getId());
-                        System.out.println("Welcome to YourStore, " + usr.getUsername() + "!");
-                        new RouterService().navigate("/products", scan);
-                  }
-                  else
-                  {
-                     System.out.println("Password is incorrect. Please try again");
-                     System.out.println("Press Enter to Continue . . .");
-                     scan.nextLine();
-                     continue;
-                  }
+                        //System.out.println("Welcome to YourStore, " + usr.getUsername() + "!");
+                        new RouterService().navigate("/user", scan);
+                    }
+                    else
+                    {
+                        System.out.println("Password is incorrect");
+                        System.out.println("Press Enter to continue. . . ");
+                        scan.nextLine();
+                        continue;
+                    }
 
                 }
 

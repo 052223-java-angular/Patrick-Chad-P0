@@ -82,7 +82,7 @@ public class UserDAO implements CrudDAO<User>{
     public Optional<User> lookupUser(String username) {
          try(Connection conn = ConnectionFactory.getInstance().getConnection())
          {
-            String sql = "SELECT * FROM Users WHERE username = ?";
+            String sql = "SELECT * FROM Users WHERE username = ? ";
             try(PreparedStatement ps = conn.prepareStatement(sql))
             {
                ps.setString(1, username);
