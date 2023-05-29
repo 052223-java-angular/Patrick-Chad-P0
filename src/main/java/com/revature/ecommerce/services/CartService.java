@@ -21,6 +21,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.revature.ecommerce.daos.CartDAO;
 import com.revature.ecommerce.daos.OrderDAO;
 import com.revature.ecommerce.daos.ProductDAO;
+import com.revature.ecommerce.daos.UserDAO;
 import com.revature.ecommerce.models.Cart;
 import com.revature.ecommerce.models.Order;
 import com.revature.ecommerce.models.Product;
@@ -30,12 +31,22 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-@AllArgsConstructor
+//@AllArgsConstructor
 public class CartService {
   private static final Logger logger = LogManager.getLogger(CartService.class);
   private static Cart cart;
+  private static CartDAO cartdao;
   private static ProductDAO prodDao;
   private static OrderDAO orderDAO;
+  
+
+  private CartService(ProductDAO prodDao, OrderDAO orderDAO, CartDAO cartdao)
+  {
+    this.prodDao = prodDao;
+    this.orderDAO = orderDAO;
+    this.cartdao = cartdao;
+  }
+  
 
   public static void createCart()
   {
@@ -44,8 +55,14 @@ public class CartService {
     String hashed_cart_id = BCrypt.hashpw(cart_id, BCrypt.gensalt());
     cart = new Cart();
     cart.setId(hashed_cart_id);
+
     logger.info("Cart created");
     //System.out.println("Cart created");
+  }
+
+  public static Cart getCart()
+  {
+    return cart;
   }
 
   public static String getCartId()
@@ -109,4 +126,26 @@ public class CartService {
     }
     return order;
   }
+
+  public void addToCart(Product product, int quantity)
+  {
+     cartdao.addToCart(product, quantity);
+  }
+
+public static CartService callCartServiceConstructor(ProductDAO prodDao, OrderDAO orderdao, CartDAO cartdao) {
+      return new CartService(prodDao, orderdao, cartdao);
+}
+
+public static void addCartToDB(Cart cart, String user_id)
+{
+    cartdao.addCartToDB(cart, user_id);
+}
+
+
+public static List<Product> callGetCartItems(String cart_id)
+{
+   return CartDAO.getCartItems(cart_id);
+}
+
+
 }

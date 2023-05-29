@@ -65,6 +65,7 @@ public class RegisterScreen implements IScreen{
       if(!(username.equalsIgnoreCase("x") || password.equalsIgnoreCase("x")))
       {
         userservice.register(username, password);
+        routerservice.navigate("/login", scan);
       }
 
         
