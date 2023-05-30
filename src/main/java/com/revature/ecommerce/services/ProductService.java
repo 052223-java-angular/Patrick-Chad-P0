@@ -1,8 +1,11 @@
 package com.revature.ecommerce.services;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.swing.text.html.Option;
 
 import com.revature.ecommerce.daos.CategoryDAO;
 import com.revature.ecommerce.daos.ProductDAO;
@@ -45,18 +48,62 @@ public class ProductService {
     // get products by category
     public List<Product> getProductsByCategory(String category){
         List<Product> listProducts = new ArrayList<Product>();
+        Product prod = new Product();
 
-        //Optional<Product> productOpt = prodDAO.lookupByCategory(category);
-        //if (productOpt.isPresent()){
-            //for (Product product : listProducts) {
-                
-            //}
-            //listProducts = productOpt.get(); 
-        //}
+        List<Optional<Product>> productsOpt = prodDAO.lookupByCategory(category);
+        if (productsOpt.isEmpty()){
+            return null; 
+        } else {
+            int i = 0;
+            for (Optional<Product> productOpt : productsOpt) {
+                productOpt = productsOpt.get(i++);
+                prod = productOpt.get();
+                listProducts.add(prod);
+            } 
 
-        return null;
+            return listProducts;  
+        }        
     }
 
     // get products by price range
+    public List<Product> getProductsByPriceRange(Double min, Double max){
+        List<Product> listProducts = new ArrayList<Product>();
+        Product prod = new Product();
+
+        List<Optional<Product>> productsOpt = prodDAO.lookupByPriceRange(min, max);
+        if (productsOpt.isEmpty()){
+            return null; 
+        } else {
+            int i = 0;
+            for (Optional<Product> productOpt : productsOpt) {
+                productOpt = productsOpt.get(i++);
+                prod = productOpt.get();
+                listProducts.add(prod);
+            } 
+
+            return listProducts;  
+        }   
+
+    }
+
+    public List<Product> getListOfProductsPurchased(String user_id)
+    {
+        List<Optional<Product>> productsOpt = new LinkedList<Optional<Product>>();
+        List<Product> listProducts = new LinkedList<Product>();
+        Product prod = new Product();
+        productsOpt = prodDAO.getListOfProductsPurchased(user_id);
+        if (productsOpt.isEmpty()){
+            return listProducts; 
+        } else {
+            int i = 0;
+            for (Optional<Product> productOpt : productsOpt) {
+                productOpt = productsOpt.get(i++);
+                prod = productOpt.get();
+                listProducts.add(prod);
+            } 
+
+            return listProducts;  
+        }   
+    }
     
 }

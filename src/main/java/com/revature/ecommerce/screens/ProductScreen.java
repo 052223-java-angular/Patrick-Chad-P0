@@ -7,48 +7,60 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.revature.ecommerce.daos.CartDAO;
+import com.revature.ecommerce.daos.OrderDAO;
+import com.revature.ecommerce.daos.ProductDAO;
 import com.revature.ecommerce.models.Category;
 import com.revature.ecommerce.models.Product;
+import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.services.ProductService;
 import com.revature.ecommerce.services.RouterService;
+import com.revature.ecommerce.utils.Session;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * The ProductScreen class represents the products screen of the eCommerence Application.
+ * It implements the IScreen interface.
+ */
 @AllArgsConstructor
 public class ProductScreen implements IScreen {
     private final RouterService router;
     private final ProductService prodServ;
     private static final Logger logger = LogManager.getLogger(ProductScreen.class);
     
+    
     @Override
-    public void start(Scanner scan) {
-        ProductDetailsScreen detailScreen = new ProductDetailsScreen();
+    public void start(Scanner scan){
+
+    }
+
+    public void start(Scanner scan, Session session) {
+        ProductDetailsScreen detailScreen = new ProductDetailsScreen(scan);
+        CartService cartservice = CartService.callCartServiceConstructor(new ProductDAO(), new OrderDAO(), new CartDAO());
         String input = "";
         logger.info("Navigated to Products screen.");
         exit:{
             while(true){
                 // print menu
                 clearScreen();
-                System.out.println("Welcome to YourStore where we have everything you don't want!");
+                System.out.println("Welcome to YourStore where we have everything you don't need!");
                 System.out.println("\n [1] Browse Products");
                 System.out.println(" [2] Search products by name");
                 System.out.println(" [3] Search products by category");
                 System.out.println(" [4] Search products by price range");
+                System.out.println(" [5] View Cart");
                 System.out.println(" [x] Exit: ");
         
                 System.out.print("\nEnter: ");
                 input = scan.nextLine(); // get user input
 
-                /* if (input.equals("x")) {
+                if (input.equalsIgnoreCase("x")) {
                     // exit menu
                     break exit;
-                } */
+                } 
         
                 switch (input) {
-                    case "x":
-                        logger.info("Exited Product Screen");
-                        //exit menu
-                        break exit;
                     case "1":
                         // browse products
                         logger.info("User selected browse products.");
@@ -56,15 +68,9 @@ public class ProductScreen implements IScreen {
                         products = prodServ.getAllProducts();
 
                         menuExit:{
-                            while(true){
-                                //loop through products and output each product
-                                int index = 0;
-                                clearScreen();
-                                System.out.println("----------- Products -----------");
-                                //System.out.println("\n");
-                                for (Product product : products) {
-                                    System.out.println("[" + ++index + "] " + product.getName());
-                                }
+                            while(true){                                
+                                //display items
+                                displayList(products, scan);
 
                                 //let user select which item to view
                                 System.out.print("\n Select which product to view. Enter x to exit: ");
@@ -72,7 +78,7 @@ public class ProductScreen implements IScreen {
 
                                 // if user wishes to exit
                                 if (input.equalsIgnoreCase("x")) {
-                                    router.navigate("/products", scan);
+                                    router.navigate("/products", scan, session);
                                 }
 
                                 //validate numeric entry
@@ -81,7 +87,7 @@ public class ProductScreen implements IScreen {
                                     Product selectedProd = new Product();
                                     selectedProd = products.get(Integer.parseInt(input) - 1);
 
-                                    detailScreen.display(scan, selectedProd); 
+                                    detailScreen.display(selectedProd); 
                                     break menuExit;
                                 } else {
                                     // invalid entry
@@ -103,7 +109,7 @@ public class ProductScreen implements IScreen {
 
                                 // if user wishes to exit
                                 if (input.equalsIgnoreCase("x")) {
-                                    router.navigate("/products", scan);
+                                    router.navigate("/products", scan, session);
                                     break productNameExit;
                                 }
 
@@ -133,8 +139,8 @@ public class ProductScreen implements IScreen {
                                                     System.out.print("Please enter desired quantity: ");
                                                     input = scan.nextLine(); 
                                                     qty = Integer.parseInt(input);
-
                                                     // TODO: send item to cart items
+                                                    cartservice.addToCart(prod, qty);
                                                     System.out.println("added " + qty + " to your cart. Press enter to continue....");
                                                     scan.nextLine();                       
                                         
@@ -156,7 +162,7 @@ public class ProductScreen implements IScreen {
                                 }  
                                 // if user wishes to exit
                                 if (input.equalsIgnoreCase("x")) {
-                                    router.navigate("/products", scan);
+                                    router.navigate("/products", scan, session);
                                 }                
                             }
                         }      
@@ -191,63 +197,194 @@ public class ProductScreen implements IScreen {
                                 // accept user choice
                                 // if user wishes to exit
                                 if (input.equalsIgnoreCase("x")) {
-                                    router.navigate("/products", scan);
+                                    router.navigate("/products", scan, session);
                                 }
 
                                 //validate numeric entry
                                 if(isNumeric(input) && Integer.parseInt(input) <= cats.size()){
                                     // valid entry
+                                    // search database for items in that category
                                     Category cat = new Category();
                                     cat = cats.get(Integer.parseInt(input) - 1);
+                                    
+                                    List<Product> catProducts = new ArrayList<Product>();
+                                    catProducts = prodServ.getProductsByCategory(cat.getId());
+                                    System.out.println(catProducts);
+                                    menuExit:{
+                                        while(true){
+                                            //loop through products and output each product
+                                            //int catIndex = 0;
+                                            clearScreen();
+                                            System.out.println("----------- Products -----------");
 
-                                     
+                                            //display items
+                                            displayList(catProducts, scan);
+                                            
+                                            // for (Product product : catProducts) {
+                                            //     System.out.println("[" + ++catIndex + "] " + product.getName());
+                                            // }
+            
+                                            //let user select which item to view
+                                            System.out.print("\n Select which product to view. Enter x to exit: ");
+                                            input = scan.nextLine();
+            
+                                            // if user wishes to exit
+                                            if (input.equalsIgnoreCase("x")) {
+                                                router.navigate("/products", scan, session);
+                                            }
+            
+                                            //validate numeric entry
+                                            if(isNumeric(input) && Integer.parseInt(input) <= catProducts.size()){
+                                                // valid entry
+                                                Product selectedProd = new Product();
+                                                selectedProd = catProducts.get(Integer.parseInt(input) - 1);
+            
+                                                detailScreen.display(selectedProd); 
+                                                break menuExit;
+                                            } else {
+                                                // invalid entry
+                                                System.out.println("Invalid Entry. Press Enter to continue...");
+                                                scan.nextLine();
+                                            }
+                                        }
+                                    }
                                     break categoryExit;
                                 } else {
                                     // invalid entry
                                     System.out.println("Invalid Entry. Press Enter to continue...");
                                     scan.nextLine();
-                                }
-                                // search database for items in that category
-                                // display products
-                                // TODO: Add to cart
+                                }                                
                             }
                         }
                         break;
                     case "4":
+                        
                         // search products by price range
+                        priceExit:{
+                            while (true){
+                                // if user wishes to exit
+                                if (input.equalsIgnoreCase("x")) {
+                                    router.navigate("/products", scan, session);
+                                }
 
-                        // if user wishes to exit
-                        if (input.equalsIgnoreCase("x")) {
-                            router.navigate("/products", scan);
+                                // display price range screen
+                                clearScreen();
+                                System.out.println("------ Price Range ------");
+
+                                // get min amt from user
+                                System.out.print("Please enter minimum: ");
+                                Double min = 0.0;
+                                input = scan.nextLine();
+
+                                if(isNumeric(input) && Double.parseDouble(input) >= 0.0){
+                                    min = Double.parseDouble(input);
+                                }
+
+                                //get max amt from user
+                                System.out.print("Please enter maximum: ");
+                                Double max = 0.0;
+                                input = scan.nextLine();
+
+                                if(isNumeric(input) && Double.parseDouble(input) >= 0.0){
+                                    max = Double.parseDouble(input);
+                                }
+
+                                // get list of products from database
+                                List<Product> priceProds = new ArrayList<Product>();
+                                priceProds = prodServ.getProductsByPriceRange(min, max);
+
+                                //display items
+                                displayList(priceProds, scan);
+
+                                //let user select which item to view
+                                System.out.print("\n Select which product to view. Enter x to exit: ");
+                                input = scan.nextLine();
+
+                                // if user wishes to exit
+                                if (input.equalsIgnoreCase("x")) {
+                                    router.navigate("/products", scan, session);
+                                }
+
+                                //validate numeric entry
+                                if(isNumeric(input) && Integer.parseInt(input) <= priceProds.size()){
+                                    // valid entry
+                                    Product selectedProd = new Product();
+                                    selectedProd = priceProds.get(Integer.parseInt(input) - 1);
+
+                                    detailScreen.display(selectedProd); 
+                                    break priceExit;
+                                } else {
+                                    // invalid entry
+                                    System.out.println("Invalid Entry. Press Enter to continue...");
+                                    scan.nextLine();
+                                }
+
+                            }
                         }
-                        break;
-                
+                    case "5":
+                        CartService.callGetCartItems(CartService.getCartId());
+                    break;  
+                        
                     default:
+                        // invalid input
                         clearScreen();  
                         System.out.println("Option mush be 1,2,3,4 or x! Press enter to continue");
                         scan.nextLine();
                         break;
+
+                    
                 }
             }
         }
+        router.navigate("/user", scan, session);
+    }
+
+    /* ---------- Methods ------------- */
+
+    /**
+     *  Parameters: prods - List<Product> - list of products to display
+     *              scan - Scanner - used to capture input from user
+     *  Description: Displays the list to the console.
+     *  Return: none
+     */
+    private void displayList(List<Product> prods, Scanner scan){
+        //loop through products and output each product
+        int catIndex = 0;
+        clearScreen();
+        System.out.println("----------- Products -----------");
+        
+        for (Product product : prods) {
+            System.out.println("[" + ++catIndex + "] " + String.format("%-20s",product.getName()) + "     Price: $" + String.format("%1$.2f",product.getPrice()) + "     Available: " + product.getQty_on_hand());
+        }        
     }
 
     /* -------- Helper Methods -------- */
+
+    /**
+     *  Parameters: none
+     *  Description: Clears the console screen.
+     *  Return: none
+     */
     private void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
+    /**
+     *  Parameters: strNum - String - input that will be verified as numeric.
+     *  Description : Checks to see if the string is numeric
+     *  Return: Returns true if numeric else false.
+     */
     private static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;
         }
         try {
             int i = Integer.parseInt(strNum);
+            logger.info("IsNumeric StrNum: " + i);
         } catch (NumberFormatException nfe) {
             return false;
         }
         return true;
-    }
-    
+    }    
 }

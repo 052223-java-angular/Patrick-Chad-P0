@@ -6,16 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@NoArgsConstructor
 @AllArgsConstructor
-@Setter
+@NoArgsConstructor
 @Getter
+@Setter
 @ToString
-public class User {
-    private String id;
-    private String username;
-    private String password;
-    private String role_id;    
+public class Review {
+    String id;
+    int rating;
+    String comment;
+    String user_id;
+    String product_id;
 }
-
-

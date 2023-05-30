@@ -1,15 +1,23 @@
 INSERT INTO
-    ecommerence.categories (id, "name")
+    categories (id, name)
 VALUES
     (
-        'bdae5526-4e75-4a54-bda7-186788317888',
-        'Sporting Goods'
+        '9cf471f4-5540-4b03-87c4-e6fe73397744',
+        'Sporting Good'
+    ),
+    (
+        '7aed5aec-74fc-4e9c-84ab-008a143c4cc2',
+        'Furniture'
+    ),
+    (
+        '258c3159-9d3d-4dc7-be30-bf45383d57b8',
+        'Outdoor'
     );
 
 INSERT INTO
     ecommerence.products (
         id,
-        "name",
+        name,
         description,
         price,
         qty_on_hand,
@@ -22,8 +30,29 @@ VALUES
         'NBA Basketball just like the ones used in the NBA.',
         50,
         1,
-        'bdae5526-4e75-4a54-bda7-186788317888'
+        '9cf471f4-5540-4b03-87c4-e6fe73397744'
     );
 
+<<<<<<< HEAD
 
 INSERT INTO roles (id, "name") VALUES (1, 'USER');
+=======
+INSERT INTO
+    roles (id, name)
+VALUES
+    (1, 'USER');
+
+INSERT INTO
+    users (id, username, PASSWORD)
+VALUES
+    (
+        '1f4a8076-39c6-4da3-9bec-71050be6cebd',
+        crotruck,
+        '$2a$10$kvW4.zeLjnHc6082d/1VGu.vvB7kKN0U7yXJjsE9my3x7Hh55853u'
+    );
+
+INSERT INTO
+    carts (id, user_id)
+VALUES
+    ('1', '1f4a8076-39c6-4da3-9bec-71050be6cebd')
+>>>>>>> 03eb69f1b1d3ef7466309a68cb0872976903bc2e

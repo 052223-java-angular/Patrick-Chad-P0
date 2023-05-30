@@ -12,6 +12,8 @@ DROP TABLE IF EXISTS Reviews CASCADE;
 
 DROP TABLE IF EXISTS CartItems CASCADE;
 
+DROP TABLE IF EXISTS Orders CASCADE;
+
 CREATE TABLE Roles (
     id VARCHAR NOT NULL PRIMARY KEY,
     name VARCHAR NOT NULL
@@ -35,7 +37,7 @@ CREATE TABLE Products (
 CREATE TABLE Users (
     id VARCHAR NOT NULL PRIMARY KEY,
     username VARCHAR NOT NULL UNIQUE,
-    password VARCHAR NOT NULL
+    PASSWORD VARCHAR NOT NULL
 );
 
 CREATE TABLE Cart (
@@ -62,4 +64,13 @@ CREATE TABLE CartItems(
     product_id VARCHAR NOT NULL,
     FOREIGN KEY (cart_id) REFERENCES cart(id),
     FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+CREATE TABLE Orders(
+    id VARCHAR NOT NULL PRIMARY KEY,
+    order_date DATE NOT NULL,
+    user_id VARCHAR NOT NULL,
+    cart_id VARCHAR NOT NULL,
+    FOREIGN KEY (cart_id) REFERENCES cart(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
