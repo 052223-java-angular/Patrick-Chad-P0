@@ -13,6 +13,7 @@ import com.revature.ecommerce.models.Product;
 //import com.revature.ecommerce.services.ProductService;
 //import com.revature.ecommerce.services.RouterService;
 import com.revature.ecommerce.services.CartService;
+import com.revature.ecommerce.utils.Session;
 
 import lombok.AllArgsConstructor;
 
@@ -23,7 +24,7 @@ public class ProductDetailsScreen implements IScreen {
     private static final CartService cartservice = CartService.getInstance();
     private static final Logger logger = LogManager.getLogger(ProductScreen.class);
 
-    public void display(Scanner scan, Product prod){
+    public void display(Scanner scan, Product prod, Session session){
         String input = "";
         clearScreen();
         logger.info("Navigated to Product Details Page.");
@@ -45,7 +46,7 @@ public class ProductDetailsScreen implements IScreen {
                         qty = Integer.parseInt(input);
 
                         // TODO: send item to cart items
-                        cartservice.addToCart(prod, qty, cartservice.getCartId());
+                        cartservice.addToCart(prod, qty, session.getCart_id());
                         System.out.println("added " + qty + " to your cart. Press enter to continue....");
                         scan.nextLine();                       
                     

@@ -2,7 +2,6 @@ package com.revature.ecommerce.screens;
 
 import java.util.Scanner;
 
-import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.services.RouterService;
 import com.revature.ecommerce.utils.Session;
 
@@ -15,6 +14,11 @@ public class UserScreen implements IScreen {
 
     @Override
     public void start(Scanner scan) {
+       
+    }
+
+    public void start(Scanner scan, Session session)
+    {
         String input = "";
 
         //clearScreen();
@@ -30,10 +34,10 @@ public class UserScreen implements IScreen {
 
         switch(input.toLowerCase()){
             case "1":
-                router.navigate("/products", scan);
+                router.navigate("/products", scan, session);
                 break;
             case "2":
-                router.navigate("/carts", scan);
+                router.navigate("/carts", scan, session);
                 break;
             case "3": 
                 

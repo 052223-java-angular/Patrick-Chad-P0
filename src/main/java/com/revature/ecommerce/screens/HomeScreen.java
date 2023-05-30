@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.services.RouterService;
+import com.revature.ecommerce.utils.Session;
 
 import lombok.AllArgsConstructor;
 
@@ -13,6 +14,10 @@ public class HomeScreen implements IScreen {
 
     @Override
     public void start(Scanner scan) {
+        
+    }
+    public void start(Scanner scan, Session session)
+    {
         String input = "";
 
         clearScreen();
@@ -27,11 +32,11 @@ public class HomeScreen implements IScreen {
 
         switch(input.toLowerCase()){
             case "1":
-                LoginScreen.getInstance().start(scan);
+                LoginScreen.getInstance().start(scan, session);
                 //router.navigate("/user", scan);
                 break;
             case "2": 
-                RegisterScreen.getInstance().start(scan);
+                RegisterScreen.getInstance().start(scan, session);
                 //router.navigate("/user", scan);
                 break;
             default:

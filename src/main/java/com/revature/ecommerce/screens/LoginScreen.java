@@ -23,11 +23,13 @@ public class LoginScreen implements IScreen{
     private final UserService userservice;
     private static LoginScreen instance;
     private static CartService cartservice = CartService.getInstance();
+    private Session session;
    
 
     private LoginScreen(UserService userservice)
     {
         this.userservice = userservice;
+        //this.session = session;
     }
 
     public static LoginScreen getInstance()
@@ -45,8 +47,14 @@ public class LoginScreen implements IScreen{
 
     @Override
     public void start(Scanner scan) {
-       String username = ""; 
-       String password = "";
+       
+
+    }
+
+    public void start(Scanner scan, Session session)
+    {
+        String username = ""; 
+        String password = "";
 
         exit:
         {
@@ -83,23 +91,30 @@ public class LoginScreen implements IScreen{
                     User usr = user.get();
                     if(BCrypt.checkpw(password, usr.getPassword()))
                     {
-                        
+                       session.setSession(usr);
                        Cart cart = CartService.checkifCartExists(usr.getId());
 
                        if(cart == null)
                        {
-                            System.out.println("Cart is null");
-                            cartservice.createCart();
+                            //System.out.println("Cart is null");
+                            cartservice.createCart(session);
+                            session.setSession(usr);
+                            CartService.addCartToDB(cartservice.getCart(), usr.getId());
                        }
                        else 
                        {
-                          System.out.println("Cart is not null");
+                          //System.out.println("Cart is not null");
                           cartservice.setCart(cart);
+                          session.setCart_id(cartservice.getCartId());
+                          session.setUsername(usr.getUsername());
+                          
+                          
+
                        }
                        
                         
                         //System.out.println("Welcome to YourStore, " + usr.getUsername() + "!");
-                        new RouterService().navigate("/user", scan);
+                        new RouterService().navigate("/user", scan, session);
                     }
                     else
                     {
@@ -127,7 +142,6 @@ public class LoginScreen implements IScreen{
         
      
         
-
 
     }
 

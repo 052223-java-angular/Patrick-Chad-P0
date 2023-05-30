@@ -61,7 +61,7 @@ public class CartDAO implements CrudDAO<Cart>
         //connect to db
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
             // prepared sql statement
-            String sql = "SELECT * FROM carts WHERE user_id=?";
+            String sql = "SELECT * FROM cart WHERE user_id=?";
             try(PreparedStatement ps = conn.prepareStatement(sql)){
                 ps.setString(1, userId);
                 //execute query
@@ -87,17 +87,17 @@ public class CartDAO implements CrudDAO<Cart>
         return null;
     }
    
-    public static List<Product> getCartItems(String CartId){
+    public static List<Product> getCartItems(String cartId){
         List<Optional<Product>> productsOpt = new ArrayList<Optional<Product>>();
         List<Product> listProducts = new ArrayList<Product>();
         //create connection to db
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
             // I learned this little trick in college. It takes the things I need from both the cartitems and products table 
             //and leverages the fact that they both share a relationship
-            String sql = "select products.id, qty_on_hand, cartitems.price, products.name, description from products inner join cartitems  on products.id = cartitems.product_id";
+            String sql = "select products.id, qty_on_hand, cartitems.price, products.name, description from products inner join cartitems  on products.id = cartitems.product_id where cart_id = ?";
             //create preparedStatement
             try(PreparedStatement ps = conn.prepareStatement(sql)){
-                //ps.setString(1, CartId);
+                ps.setString(1, cartId);
                 //execute query
                 try(ResultSet rs = ps.executeQuery()){
                     while(rs.next())

@@ -32,6 +32,10 @@ public class ProductScreen implements IScreen {
     
     @Override
     public void start(Scanner scan) {
+        
+    }
+    public void start(Scanner scan, Session session)
+    {
         ProductDetailsScreen detailScreen = new ProductDetailsScreen();
         CartService cartservice = CartService.callCartServiceConstructor(new ProductDAO(), new OrderDAO(), new CartDAO());
         String input = "";
@@ -73,7 +77,7 @@ public class ProductScreen implements IScreen {
 
                                 // if user wishes to exit
                                 if (input.equalsIgnoreCase("x")) {
-                                    router.navigate("/products", scan);
+                                    router.navigate("/products", scan, session);
                                 }
 
                                 //validate numeric entry
@@ -82,7 +86,7 @@ public class ProductScreen implements IScreen {
                                     Product selectedProd = new Product();
                                     selectedProd = products.get(Integer.parseInt(input) - 1);
 
-                                    detailScreen.display(scan, selectedProd); 
+                                    detailScreen.display(scan, selectedProd, session); 
                                     break menuExit;
                                 } else {
                                     // invalid entry
@@ -104,7 +108,7 @@ public class ProductScreen implements IScreen {
 
                                 // if user wishes to exit
                                 if (input.equalsIgnoreCase("x")) {
-                                    router.navigate("/products", scan);
+                                    router.navigate("/products", scan, session);
                                     break productNameExit;
                                 }
 
@@ -135,7 +139,7 @@ public class ProductScreen implements IScreen {
                                                     input = scan.nextLine(); 
                                                     qty = Integer.parseInt(input);
                                                     // TODO: send item to cart items
-                                                    cartservice.addToCart(prod, qty, cartservice.getCartId());
+                                                    cartservice.addToCart(prod, qty, session.getCart_id());
                                                     System.out.println("added " + qty + " to your cart. Press enter to continue....");
                                                     scan.nextLine();                       
 
@@ -158,7 +162,7 @@ public class ProductScreen implements IScreen {
                                 }  
                                 // if user wishes to exit
                                 if (input.equalsIgnoreCase("x")) {
-                                    router.navigate("/products", scan);
+                                    router.navigate("/products", scan, session);
                                 }                
                             }
                         }      
@@ -193,7 +197,7 @@ public class ProductScreen implements IScreen {
                                 // accept user choice
                                 // if user wishes to exit
                                 if (input.equalsIgnoreCase("x")) {
-                                    router.navigate("/products", scan);
+                                    router.navigate("/products", scan, session);
                                 }
 
                                 //validate numeric entry
@@ -226,7 +230,7 @@ public class ProductScreen implements IScreen {
             
                                             // if user wishes to exit
                                             if (input.equalsIgnoreCase("x")) {
-                                                router.navigate("/products", scan);
+                                                router.navigate("/products", scan, session);
                                             }
             
                                             //validate numeric entry
@@ -235,7 +239,7 @@ public class ProductScreen implements IScreen {
                                                 Product selectedProd = new Product();
                                                 selectedProd = catProducts.get(Integer.parseInt(input) - 1);
             
-                                                detailScreen.display(scan, selectedProd); 
+                                                detailScreen.display(scan, selectedProd, session); 
                                                 break menuExit;
                                             } else {
                                                 // invalid entry
@@ -271,7 +275,7 @@ public class ProductScreen implements IScreen {
                             while (true){
                                 // if user wishes to exit
                                 if (input.equalsIgnoreCase("x")) {
-                                    router.navigate("/products", scan);
+                                    router.navigate("/products", scan, session);
                                 }
 
                                 // display price range screen
@@ -309,7 +313,7 @@ public class ProductScreen implements IScreen {
 
                                 // if user wishes to exit
                                 if (input.equalsIgnoreCase("x")) {
-                                    router.navigate("/products", scan);
+                                    router.navigate("/products", scan, session);
                                 }
 
                                 //validate numeric entry
@@ -318,7 +322,7 @@ public class ProductScreen implements IScreen {
                                     Product selectedProd = new Product();
                                     selectedProd = priceProds.get(Integer.parseInt(input) - 1);
 
-                                    detailScreen.display(scan, selectedProd); 
+                                    detailScreen.display(scan, selectedProd, session); 
                                     break priceExit;
                                 } else {
                                     // invalid entry
@@ -343,7 +347,7 @@ public class ProductScreen implements IScreen {
                 }
             }
         }
-        router.navigate("/user", scan);
+        router.navigate("/user", scan, session);
     }
 
     /* ---------- Methods ------------- */

@@ -11,17 +11,25 @@ import com.revature.ecommerce.daos.ProductDAO;
 import com.revature.ecommerce.models.Product;
 import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.services.RouterService;
+import com.revature.ecommerce.utils.Session;
 
 public class CartScreen implements IScreen{
    // private static CartDAO cartdao;
     @Override
     public void start(Scanner scan) {
+        
+        
+       
+    }
+
+    public void start(Scanner scanner, Session session)
+    {
         String input = "";
         Scanner sc = new Scanner(System.in);
-        CartService cartService = CartService.getInstance();
+        //CartService cartService = CartService.getInstance();
         
 
-        List<Product> items = CartService.callGetCartItems(cartService.getCartId());
+        List<Product> items = CartService.callGetCartItems(session.getCart_id());
         if(items != null)
         {
                          
@@ -98,11 +106,9 @@ public class CartScreen implements IScreen{
         else
         {
             System.out.println("Your cart has not items in it. Press Enter to go back to the home page . . .");
-            scan.nextLine();
-            new RouterService().navigate("/user", scan);
+            scanner.nextLine();
+            new RouterService().navigate("/user", scanner, session);
         }
-        
-       
     }
 
 

@@ -26,6 +26,7 @@ import com.revature.ecommerce.models.Cart;
 import com.revature.ecommerce.models.Order;
 import com.revature.ecommerce.models.Product;
 import com.revature.ecommerce.models.User;
+import com.revature.ecommerce.utils.Session;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,6 +36,7 @@ import lombok.Setter;
 public class CartService {
   private static final Logger logger = LogManager.getLogger(CartService.class);
   private Cart cart;
+  private Session session;
   private static CartDAO cartdao;
   private static ProductDAO prodDao;
   private static OrderDAO orderDAO;
@@ -63,16 +65,16 @@ public class CartService {
      this.cart = cart;
   }
 
-  public void createCart()
+  public void createCart(Session session)
   {
-
+    System.out.println("In createCart()");
     String cart_id = UUID.randomUUID().toString();
     String hashed_cart_id = BCrypt.hashpw(cart_id, BCrypt.gensalt());
     this.cart = new Cart();
     cart.setId(hashed_cart_id);
-
+    session.setCart_id(hashed_cart_id);
     logger.info("Cart created");
-    //System.out.println("Cart created");
+    
   }
 
   public Cart getCart()
@@ -92,11 +94,12 @@ public class CartService {
   public void setCartId(String cart_id)
   {
     cart.setId(cart_id);
+
   }
 
   
 
-  public Order Checkout(Scanner scan, Cart cart){
+  public Order Checkout(Scanner scan, Cart cart, Session session){
     logger.info("Checkout Process");
     Order order = new Order();
     String input = "";
