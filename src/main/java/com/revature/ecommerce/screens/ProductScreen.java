@@ -45,7 +45,6 @@ public class ProductScreen implements IScreen {
                 System.out.println(" [2] Search products by name");
                 System.out.println(" [3] Search products by category");
                 System.out.println(" [4] Search products by price range");
-                System.out.println("[5] View Cart");
                 System.out.println(" [x] Exit: ");
         
                 System.out.print("\nEnter: ");
@@ -252,6 +251,14 @@ public class ProductScreen implements IScreen {
                                 }
                                 
                                 // TODO: Add to cart
+                                System.out.println("Would you like to add this item to your cart? (y/n)");
+                                input = scan.nextLine();
+                                if(input.equalsIgnoreCase("y"));
+                                {
+                                    System.out.println("Enter the quantity that you want: ");
+                                    input = scan.nextLine();
+                                    
+                                }
                                 
                             }
                         }
@@ -320,9 +327,7 @@ public class ProductScreen implements IScreen {
 
                             }
                         }
-                    case "5":
-                        CartService.callGetCartItems(CartService.getCartId());
-                    break;  
+                    
                         
                     default:
                         // invalid input

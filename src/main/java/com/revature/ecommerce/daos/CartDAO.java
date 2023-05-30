@@ -18,6 +18,7 @@ import java.util.UUID;
 import com.revature.ecommerce.models.Cart;
 import com.revature.ecommerce.utils.ConnectionFactory;
 import com.revature.ecommerce.models.Product;
+import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.utils.ConnectionFactory;
 
 public class CartDAO implements CrudDAO<Cart>
@@ -135,7 +136,17 @@ public class CartDAO implements CrudDAO<Cart>
     {
         try(Connection conn = ConnectionFactory.getInstance().getConnection())
         {
-            //String sql = "INSERT INTO cartitems()"
+            String sql = "INSERT INTO cartitems(id, qty, price, cart_id, product_id) VALUES (?,?,?,?,?)";
+            try(PreparedStatement ps = conn.prepareStatement(sql))
+            {
+                ps.setString(1, UUID.randomUUID().toString());
+                ps.setInt(2, quantity);
+                ps.setDouble(3, product.getPrice());
+                ps.setString(4, CartService.getCartId());
+                ps.setString(5, product.getId());
+                ps.executeUpdate();
+
+            }
         }
         catch(SQLException e){
             throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
@@ -165,6 +176,59 @@ public class CartDAO implements CrudDAO<Cart>
                 System.out.println("Added cart to database");
             }
         }   
+        catch(SQLException e){
+            throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
+        } 
+        catch(IOException e)
+        {
+            throw new RuntimeException("Unable to find application.properties");
+        } 
+        catch(ClassNotFoundException e)
+        {
+            throw new RuntimeException("Unable to load jdbc");
+        }
+    }
+
+    public void deleteFromCart(String name)
+    {
+        String sql = "DELETE FROM cartitems WHERE name = ?";
+        try(Connection conn = ConnectionFactory.getInstance().getConnection())
+        {
+            try(PreparedStatement ps = conn.prepareStatement(sql))
+            {
+                ps.setString(1,name);
+                ps.execute();
+
+            }
+            
+        }
+        catch(SQLException e){
+            throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
+        } 
+        catch(IOException e)
+        {
+            throw new RuntimeException("Unable to find application.properties");
+        } 
+        catch(ClassNotFoundException e)
+        {
+            throw new RuntimeException("Unable to load jdbc");
+        }
+        
+    }
+
+    public void updateQuantity(String name, int quantity)
+    {
+        
+        try(Connection conn = ConnectionFactory.getInstance().getConnection())
+        {
+            String sql = "UPDATE cartitems Set qty = ? WHERE name = ?";
+            try(PreparedStatement ps = conn.prepareStatement(sql))
+            {
+                ps.setInt(1, quantity);
+                ps.setString(2, name);
+                ps.executeUpdate();
+            }
+        }
         catch(SQLException e){
             throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
         } 

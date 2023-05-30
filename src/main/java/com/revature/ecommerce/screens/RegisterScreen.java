@@ -34,7 +34,7 @@ public class RegisterScreen implements IScreen{
 
     @Override
     public void start(Scanner scan) {
-        System.out.println("In RegisterScreen.start()");
+        //System.out.println("In RegisterScreen.start()");
         String username = "";
         String password = "";
 
@@ -83,7 +83,7 @@ public class RegisterScreen implements IScreen{
 
             if(username.equalsIgnoreCase("x"))
             {
-                System.out.println("Returning x");
+                //System.out.println("Returning x");
                 return "x";
             }
 

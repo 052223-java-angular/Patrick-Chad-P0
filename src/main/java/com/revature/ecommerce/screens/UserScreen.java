@@ -33,10 +33,10 @@ public class UserScreen implements IScreen {
                 router.navigate("/products", scan);
                 break;
             case "2":
-                LoginScreen.getInstance().start(scan);
+                CartService.callGetCartItems(CartService.getCartId());
                 break;
             case "3": 
-                RegisterScreen.getInstance().start(scan);
+                
                 break;
             default:
                 break;

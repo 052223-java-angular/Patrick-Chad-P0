@@ -31,10 +31,10 @@ public class LoginScreen implements IScreen{
 
     public static LoginScreen getInstance()
     {
-        System.out.println("In LoginScreen.getInstance()");
+       //System.out.println("In LoginScreen.getInstance()");
         if(instance == null)
         {
-            System.out.println("Instance null. Creating new instance");
+            //System.out.println("Instance null. Creating new instance");
             instance = new LoginScreen(UserService.getInstance());
         }
 
@@ -69,7 +69,7 @@ public class LoginScreen implements IScreen{
 
 
                 Optional<User> user = userservice.callLookupUser(username);
-                System.out.println("User.isEmpty()? " + user.isEmpty());
+                //System.out.println("User.isEmpty()? " + user.isEmpty());
 
                 if(user.isEmpty())
                 {

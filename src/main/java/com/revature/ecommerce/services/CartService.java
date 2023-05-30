@@ -147,5 +147,21 @@ public static List<Product> callGetCartItems(String cart_id)
    return CartDAO.getCartItems(cart_id);
 }
 
+public static void deleteFromCart(String name)
+{
+  
+   
+  
+      cartdao.deleteFromCart(name);
+      
+   
+   
+      //new RouterService().navigate("/products", new Scanner(System.in))
+}
+
+public static void callUpdateQuantity(String name, int quantity)
+{
+    cartdao.updateQuantity(name, quantity);
+}
 
 }
