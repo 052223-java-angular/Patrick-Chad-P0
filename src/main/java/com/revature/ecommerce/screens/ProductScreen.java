@@ -151,6 +151,7 @@ public class ProductScreen implements IScreen {
                                                     scan.nextLine();
                                                     break;
                                             }
+                                            break;
                                         }
                                     }
                             
@@ -257,7 +258,7 @@ public class ProductScreen implements IScreen {
                                 {
                                     System.out.println("Enter the quantity that you want: ");
                                     input = scan.nextLine();
-                                    
+
                                 }
                                 
                             }
@@ -327,7 +328,8 @@ public class ProductScreen implements IScreen {
 
                             }
                         }
-                    
+                    case "x":
+                        new RouterService().navigate("/user", scan);
                         
                     default:
                         // invalid input

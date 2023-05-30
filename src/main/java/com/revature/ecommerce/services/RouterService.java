@@ -28,6 +28,9 @@ public class RouterService {
             case "/user":
                 new UserScreen(this).start(scan);
                break;
+            case "/carts":
+                new CartScreen().start(scan);
+                break;
             default:
                 break;
         }

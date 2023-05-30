@@ -60,6 +60,7 @@ public class ProductDetailsScreen implements IScreen {
                         scan.nextLine();
                     break;
                 }
+                break;
             }
         }
         
