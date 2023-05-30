@@ -28,4 +28,5 @@ public class Session {
         this.roleId = user.getRole_id();
         this.cart_id = cart.getId();
     }
+
 }

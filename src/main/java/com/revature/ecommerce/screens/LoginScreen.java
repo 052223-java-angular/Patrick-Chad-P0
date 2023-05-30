@@ -11,6 +11,7 @@ import com.revature.ecommerce.daos.CartDAO;
 import com.revature.ecommerce.daos.OrderDAO;
 import com.revature.ecommerce.daos.ProductDAO;
 import com.revature.ecommerce.daos.UserDAO;
+import com.revature.ecommerce.models.Cart;
 import com.revature.ecommerce.models.User;
 import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.services.RouterService;
@@ -30,20 +31,29 @@ public class LoginScreen implements IScreen{
     private final UserService userservice;
     private static User usr;
     private static LoginScreen instance;
-    private static CartService cartservice = CartService.callCartServiceConstructor(new ProductDAO(),new OrderDAO() ,new CartDAO());
+    private static CartService cartservice = CartService.getInstance();
+    private Session session;
    
 
+<<<<<<< HEAD
     // private LoginScreen(UserService userservice)
     // {
     //     this.userservice = userservice;
     // }
+=======
+    private LoginScreen(UserService userservice)
+    {
+        this.userservice = userservice;
+        //this.session = session;
+    }
+>>>>>>> e272335860190344165ec1a9a20c62d8682af312
 
     public static LoginScreen getInstance()
     {
-        System.out.println("In LoginScreen.getInstance()");
+       //System.out.println("In LoginScreen.getInstance()");
         if(instance == null)
         {
-            System.out.println("Instance null. Creating new instance");
+            //System.out.println("Instance null. Creating new instance");
             instance = new LoginScreen(UserService.getInstance());
         }
 
@@ -83,7 +93,7 @@ public class LoginScreen implements IScreen{
 
 
                 Optional<User> user = userservice.callLookupUser(username);
-                System.out.println("User.isEmpty()? " + user.isEmpty());
+                //System.out.println("User.isEmpty()? " + user.isEmpty());
 
                 if(user.isEmpty())
                 {
@@ -96,8 +106,27 @@ public class LoginScreen implements IScreen{
                     usr = user.get();
                     if(BCrypt.checkpw(password, usr.getPassword()))
                     {
-                        CartService.createCart(session);
-                        CartService.addCartToDB(CartService.getCart(), usr.getId());
+                       session.setSession(usr);
+                       Cart cart = CartService.checkifCartExists(usr.getId());
+
+                       if(cart == null)
+                       {
+                            //System.out.println("Cart is null");
+                            cartservice.createCart(session);
+                            session.setSession(usr);
+                            CartService.addCartToDB(cartservice.getCart(), usr.getId());
+                       }
+                       else 
+                       {
+                          //System.out.println("Cart is not null");
+                          cartservice.setCart(cart);
+                          session.setCart_id(cartservice.getCartId());
+                          session.setUsername(usr.getUsername());
+                          
+                          
+
+                       }
+                       
                         
                         session.setId(usr.getId());
                         
@@ -130,7 +159,6 @@ public class LoginScreen implements IScreen{
         
      
         
-
 
     }
 

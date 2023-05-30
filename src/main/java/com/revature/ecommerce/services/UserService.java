@@ -25,10 +25,10 @@ public class UserService {
 
     public static UserService getInstance()
     {
-        System.out.println("In UserService.getInstance()");
+        //System.out.println("In UserService.getInstance()");
         if(instance == null)
         {
-            System.out.println("UserService instance null. Creating new userInstance");
+            //System.out.println("UserService instance null. Creating new userInstance");
             instance = new UserService(new UserDAO(), new RoleService(new RoleDAO()));
         }
 

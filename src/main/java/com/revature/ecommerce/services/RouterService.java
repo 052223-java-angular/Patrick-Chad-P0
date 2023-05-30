@@ -26,7 +26,7 @@ public class RouterService {
                 new HomeScreen(this).start(scan, session);
                 break;
             case "/products":
-                new ProductScreen(this, prodServ).start(scan,session);
+                new ProductScreen(this, prodServ).start(scan, session);
                 break;
             case "/login":
                 LoginScreen login = LoginScreen.getInstance();
@@ -41,6 +41,12 @@ public class RouterService {
                 break;
             case "/writereview":
                 new ReviewScreen(prodServ, this).start(scan,session);
+            //    RegisterScreen rs = RegisterScreen.getInstance();
+            //    rs.start(scan, session);
+                break;
+            case "/carts":
+                new CartScreen().start(scan, session);
+                break;
             default:
                 break;
         }

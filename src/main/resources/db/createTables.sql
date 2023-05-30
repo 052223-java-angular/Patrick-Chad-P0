@@ -26,7 +26,7 @@ CREATE TABLE Categories (
 
 CREATE TABLE Products (
     id VARCHAR NOT NULL PRIMARY KEY,
-    name VARCHAR NOT NULL,
+    "name" VARCHAR NOT NULL,
     description VARCHAR,
     price DECIMAL NOT NULL,
     qty_on_hand INT DEFAULT 0,
@@ -59,6 +59,7 @@ CREATE TABLE Reviews (
 CREATE TABLE CartItems(
     id VARCHAR NOT NULL PRIMARY KEY,
     qty INT NOT NULL,
+    "name" VARCHAR NOT NULL,
     price DECIMAL NOT NULL,
     cart_id VARCHAR NOT NULL,
     product_id VARCHAR NOT NULL,

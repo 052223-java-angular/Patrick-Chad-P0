@@ -9,10 +9,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import com.revature.ecommerce.models.Cart;
 import com.revature.ecommerce.utils.ConnectionFactory;
 import com.revature.ecommerce.models.Product;
+import com.revature.ecommerce.services.CartService;
+import com.revature.ecommerce.utils.ConnectionFactory;
 
 public class CartDAO implements CrudDAO<Cart>
 {
@@ -53,7 +56,7 @@ public class CartDAO implements CrudDAO<Cart>
         //connect to db
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
             // prepared sql statement
-            String sql = "SELECT * FROM carts WHERE user_id=?";
+            String sql = "SELECT * FROM cart WHERE user_id=?";
             try(PreparedStatement ps = conn.prepareStatement(sql)){
                 ps.setString(1, userId);
                 //execute query
@@ -79,18 +82,21 @@ public class CartDAO implements CrudDAO<Cart>
         return null;
     }
    
-    public static List<Product> getCartItems(String CartId){
+    public static List<Product> getCartItems(String cartId){
         List<Optional<Product>> productsOpt = new ArrayList<Optional<Product>>();
         List<Product> listProducts = new ArrayList<Product>();
         //create connection to db
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
-            String sql = "SELECT * from cartitems WHERE cart_id=?";
+            // I learned this little trick in college. It takes the things I need from both the cartitems and products table 
+            //and leverages the fact that they both share a relationship
+            String sql = "select products.id, qty_on_hand, cartitems.price, products.name, description from products inner join cartitems  on products.id = cartitems.product_id where cart_id = ?";
             //create preparedStatement
             try(PreparedStatement ps = conn.prepareStatement(sql)){
-                ps.setString(1, CartId);
+                ps.setString(1, cartId);
                 //execute query
                 try(ResultSet rs = ps.executeQuery()){
-                    while(rs.next()){
+                    while(rs.next())
+                    {
                         Product product = new Product();
                         product.setId(rs.getString("id"));
                         product.setName(rs.getString("name"));
@@ -102,6 +108,7 @@ public class CartDAO implements CrudDAO<Cart>
                     }
                 }
                 if (productsOpt.isEmpty()){
+                    System.out.println("Returning null");
                     return null; 
                 } else {
                     int i = 0;
@@ -124,11 +131,22 @@ public class CartDAO implements CrudDAO<Cart>
     }
 
 
-    public void addToCart(Product product, int quantity)
+    public void addToCart(Product product, int quantity, String cart_id)
     {
         try(Connection conn = ConnectionFactory.getInstance().getConnection())
         {
-            //String sql = "INSERT INTO cartitems()"
+            String sql = "INSERT INTO cartitems(id, qty, name, price, cart_id, product_id) VALUES (?,?,?,?,?,?)";
+            try(PreparedStatement ps = conn.prepareStatement(sql))
+            {
+                ps.setString(1, UUID.randomUUID().toString());
+                ps.setInt(2, quantity);
+                ps.setString(3, product.getName());
+                ps.setDouble(4, product.getPrice());
+                ps.setString(5, cart_id);
+                ps.setString(6, product.getId());
+                ps.executeUpdate();
+
+            }
         }
         catch(SQLException e){
             throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
@@ -143,6 +161,38 @@ public class CartDAO implements CrudDAO<Cart>
         }
 
     }
+
+    /*public static ResultSet getItemsFromCart(String cart_id)
+    {
+        try(Connection conn = ConnectionFactory.getInstance().getConnection())
+        {
+            
+
+            try(PreparedStatement ps = conn.prepareStatement(sql))
+            {
+                ps.setString(1, cart_id);
+
+                try(ResultSet rs = ps.executeQuery())
+                {
+                    while(rs.next())
+                    {
+
+                    }
+                }
+            }
+        }
+        catch(SQLException e){
+            throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
+        } 
+        catch(IOException e)
+        {
+            throw new RuntimeException("Unable to find application.properties");
+        } 
+        catch(ClassNotFoundException e)
+        {
+            throw new RuntimeException("Unable to load jdbc");
+        }
+    }*/
 
     public void addCartToDB(Cart cart, String user_id)
     {
@@ -170,4 +220,100 @@ public class CartDAO implements CrudDAO<Cart>
             throw new RuntimeException("Unable to load jdbc");
         }
     }
+
+    public void deleteFromCart(String name)
+    {
+        String sql = "DELETE FROM cartitems WHERE name = ?";
+        try(Connection conn = ConnectionFactory.getInstance().getConnection())
+        {
+            try(PreparedStatement ps = conn.prepareStatement(sql))
+            {
+                ps.setString(1,name);
+                ps.execute();
+
+            }
+            
+        }
+        catch(SQLException e){
+            throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
+        } 
+        catch(IOException e)
+        {
+            throw new RuntimeException("Unable to find application.properties");
+        } 
+        catch(ClassNotFoundException e)
+        {
+            throw new RuntimeException("Unable to load jdbc");
+        }
+        
+    }
+
+    public void updateQuantity(String name, int quantity)
+    {
+        
+        try(Connection conn = ConnectionFactory.getInstance().getConnection())
+        {
+            String sql = "UPDATE cartitems Set qty = ? WHERE name = ?";
+            try(PreparedStatement ps = conn.prepareStatement(sql))
+            {
+                ps.setInt(1, quantity);
+                ps.setString(2, name);
+                ps.executeUpdate();
+            }
+        }
+        catch(SQLException e){
+            throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
+        } 
+        catch(IOException e)
+        {
+            throw new RuntimeException("Unable to find application.properties");
+        } 
+        catch(ClassNotFoundException e)
+        {
+            throw new RuntimeException("Unable to load jdbc");
+        }
+    }
+
+    public Cart checkifCartExists(String user_id)
+    {
+        try(Connection conn = ConnectionFactory.getInstance().getConnection())
+        {
+            String sql = "SELECT * FROM cart WHERE user_id = ?";
+            try(PreparedStatement ps = conn.prepareStatement(sql))
+            {
+                ps.setString(1, user_id);
+
+                try(ResultSet rs = ps.executeQuery())
+                {
+                    if(rs.next())
+                    {
+                        Cart cart = new Cart();
+                        cart.setId(rs.getString("id"));
+                        cart.setUser_id(rs.getString("user_id"));
+                        return cart;
+
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+
+        }
+        catch(SQLException e){
+            throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
+        } 
+        catch(IOException e)
+        {
+            throw new RuntimeException("Unable to find application.properties");
+        } 
+        catch(ClassNotFoundException e)
+        {
+            throw new RuntimeException("Unable to load jdbc");
+        }
+    }
+
+
 }
+    

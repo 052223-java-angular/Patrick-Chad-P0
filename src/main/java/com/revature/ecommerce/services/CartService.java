@@ -26,10 +26,12 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CartService {
   private static final Logger logger = LogManager.getLogger(CartService.class);
-  private static Cart cart;
+  private Cart cart;
+  private Session session;
   private static CartDAO cartdao;
   private static ProductDAO prodDao;
   private static OrderDAO orderDAO;
+  private static CartService instance;
   
 
   private CartService(ProductDAO prodDao, OrderDAO orderDAO, CartDAO cartdao)
@@ -38,34 +40,66 @@ public class CartService {
     this.orderDAO = orderDAO;
     this.cartdao = cartdao;
   }
-  
 
-  public static void createCart(Session session)
+  // public static void createCart(Session session)
+  // {
+
+  //   String cart_id = UUID.randomUUID().toString();
+  //   String hashed_cart_id = BCrypt.hashpw(cart_id, BCrypt.gensalt());
+  //   cart = new Cart();
+  //   cart.setId(hashed_cart_id);
+  //   session.setCart_id(hashed_cart_id);
+  //   logger.info("Cart created");
+  //   //System.out.println("Cart created");
+  // }
+  public static CartService getInstance()
   {
+      if(instance == null)
+      {
+         instance = new CartService(new ProductDAO(), new OrderDAO(), new CartDAO());
+      }
+      return instance;
+  }
+  
+  public void setCart(Cart cart)
+  {
+    System.out.println("Setting cart . . .");
+     this.cart = cart;
+  }
 
+  public void createCart(Session session)
+  {
+    System.out.println("In createCart()");
     String cart_id = UUID.randomUUID().toString();
     String hashed_cart_id = BCrypt.hashpw(cart_id, BCrypt.gensalt());
-    cart = new Cart();
+    this.cart = new Cart();
     cart.setId(hashed_cart_id);
     session.setCart_id(hashed_cart_id);
     logger.info("Cart created");
-    //System.out.println("Cart created");
+    
   }
 
-  public static Cart getCart()
+  public Cart getCart()
   {
     return cart;
   }
 
-  public static String getCartId()
+  public String getCartId()
   {
     return cart.getId();
   }
 
-  public static void setId(String user_id)
+  public void setId(String user_id)
   {
     cart.setUser_id(user_id);
   }
+  public void setCartId(String cart_id)
+  {
+    cart.setId(cart_id);
+
+  }
+
+  
 
   public Order Checkout(Scanner scan, Cart cart, Session session){
     logger.info("Checkout Process");
@@ -123,25 +157,44 @@ public class CartService {
     return order;
   }
 
-  public void addToCart(Product product, int quantity)
+  public void addToCart(Product product, int quantity, String cart_id)
   {
-     cartdao.addToCart(product, quantity);
+     cartdao.addToCart(product, quantity, cart_id);
   }
 
-public static CartService callCartServiceConstructor(ProductDAO prodDao, OrderDAO orderdao, CartDAO cartdao) {
-      return new CartService(prodDao, orderdao, cartdao);
-}
+  public static CartService callCartServiceConstructor(ProductDAO prodDao, OrderDAO orderdao, CartDAO cartdao) {
+        return new CartService(prodDao, orderdao, cartdao);
+  }
 
-public static void addCartToDB(Cart cart, String user_id)
-{
-    cartdao.addCartToDB(cart, user_id);
-}
-
-
-public static List<Product> callGetCartItems(String cart_id)
-{
-   return CartDAO.getCartItems(cart_id);
-}
+  public static void addCartToDB(Cart cart, String user_id)
+  {
+      cartdao.addCartToDB(cart, user_id);
+  }
 
 
+  public static List<Product> callGetCartItems(String cart_id)
+  {
+    return CartDAO.getCartItems(cart_id);
+  }
+
+  public static void deleteFromCart(String name)
+  {
+    
+    
+    
+        cartdao.deleteFromCart(name);
+        
+        //new RouterService().navigate("/products", new Scanner(System.in))
+  }
+
+  public static void callUpdateQuantity(String name, int quantity)
+  {
+      cartdao.updateQuantity(name, quantity);
+  }
+
+  public static Cart checkifCartExists(String user_id)
+  {
+      
+    return cartdao.checkifCartExists(user_id);
+  }
 }

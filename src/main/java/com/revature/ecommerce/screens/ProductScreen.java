@@ -87,7 +87,7 @@ public class ProductScreen implements IScreen {
                                     Product selectedProd = new Product();
                                     selectedProd = products.get(Integer.parseInt(input) - 1);
 
-                                    detailScreen.display(selectedProd); 
+                                    detailScreen.display(scan, selectedProd, session); 
                                     break menuExit;
                                 } else {
                                     // invalid entry
@@ -141,10 +141,10 @@ public class ProductScreen implements IScreen {
                                                     input = scan.nextLine(); 
                                                     qty = Integer.parseInt(input);
                                                     // TODO: send item to cart items
-                                                    cartservice.addToCart(prod, qty);
+                                                    cartservice.addToCart(prod, qty, session.getCart_id());
                                                     System.out.println("added " + qty + " to your cart. Press enter to continue....");
                                                     scan.nextLine();                       
-                                        
+
                                                     break addtocart;
                                                 case "n":
                                                     // reload menu
@@ -157,6 +157,7 @@ public class ProductScreen implements IScreen {
                                                     scan.nextLine();
                                                     break;
                                             }
+                                            break;
                                         }
                                     }
                             
@@ -240,7 +241,7 @@ public class ProductScreen implements IScreen {
                                                 Product selectedProd = new Product();
                                                 selectedProd = catProducts.get(Integer.parseInt(input) - 1);
             
-                                                detailScreen.display(selectedProd); 
+                                                detailScreen.display(scan, selectedProd, session); 
                                                 break menuExit;
                                             } else {
                                                 // invalid entry
@@ -254,7 +255,18 @@ public class ProductScreen implements IScreen {
                                     // invalid entry
                                     System.out.println("Invalid Entry. Press Enter to continue...");
                                     scan.nextLine();
-                                }                                
+                                }
+                                
+                                // TODO: Add to cart
+                                System.out.println("Would you like to add this item to your cart? (y/n)");
+                                input = scan.nextLine();
+                                if(input.equalsIgnoreCase("y"));
+                                {
+                                    System.out.println("Enter the quantity that you want: ");
+                                    input = scan.nextLine();
+
+                                }
+                                
                             }
                         }
                         break;
@@ -312,7 +324,7 @@ public class ProductScreen implements IScreen {
                                     Product selectedProd = new Product();
                                     selectedProd = priceProds.get(Integer.parseInt(input) - 1);
 
-                                    detailScreen.display(selectedProd); 
+                                    detailScreen.display(scan, selectedProd, session); 
                                     break priceExit;
                                 } else {
                                     // invalid entry
@@ -322,9 +334,9 @@ public class ProductScreen implements IScreen {
 
                             }
                         }
-                    case "5":
-                        CartService.callGetCartItems(CartService.getCartId());
-                    break;  
+                    case "x":
+                       
+                        break;
                         
                     default:
                         // invalid input

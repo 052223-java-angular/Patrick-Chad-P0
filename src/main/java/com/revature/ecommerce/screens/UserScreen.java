@@ -20,10 +20,11 @@ public class UserScreen implements IScreen {
         throw new UnsupportedOperationException("Unimplemented method 'start'");
     }
 
-    public void start(Scanner scan, Session session) {
+    public void start(Scanner scan, Session session)
+    {
         String input = "";
 
-        clearScreen();
+        //clearScreen();
         System.out.println("Welcome to YourStore where we have everything you don't need!");
         
         System.out.println("\n [1] View Products");
@@ -40,13 +41,15 @@ public class UserScreen implements IScreen {
                 router.navigate("/products", scan, session);
                 break;
             case "2":
-                LoginScreen.getInstance().start(scan, session);
+                router.navigate("/carts", scan, session);
+                //LoginScreen.getInstance().start(scan, session);
                 break;
             case "3": 
                 RegisterScreen.getInstance().start(scan, session);
                 break;
             case "4":
                 router.navigate("/writereview", scan, session);
+                break;            
             default:
                 break;
         }
