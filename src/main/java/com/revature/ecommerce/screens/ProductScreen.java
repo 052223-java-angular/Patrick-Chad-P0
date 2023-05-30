@@ -93,6 +93,7 @@ public class ProductScreen implements IScreen {
                                     // invalid entry
                                     System.out.println("Invalid Entry. Press Enter to continue...");
                                     scan.nextLine();
+                                    input = "";
                                 }
                             }
                         }

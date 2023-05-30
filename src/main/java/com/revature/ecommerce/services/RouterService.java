@@ -40,7 +40,7 @@ public class RouterService {
                 new UserScreen(this).start(scan,session);
                 break;
             case "/writereview":
-                new ReviewScreen().start(scan,session);
+                new ReviewScreen(prodServ, this).start(scan,session);
             default:
                 break;
         }

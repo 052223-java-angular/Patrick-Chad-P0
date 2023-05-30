@@ -14,9 +14,10 @@ public class UserScreen implements IScreen {
     private final RouterService router;
     private static User user;
 
-    @Override
-    public void start(Scanner scan){
 
+    @Override
+    public void start(Scanner scan) {
+        throw new UnsupportedOperationException("Unimplemented method 'start'");
     }
 
     public void start(Scanner scan, Session session) {
@@ -56,4 +57,6 @@ public class UserScreen implements IScreen {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
+
+
 }

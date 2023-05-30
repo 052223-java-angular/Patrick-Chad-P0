@@ -34,11 +34,11 @@ public class ProductDetailsScreen implements IScreen {
         System.out.println("Product Description: " + prod.getDescription());
         System.out.println("Product Price: $" + String.format("%1$.2f",prod.getPrice()));
         displayReviews(prod);
-        System.out.print("\nWould you like to add to your cart? (y/n): ");
-        input = scan.nextLine();
 
         addtocart:{
             while(true){
+                System.out.print("\nWould you like to add to your cart? (y/n): ");
+                input = scan.nextLine();
                 switch (input){
                     case "y":
                         // add to cart  
@@ -58,11 +58,11 @@ public class ProductDetailsScreen implements IScreen {
                         System.out.println("Item not added to cart. Press enter to continue....");
                         scan.nextLine();
 
-                    break addtocart;
+                        break addtocart;
                     default:
                         System.out.println("Invalid entry. Must select (y/n). Press enter to continue....");
                         scan.nextLine();
-                    break;
+                        break;
                 }
             }
         }

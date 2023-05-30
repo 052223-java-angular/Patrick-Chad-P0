@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.revature.ecommerce.models.Product;
 import com.revature.ecommerce.models.Review;
-import com.revature.ecommerce.models.User;
 import com.revature.ecommerce.services.ProductService;
 import com.revature.ecommerce.services.ReviewService;
 import com.revature.ecommerce.services.RouterService;
@@ -22,13 +21,12 @@ import lombok.Setter;
 import lombok.ToString;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @ToString
 public class ReviewScreen implements IScreen{
     private ProductService productService = new ProductService();
-    private RouterService router;
+    private final RouterService router;
     private static final Logger logger = LogManager.getLogger(ProductScreen.class);
     private static Review review = new Review();
     private static ReviewService reviewService = new ReviewService();
@@ -56,10 +54,15 @@ public class ReviewScreen implements IScreen{
                 System.out.println("\n ----- Previous Purchases -----");
 
                 //display list of products
-                int index = 0;
-                for (Product product : products) {
-                    System.out.println("[" + ++index + "] " + String.format("%-20s",product.getName()));
+                if (products == null){
+                    System.out.println("No previous purchased items found. Press [x] to exit.");
+                }else{
+                    int index = 0;
+                    for (Product product : products) {
+                        System.out.println("[" + ++index + "] " + String.format("%-20s",product.getName()));
+                    }
                 }
+                
                 System.out.println(" [x] Exit");
 
                 System.out.print("\nPlease select which product to review. ");
@@ -67,7 +70,7 @@ public class ReviewScreen implements IScreen{
 
                 // if user wishes to exit
                 if (input.equalsIgnoreCase("x")) {
-                    router.navigate("/products", scan, session);
+                    break exit;
                 }
 
                 //validate numeric entry
@@ -100,6 +103,7 @@ public class ReviewScreen implements IScreen{
                 }
             }
         }
+        router.navigate("/user", scan, session);
     }
 
     /* -------- Helper Methods -------- */
