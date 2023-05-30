@@ -13,18 +13,26 @@ import com.revature.ecommerce.models.User;
 import com.revature.ecommerce.services.ProductService;
 import com.revature.ecommerce.services.ReviewService;
 import com.revature.ecommerce.services.RouterService;
+import com.revature.ecommerce.utils.Session;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class ReviewScreen implements IScreen{
     private ProductService productService = new ProductService();
     private RouterService router;
     private static final Logger logger = LogManager.getLogger(ProductScreen.class);
     private static Review review = new Review();
     private static ReviewService reviewService = new ReviewService();
+    private static Session session;
 
     /**
      *  Parameters: scan - Scanner - used to get input from user.
@@ -35,12 +43,12 @@ public class ReviewScreen implements IScreen{
     public void start(Scanner scan){
 
     }
-    
-    public void start(Scanner scan, User user) {
+
+    public void start(Scanner scan, Session session) {
         String input = "";
         //pull list of products purchased
         List<Product> products = new LinkedList<Product>();
-        products = productService.getListOfProductsPurchased(user.getId());
+        products = productService.getListOfProductsPurchased(session.getId());
         exit:{
             while(true){
                 //display menu
@@ -59,7 +67,7 @@ public class ReviewScreen implements IScreen{
 
                 // if user wishes to exit
                 if (input.equalsIgnoreCase("x")) {
-                    router.navigate("/products", scan);
+                    router.navigate("/products", scan, session);
                 }
 
                 //validate numeric entry
@@ -72,7 +80,7 @@ public class ReviewScreen implements IScreen{
                     review.setProduct_id(selectedProd.getId());
 
                     //set user id
-                    review.setUser_id(user.getId());
+                    review.setUser_id(session.getId());
 
                     System.out.print("Please enter rating: ");
                     input = scan.nextLine();

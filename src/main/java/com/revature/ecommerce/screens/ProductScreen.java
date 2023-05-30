@@ -15,6 +15,7 @@ import com.revature.ecommerce.models.Product;
 import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.services.ProductService;
 import com.revature.ecommerce.services.RouterService;
+import com.revature.ecommerce.utils.Session;
 
 import lombok.AllArgsConstructor;
 
@@ -30,7 +31,11 @@ public class ProductScreen implements IScreen {
     
     
     @Override
-    public void start(Scanner scan) {
+    public void start(Scanner scan){
+
+    }
+
+    public void start(Scanner scan, Session session) {
         ProductDetailsScreen detailScreen = new ProductDetailsScreen(scan);
         CartService cartservice = CartService.callCartServiceConstructor(new ProductDAO(), new OrderDAO(), new CartDAO());
         String input = "";
@@ -44,7 +49,7 @@ public class ProductScreen implements IScreen {
                 System.out.println(" [2] Search products by name");
                 System.out.println(" [3] Search products by category");
                 System.out.println(" [4] Search products by price range");
-                System.out.println("[5] View Cart");
+                System.out.println(" [5] View Cart");
                 System.out.println(" [x] Exit: ");
         
                 System.out.print("\nEnter: ");
@@ -73,7 +78,7 @@ public class ProductScreen implements IScreen {
 
                                 // if user wishes to exit
                                 if (input.equalsIgnoreCase("x")) {
-                                    router.navigate("/products", scan);
+                                    router.navigate("/products", scan, session);
                                 }
 
                                 //validate numeric entry
@@ -104,7 +109,7 @@ public class ProductScreen implements IScreen {
 
                                 // if user wishes to exit
                                 if (input.equalsIgnoreCase("x")) {
-                                    router.navigate("/products", scan);
+                                    router.navigate("/products", scan, session);
                                     break productNameExit;
                                 }
 
@@ -157,7 +162,7 @@ public class ProductScreen implements IScreen {
                                 }  
                                 // if user wishes to exit
                                 if (input.equalsIgnoreCase("x")) {
-                                    router.navigate("/products", scan);
+                                    router.navigate("/products", scan, session);
                                 }                
                             }
                         }      
@@ -192,7 +197,7 @@ public class ProductScreen implements IScreen {
                                 // accept user choice
                                 // if user wishes to exit
                                 if (input.equalsIgnoreCase("x")) {
-                                    router.navigate("/products", scan);
+                                    router.navigate("/products", scan, session);
                                 }
 
                                 //validate numeric entry
@@ -225,7 +230,7 @@ public class ProductScreen implements IScreen {
             
                                             // if user wishes to exit
                                             if (input.equalsIgnoreCase("x")) {
-                                                router.navigate("/products", scan);
+                                                router.navigate("/products", scan, session);
                                             }
             
                                             //validate numeric entry
@@ -259,7 +264,7 @@ public class ProductScreen implements IScreen {
                             while (true){
                                 // if user wishes to exit
                                 if (input.equalsIgnoreCase("x")) {
-                                    router.navigate("/products", scan);
+                                    router.navigate("/products", scan, session);
                                 }
 
                                 // display price range screen
@@ -297,7 +302,7 @@ public class ProductScreen implements IScreen {
 
                                 // if user wishes to exit
                                 if (input.equalsIgnoreCase("x")) {
-                                    router.navigate("/products", scan);
+                                    router.navigate("/products", scan, session);
                                 }
 
                                 //validate numeric entry
@@ -331,7 +336,7 @@ public class ProductScreen implements IScreen {
                 }
             }
         }
-        router.navigate("/home", scan);
+        router.navigate("/user", scan, session);
     }
 
     /* ---------- Methods ------------- */

@@ -1,37 +1,25 @@
 package com.revature.ecommerce.daos;
 
 import java.io.IOException;
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import com.revature.ecommerce.models.Cart;
 import com.revature.ecommerce.utils.ConnectionFactory;
 import com.revature.ecommerce.models.Product;
-import com.revature.ecommerce.models.User;
-import com.revature.ecommerce.utils.ConnectionFactory;
 
 public class CartDAO implements CrudDAO<Cart>
 {
 
     @Override
     public void save(Cart obj) {
-<<<<<<< HEAD
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
-=======
-        //TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented Method 'save'");
->>>>>>> 7b0ca9de6f6bb5c02b5cc5d6346ce24cc12f2e8f
     }
 
     @Override

@@ -2,29 +2,33 @@ package com.revature.ecommerce.screens;
 
 import java.util.Scanner;
 
-import com.revature.ecommerce.services.CartService;
+import com.revature.ecommerce.models.User;
 import com.revature.ecommerce.services.RouterService;
 import com.revature.ecommerce.utils.Session;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+
 
 @AllArgsConstructor
 public class UserScreen implements IScreen {
     private final RouterService router;
-    //private final Session session;
+    private static User user;
 
     @Override
-    public void start(Scanner scan) {
+    public void start(Scanner scan){
+
+    }
+
+    public void start(Scanner scan, Session session) {
         String input = "";
 
         clearScreen();
         System.out.println("Welcome to YourStore where we have everything you don't need!");
         
-        System.out.println(" [1] View Products");
+        System.out.println("\n [1] View Products");
         System.out.println(" [2] View Cart");
         System.out.println(" [3] Orders");
-        System.out.println(" [4] Leave review");
+        System.out.println(" [4] Write Review");
         System.out.println(" [x] Exit");
 
         System.out.print("\nEnter: ");
@@ -32,17 +36,16 @@ public class UserScreen implements IScreen {
 
         switch(input.toLowerCase()){
             case "1":
-                router.navigate("/products", scan);
+                router.navigate("/products", scan, session);
                 break;
             case "2":
-                LoginScreen.getInstance().start(scan);
+                LoginScreen.getInstance().start(scan, session);
                 break;
             case "3": 
-                RegisterScreen.getInstance().start(scan);
+                RegisterScreen.getInstance().start(scan, session);
                 break;
             case "4":
-                router.navigate("/reviews",scan);
-                break;
+                router.navigate("/writereview", scan, session);
             default:
                 break;
         }

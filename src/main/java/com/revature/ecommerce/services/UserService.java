@@ -39,7 +39,7 @@ public class UserService {
     {
         Role foundRole = roleservice.findByName("USER");
         String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
-        User newUser = new User(UUID.randomUUID().toString(),username, hashed);
+        User newUser = new User(UUID.randomUUID().toString(),username, hashed, foundRole.getId());
         userdao.save(newUser);
         return newUser;
 

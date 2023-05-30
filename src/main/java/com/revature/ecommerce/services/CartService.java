@@ -19,10 +19,11 @@ import com.revature.ecommerce.models.Cart;
 import com.revature.ecommerce.models.Order;
 import com.revature.ecommerce.models.Product;
 import com.revature.ecommerce.models.User;
+import com.revature.ecommerce.utils.Session;
 
 import lombok.AllArgsConstructor;
 
-//@AllArgsConstructor
+@AllArgsConstructor
 public class CartService {
   private static final Logger logger = LogManager.getLogger(CartService.class);
   private static Cart cart;
@@ -39,14 +40,14 @@ public class CartService {
   }
   
 
-  public static void createCart()
+  public static void createCart(Session session)
   {
 
     String cart_id = UUID.randomUUID().toString();
     String hashed_cart_id = BCrypt.hashpw(cart_id, BCrypt.gensalt());
     cart = new Cart();
     cart.setId(hashed_cart_id);
-
+    session.setCart_id(hashed_cart_id);
     logger.info("Cart created");
     //System.out.println("Cart created");
   }
@@ -66,7 +67,7 @@ public class CartService {
     cart.setUser_id(user_id);
   }
 
-  public Order Checkout(Scanner scan, Cart cart, User user){
+  public Order Checkout(Scanner scan, Cart cart, Session session){
     logger.info("Checkout Process");
     Order order = new Order();
     String input = "";
@@ -107,7 +108,7 @@ public class CartService {
             System.out.print("Order placed. Press enter to continue.....");
 
             //create new cart for customer
-            createCart();
+            createCart(session);
             //addCartToDB(cart,user.getId());
             scan.nextLine();
             break cartInput;

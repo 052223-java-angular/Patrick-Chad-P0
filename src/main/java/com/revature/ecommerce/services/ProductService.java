@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.swing.text.html.Option;
+
 import com.revature.ecommerce.daos.CategoryDAO;
 import com.revature.ecommerce.daos.ProductDAO;
 import com.revature.ecommerce.models.Category;
@@ -91,7 +93,7 @@ public class ProductService {
         Product prod = new Product();
         productsOpt = prodDAO.getListOfProductsPurchased(user_id);
         if (productsOpt.isEmpty()){
-            return null; 
+            return listProducts; 
         } else {
             int i = 0;
             for (Optional<Product> productOpt : productsOpt) {

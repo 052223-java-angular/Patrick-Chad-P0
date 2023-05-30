@@ -3,6 +3,7 @@ package com.revature.ecommerce.screens;
 
 import java.util.Scanner;
 
+import com.revature.ecommerce.models.User;
 import com.revature.ecommerce.services.RouterService;
 import com.revature.ecommerce.services.UserService;
 import com.revature.ecommerce.utils.Session;
@@ -10,7 +11,7 @@ import com.revature.ecommerce.utils.Session;
 public class RegisterScreen implements IScreen{
     private final UserService userservice;
     private final RouterService routerservice;
-    private Session session;
+    private static User user;
     private static RegisterScreen instance;
     
     private RegisterScreen(UserService userservice, RouterService routerservice)
@@ -33,7 +34,11 @@ public class RegisterScreen implements IScreen{
     
 
     @Override
-    public void start(Scanner scan) {
+    public void start(Scanner scan){
+
+    }
+
+    public void start(Scanner scan, Session session) {
         System.out.println("In RegisterScreen.start()");
         String username = "";
         String password = "";
@@ -64,8 +69,8 @@ public class RegisterScreen implements IScreen{
 
       if(!(username.equalsIgnoreCase("x") || password.equalsIgnoreCase("x")))
       {
-        userservice.register(username, password);
-        routerservice.navigate("/login", scan);
+        user = userservice.register(username, password);
+        routerservice.navigate("/login", scan, session);
       }
 
         

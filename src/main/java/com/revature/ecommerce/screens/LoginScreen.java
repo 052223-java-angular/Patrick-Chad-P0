@@ -16,18 +16,27 @@ import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.services.RouterService;
 import com.revature.ecommerce.services.UserService;
 import com.revature.ecommerce.utils.Session;
-import com.revature.ecommerce.utils.Session;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class LoginScreen implements IScreen{
     private final UserService userservice;
+    private static User usr;
     private static LoginScreen instance;
     private static CartService cartservice = CartService.callCartServiceConstructor(new ProductDAO(),new OrderDAO() ,new CartDAO());
    
 
-    private LoginScreen(UserService userservice)
-    {
-        this.userservice = userservice;
-    }
+    // private LoginScreen(UserService userservice)
+    // {
+    //     this.userservice = userservice;
+    // }
 
     public static LoginScreen getInstance()
     {
@@ -44,6 +53,11 @@ public class LoginScreen implements IScreen{
 
     @Override
     public void start(Scanner scan) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'start'");
+    }
+
+    public void start(Scanner scan, Session session) {
        String username = ""; 
        String password = "";
 
@@ -79,14 +93,16 @@ public class LoginScreen implements IScreen{
                 }
                 else
                 {
-                    User usr = user.get();
+                    usr = user.get();
                     if(BCrypt.checkpw(password, usr.getPassword()))
                     {
-                        CartService.createCart();
+                        CartService.createCart(session);
                         CartService.addCartToDB(CartService.getCart(), usr.getId());
                         
+                        session.setId(usr.getId());
+                        
                         //System.out.println("Welcome to YourStore, " + usr.getUsername() + "!");
-                        new RouterService().navigate("/user", scan);
+                        new RouterService().navigate("/user", scan, session);
                     }
                     else
                     {
