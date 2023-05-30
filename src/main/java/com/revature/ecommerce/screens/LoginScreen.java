@@ -11,6 +11,7 @@ import com.revature.ecommerce.daos.CartDAO;
 import com.revature.ecommerce.daos.OrderDAO;
 import com.revature.ecommerce.daos.ProductDAO;
 import com.revature.ecommerce.daos.UserDAO;
+import com.revature.ecommerce.models.Cart;
 import com.revature.ecommerce.models.User;
 import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.services.RouterService;
@@ -21,7 +22,7 @@ import com.revature.ecommerce.utils.Session;
 public class LoginScreen implements IScreen{
     private final UserService userservice;
     private static LoginScreen instance;
-    private static CartService cartservice = CartService.callCartServiceConstructor(new ProductDAO(),new OrderDAO() ,new CartDAO());
+    private static CartService cartservice = CartService.getInstance();
    
 
     private LoginScreen(UserService userservice)
@@ -82,8 +83,20 @@ public class LoginScreen implements IScreen{
                     User usr = user.get();
                     if(BCrypt.checkpw(password, usr.getPassword()))
                     {
-                        CartService.createCart();
-                        CartService.addCartToDB(CartService.getCart(), usr.getId());
+                        
+                       Cart cart = CartService.checkifCartExists(usr.getId());
+
+                       if(cart == null)
+                       {
+                            System.out.println("Cart is null");
+                            cartservice.createCart();
+                       }
+                       else 
+                       {
+                          System.out.println("Cart is not null");
+                          cartservice.setCart(cart);
+                       }
+                       
                         
                         //System.out.println("Welcome to YourStore, " + usr.getUsername() + "!");
                         new RouterService().navigate("/user", scan);

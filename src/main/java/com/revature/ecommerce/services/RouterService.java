@@ -9,7 +9,7 @@ public class RouterService {
     ProductService prodServ = new ProductService();
     
     public void navigate(String path, Scanner scan){
-        System.out.println("In routerService.navigate()");
+        //System.out.println("In routerService.navigate()");
         switch(path){
             case "/home":
                 new HomeScreen(this).start(scan);

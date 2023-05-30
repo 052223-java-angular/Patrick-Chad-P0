@@ -94,7 +94,7 @@ public class CartDAO implements CrudDAO<Cart>
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
             // I learned this little trick in college. It takes the things I need from both the cartitems and products table 
             //and leverages the fact that they both share a relationship
-            String sql = "select cartitems.id, qty, cartitems.price, products.name, qty_on_hand, description from cartitems inner join products on cartitems.product_id = products.id";
+            String sql = "select products.id, qty_on_hand, cartitems.price, products.name, description from products inner join cartitems  on products.id = cartitems.product_id";
             //create preparedStatement
             try(PreparedStatement ps = conn.prepareStatement(sql)){
                 //ps.setString(1, CartId);
@@ -136,7 +136,7 @@ public class CartDAO implements CrudDAO<Cart>
     }
 
 
-    public void addToCart(Product product, int quantity)
+    public void addToCart(Product product, int quantity, String cart_id)
     {
         try(Connection conn = ConnectionFactory.getInstance().getConnection())
         {
@@ -147,7 +147,7 @@ public class CartDAO implements CrudDAO<Cart>
                 ps.setInt(2, quantity);
                 ps.setString(3, product.getName());
                 ps.setDouble(4, product.getPrice());
-                ps.setString(5, CartService.getCartId());
+                ps.setString(5, cart_id);
                 ps.setString(6, product.getId());
                 ps.executeUpdate();
 
@@ -278,4 +278,47 @@ public class CartDAO implements CrudDAO<Cart>
             throw new RuntimeException("Unable to load jdbc");
         }
     }
+
+    public Cart checkifCartExists(String user_id)
+    {
+        try(Connection conn = ConnectionFactory.getInstance().getConnection())
+        {
+            String sql = "SELECT * FROM cart WHERE user_id = ?";
+            try(PreparedStatement ps = conn.prepareStatement(sql))
+            {
+                ps.setString(1, user_id);
+
+                try(ResultSet rs = ps.executeQuery())
+                {
+                    if(rs.next())
+                    {
+                        Cart cart = new Cart();
+                        cart.setId(rs.getString("id"));
+                        cart.setUser_id(rs.getString("user_id"));
+                        return cart;
+
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+
+        }
+        catch(SQLException e){
+            throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
+        } 
+        catch(IOException e)
+        {
+            throw new RuntimeException("Unable to find application.properties");
+        } 
+        catch(ClassNotFoundException e)
+        {
+            throw new RuntimeException("Unable to load jdbc");
+        }
+    }
+
+
 }
+    

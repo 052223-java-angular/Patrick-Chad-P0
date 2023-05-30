@@ -17,7 +17,7 @@ public class UserScreen implements IScreen {
     public void start(Scanner scan) {
         String input = "";
 
-        clearScreen();
+        //clearScreen();
         System.out.println("Welcome to YourStore where we have everything you don't need!");
         
         System.out.println(" [1] View Products");

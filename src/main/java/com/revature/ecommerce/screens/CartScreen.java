@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 
 import com.revature.ecommerce.daos.CartDAO;
+import com.revature.ecommerce.daos.OrderDAO;
+import com.revature.ecommerce.daos.ProductDAO;
 import com.revature.ecommerce.models.Product;
 import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.services.RouterService;
@@ -16,7 +18,10 @@ public class CartScreen implements IScreen{
     public void start(Scanner scan) {
         String input = "";
         Scanner sc = new Scanner(System.in);
-        List<Product> items = CartService.callGetCartItems(CartService.getCartId());
+        CartService cartService = CartService.getInstance();
+        
+
+        List<Product> items = CartService.callGetCartItems(cartService.getCartId());
         if(items != null)
         {
                          
@@ -82,8 +87,10 @@ public class CartScreen implements IScreen{
                                 }
                             }
                         }
+                        sc.close();
                         
                         break;
+                    
                     
             
            }
