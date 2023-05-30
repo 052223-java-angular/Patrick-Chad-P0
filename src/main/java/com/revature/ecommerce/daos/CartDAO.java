@@ -14,8 +14,6 @@ import java.util.UUID;
 import com.revature.ecommerce.models.Cart;
 import com.revature.ecommerce.utils.ConnectionFactory;
 import com.revature.ecommerce.models.Product;
-import com.revature.ecommerce.services.CartService;
-import com.revature.ecommerce.utils.ConnectionFactory;
 
 public class CartDAO implements CrudDAO<Cart>
 {

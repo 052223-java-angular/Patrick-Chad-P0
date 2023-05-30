@@ -35,18 +35,11 @@ public class LoginScreen implements IScreen{
     private Session session;
    
 
-<<<<<<< HEAD
-    // private LoginScreen(UserService userservice)
-    // {
-    //     this.userservice = userservice;
-    // }
-=======
     private LoginScreen(UserService userservice)
     {
         this.userservice = userservice;
         //this.session = session;
     }
->>>>>>> e272335860190344165ec1a9a20c62d8682af312
 
     public static LoginScreen getInstance()
     {
