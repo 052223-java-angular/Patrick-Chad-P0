@@ -92,13 +92,16 @@ public class CartDAO implements CrudDAO<Cart>
         List<Product> listProducts = new ArrayList<Product>();
         //create connection to db
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
-            String sql = "SELECT * from cartitems WHERE cart_id=?";
+            // I learned this little trick in college. It takes the things I need from both the cartitems and products table 
+            //and leverages the fact that they both share a relationship
+            String sql = "select cartitems.id, qty, cartitems.price, products.name, qty_on_hand, description from cartitems inner join products on cartitems.product_id = products.id";
             //create preparedStatement
             try(PreparedStatement ps = conn.prepareStatement(sql)){
-                ps.setString(1, CartId);
+                //ps.setString(1, CartId);
                 //execute query
                 try(ResultSet rs = ps.executeQuery()){
-                    while(rs.next()){
+                    while(rs.next())
+                    {
                         Product product = new Product();
                         product.setId(rs.getString("id"));
                         product.setName(rs.getString("name"));
@@ -110,6 +113,7 @@ public class CartDAO implements CrudDAO<Cart>
                     }
                 }
                 if (productsOpt.isEmpty()){
+                    System.out.println("Returning null");
                     return null; 
                 } else {
                     int i = 0;
@@ -136,14 +140,15 @@ public class CartDAO implements CrudDAO<Cart>
     {
         try(Connection conn = ConnectionFactory.getInstance().getConnection())
         {
-            String sql = "INSERT INTO cartitems(id, qty, price, cart_id, product_id) VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO cartitems(id, qty, name, price, cart_id, product_id) VALUES (?,?,?,?,?,?)";
             try(PreparedStatement ps = conn.prepareStatement(sql))
             {
                 ps.setString(1, UUID.randomUUID().toString());
                 ps.setInt(2, quantity);
-                ps.setDouble(3, product.getPrice());
-                ps.setString(4, CartService.getCartId());
-                ps.setString(5, product.getId());
+                ps.setString(3, product.getName());
+                ps.setDouble(4, product.getPrice());
+                ps.setString(5, CartService.getCartId());
+                ps.setString(6, product.getId());
                 ps.executeUpdate();
 
             }
@@ -161,6 +166,38 @@ public class CartDAO implements CrudDAO<Cart>
         }
 
     }
+
+    /*public static ResultSet getItemsFromCart(String cart_id)
+    {
+        try(Connection conn = ConnectionFactory.getInstance().getConnection())
+        {
+            
+
+            try(PreparedStatement ps = conn.prepareStatement(sql))
+            {
+                ps.setString(1, cart_id);
+
+                try(ResultSet rs = ps.executeQuery())
+                {
+                    while(rs.next())
+                    {
+
+                    }
+                }
+            }
+        }
+        catch(SQLException e){
+            throw new RuntimeException("Unable to connect to database. Error code: " + e.getMessage());
+        } 
+        catch(IOException e)
+        {
+            throw new RuntimeException("Unable to find application.properties");
+        } 
+        catch(ClassNotFoundException e)
+        {
+            throw new RuntimeException("Unable to load jdbc");
+        }
+    }*/
 
     public void addCartToDB(Cart cart, String user_id)
     {

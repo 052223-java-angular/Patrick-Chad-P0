@@ -138,7 +138,7 @@ public class ProductScreen implements IScreen {
                                                     cartservice.addToCart(prod, qty);
                                                     System.out.println("added " + qty + " to your cart. Press enter to continue....");
                                                     scan.nextLine();                       
-                                        
+
                                                     break addtocart;
                                                 case "n":
                                                     // reload menu
@@ -329,7 +329,8 @@ public class ProductScreen implements IScreen {
                             }
                         }
                     case "x":
-                        new RouterService().navigate("/user", scan);
+                       
+                        break;
                         
                     default:
                         // invalid input
@@ -342,7 +343,7 @@ public class ProductScreen implements IScreen {
                 }
             }
         }
-        router.navigate("/home", scan);
+        router.navigate("/user", scan);
     }
 
     /* ---------- Methods ------------- */
