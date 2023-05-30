@@ -17,6 +17,7 @@ import java.util.UUID;
 
 import com.revature.ecommerce.models.Cart;
 import com.revature.ecommerce.utils.ConnectionFactory;
+import com.revature.ecommerce.utils.Session;
 import com.revature.ecommerce.models.Product;
 import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.utils.ConnectionFactory;
@@ -136,7 +137,7 @@ public class CartDAO implements CrudDAO<Cart>
     }
 
 
-    public void addToCart(Product product, int quantity, String cart_id)
+    public void addToCart(Product product, int quantity, Session session)
     {
         try(Connection conn = ConnectionFactory.getInstance().getConnection())
         {
@@ -147,7 +148,7 @@ public class CartDAO implements CrudDAO<Cart>
                 ps.setInt(2, quantity);
                 ps.setString(3, product.getName());
                 ps.setDouble(4, product.getPrice());
-                ps.setString(5, cart_id);
+                ps.setString(5, session.getCart_id());
                 ps.setString(6, product.getId());
                 ps.executeUpdate();
 

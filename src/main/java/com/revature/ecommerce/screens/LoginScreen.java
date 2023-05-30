@@ -92,7 +92,7 @@ public class LoginScreen implements IScreen{
                     if(BCrypt.checkpw(password, usr.getPassword()))
                     {
                        session.setSession(usr);
-                       Cart cart = CartService.checkifCartExists(usr.getId());
+                       Cart cart = CartService.checkifCartExists(session.getCart_id());
 
                        if(cart == null)
                        {
@@ -107,7 +107,7 @@ public class LoginScreen implements IScreen{
                           cartservice.setCart(cart);
                           session.setCart_id(cartservice.getCartId());
                           session.setUsername(usr.getUsername());
-                          
+
                           
 
                        }

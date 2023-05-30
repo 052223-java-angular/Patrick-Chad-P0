@@ -151,9 +151,9 @@ public class CartService {
     return order;
   }
 
-  public void addToCart(Product product, int quantity, String cart_id)
+  public void addToCart(Product product, int quantity, Session session)
   {
-     cartdao.addToCart(product, quantity, cart_id);
+     cartdao.addToCart(product, quantity, session);
   }
 
 public static CartService callCartServiceConstructor(ProductDAO prodDao, OrderDAO orderdao, CartDAO cartdao) {

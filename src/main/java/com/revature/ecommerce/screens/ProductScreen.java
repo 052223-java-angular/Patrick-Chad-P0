@@ -139,7 +139,7 @@ public class ProductScreen implements IScreen {
                                                     input = scan.nextLine(); 
                                                     qty = Integer.parseInt(input);
                                                     // TODO: send item to cart items
-                                                    cartservice.addToCart(prod, qty, session.getCart_id());
+                                                    cartservice.addToCart(prod, qty, session);
                                                     System.out.println("added " + qty + " to your cart. Press enter to continue....");
                                                     scan.nextLine();                       
 
