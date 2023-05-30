@@ -16,7 +16,6 @@ import com.revature.ecommerce.utils.Session;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -30,7 +29,6 @@ public class ReviewScreen implements IScreen{
     private static final Logger logger = LogManager.getLogger(ProductScreen.class);
     private static Review review = new Review();
     private static ReviewService reviewService = new ReviewService();
-    private static Session session;
 
     /**
      *  Parameters: scan - Scanner - used to get input from user.

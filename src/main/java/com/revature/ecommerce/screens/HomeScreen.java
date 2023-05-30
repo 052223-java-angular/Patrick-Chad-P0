@@ -2,7 +2,6 @@ package com.revature.ecommerce.screens;
 
 import java.util.Scanner;
 
-import com.revature.ecommerce.models.User;
 import com.revature.ecommerce.services.RouterService;
 import com.revature.ecommerce.utils.Session;
 
@@ -17,11 +16,9 @@ import lombok.ToString;
 @ToString
 public class HomeScreen implements IScreen {
     private final RouterService router;
-    private static User user;
 
     @Override
     public void start(Scanner scan) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'start'");
     }
 

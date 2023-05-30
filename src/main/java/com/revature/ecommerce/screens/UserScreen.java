@@ -2,7 +2,7 @@ package com.revature.ecommerce.screens;
 
 import java.util.Scanner;
 
-import com.revature.ecommerce.models.User;
+//import com.revature.ecommerce.models.User;
 import com.revature.ecommerce.services.RouterService;
 import com.revature.ecommerce.utils.Session;
 
@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserScreen implements IScreen {
     private final RouterService router;
-    private static User user;
+    //private static User user;
 
 
     @Override
@@ -24,7 +24,7 @@ public class UserScreen implements IScreen {
     {
         String input = "";
 
-        //clearScreen();
+        clearScreen();
         System.out.println("Welcome to YourStore where we have everything you don't need!");
         
         System.out.println("\n [1] View Products");

@@ -5,13 +5,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.revature.ecommerce.models.Cart;
 import com.revature.ecommerce.models.User;
-import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.utils.ConnectionFactory;
 
 public class UserDAO implements CrudDAO<User>{

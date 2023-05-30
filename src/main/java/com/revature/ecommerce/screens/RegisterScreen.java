@@ -30,11 +30,7 @@ public class RegisterScreen implements IScreen{
         return instance;
     }
 
-
-    
-
     @Override
-<<<<<<< HEAD
     public void start(Scanner scan){
 
     }
@@ -73,51 +69,8 @@ public class RegisterScreen implements IScreen{
         user = userservice.register(username, password);
         routerservice.navigate("/login", scan, session);
       }
-=======
-    public void start(Scanner scan) {
-       
->>>>>>> e272335860190344165ec1a9a20c62d8682af312
-
-        
-        
     }
-
-    public void start(Scanner scan, Session session)
-    {
-         //System.out.println("In RegisterScreen.start()");
-         String username = "";
-         String password = "";
- 
-         exit:{
-             while(true)
-             {
-                 //clearScreen();
-                 System.out.println("Welcome to the register screen");
-                 username = getUsername(scan);
-                 if(username.equalsIgnoreCase("x"))
-                 {
-                     break exit;
-                 }
-                 password = getPassword(scan);
- 
-                 if(password.equalsIgnoreCase("x"))
-                 {
-                     break exit;
-                 }
- 
- 
-                 break;
-             }
-             
-             
-         }
- 
-       if(!(username.equalsIgnoreCase("x") || password.equalsIgnoreCase("x")))
-       {
-         userservice.register(username, password);
-         routerservice.navigate("/login", scan, session);
-       }
-    }
+    
     public String getUsername(Scanner scanner)
     {
         String username = "";

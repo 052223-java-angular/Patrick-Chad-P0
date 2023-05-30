@@ -14,11 +14,9 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.revature.ecommerce.daos.CartDAO;
 import com.revature.ecommerce.daos.OrderDAO;
 import com.revature.ecommerce.daos.ProductDAO;
-import com.revature.ecommerce.daos.UserDAO;
 import com.revature.ecommerce.models.Cart;
 import com.revature.ecommerce.models.Order;
 import com.revature.ecommerce.models.Product;
-import com.revature.ecommerce.models.User;
 import com.revature.ecommerce.utils.Session;
 
 import lombok.AllArgsConstructor;
@@ -27,7 +25,7 @@ import lombok.AllArgsConstructor;
 public class CartService {
   private static final Logger logger = LogManager.getLogger(CartService.class);
   private Cart cart;
-  private Session session;
+  //private Session session;
   private static CartDAO cartdao;
   private static ProductDAO prodDao;
   private static OrderDAO orderDAO;

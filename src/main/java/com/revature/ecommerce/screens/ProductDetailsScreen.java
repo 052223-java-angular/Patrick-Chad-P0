@@ -7,10 +7,6 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.revature.ecommerce.daos.CartDAO;
-import com.revature.ecommerce.daos.OrderDAO;
-import com.revature.ecommerce.daos.ProductDAO;
-import com.revature.ecommerce.models.Cart;
 import com.revature.ecommerce.models.Product;
 import com.revature.ecommerce.models.Review;
 import com.revature.ecommerce.services.ReviewService;

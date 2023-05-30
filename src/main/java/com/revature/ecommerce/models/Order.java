@@ -1,7 +1,6 @@
 package com.revature.ecommerce.models;
 
 import java.sql.Date;
-import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
