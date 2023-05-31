@@ -16,12 +16,13 @@ import java.sql.SQLException;
 public class ProductDAO implements CrudDAO<Product> {
     @Override
     public void update(Product obj) {
+        //  Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
     public Optional<Product> lookupUser(String username) {
-        // TODO Auto-generated method stub
+        //  Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'lookupUser'");
     }
 
@@ -32,6 +33,8 @@ public class ProductDAO implements CrudDAO<Product> {
         Purpose: this routine is used to query the database to get a list of items.
 
         Return: This routine will return a List<Product>.
+
+        Author: Chad Rotruck
     */
     public List<Product> lookupProducts() {
         List<Product> products = new LinkedList<Product>();
@@ -71,6 +74,8 @@ public class ProductDAO implements CrudDAO<Product> {
         Purpose: this routine is used to query the database to get a specific item by name.
 
         Return: This routine will return an Optional<Product>.
+
+        Author: Chad Rotruck
     */
     public Optional<Product> lookupByProductName(String name) {
         
@@ -105,11 +110,13 @@ public class ProductDAO implements CrudDAO<Product> {
 
     @Override
     public void delete(Product obj) {
+        //  Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
 
     @Override
     public void save(Product obj) {
+        //  Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'save'");
     }
 
@@ -120,6 +127,8 @@ public class ProductDAO implements CrudDAO<Product> {
         Purpose: This routine will pull data based on the selected category and return a list of products.
 
         Return: This routine will return an Optional<Product> List.
+
+        Author: Chad Rotruck
     */
     public List<Optional<Product>> lookupByCategory(String category) {
         // connect to database
@@ -163,6 +172,8 @@ public class ProductDAO implements CrudDAO<Product> {
                     products exist in that price range, routine should return an empty list.
 
         Return: This routine will return an Optional<Product> List.
+
+        Author: Chad Rotruck
     */
     public List<Optional<Product>> lookupByPriceRange(double min, double max) {
         // connect to database
@@ -207,6 +218,8 @@ public class ProductDAO implements CrudDAO<Product> {
         Purpose: This routine will update quantities in the database.
 
         Return: none
+
+        Author: Chad Rotruck
     */
     public void updateCartQtys(Product product){
         // connect to database
@@ -240,6 +253,8 @@ public class ProductDAO implements CrudDAO<Product> {
                     products exist in that price range, routine should return an empty list.
 
         Return: This routine will return an Optional<Product> List.
+
+        Author: Chad Rotruck
     */
     public List<Optional<Product>> getListOfProductsPurchased(String user_id) {
         // connect to database

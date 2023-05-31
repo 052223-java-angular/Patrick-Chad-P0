@@ -19,6 +19,14 @@ import java.util.Scanner;
 public class RouterService {
     ProductService prodServ = new ProductService();
     
+    /**
+    *  Parameters: path - String - the path used for navigation.
+                   scan - Scanner - used to capture user input
+                   session - Session - the current user session.
+    *  Description: Displays reviews for selected product
+    *  Return: A list of reviews
+    *  Author: Chad Rotruck and Patrick Powers
+    */
     public void navigate(String path, Scanner scan, Session session){
         System.out.println("In routerService.navigate()");
         switch(path){
@@ -41,8 +49,6 @@ public class RouterService {
                 break;
             case "/writereview":
                 new ReviewScreen(prodServ, this).start(scan,session);
-            //    RegisterScreen rs = RegisterScreen.getInstance();
-            //    rs.start(scan, session);
                 break;
             case "/carts":
                 new CartScreen().start(scan, session);

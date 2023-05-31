@@ -36,6 +36,12 @@ public class OrderDAO implements CrudDAO<Order>{
         throw new UnsupportedOperationException("Unimplemented method 'lookupUser'");
     }
 
+    /**
+    *  Parameters: order - Order - The order in which to save
+    *  Description: saves an order to the database
+    *  Return: an the order object when completed.
+    *  Author: Chad Rotruck 
+    */
     public Order saveOrder(Order order){
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
             String sql = "INSERT INTO orders (id,order_date,user_id,cart_id) values (?,?,?,?)";

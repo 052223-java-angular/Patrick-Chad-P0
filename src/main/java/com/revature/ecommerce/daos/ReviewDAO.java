@@ -18,6 +18,12 @@ import com.revature.ecommerce.utils.Session;
 public class ReviewDAO implements CrudDAO<Review> {
 
     @Override
+    /**
+    *  Parameters: obj - Review - The review to be saved
+    *  Description: saves a review to the database
+    *  Return: none
+    *  Author: Chad Rotruck 
+    */
     public void save(Review obj) {
         //save review;
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
@@ -56,6 +62,12 @@ public class ReviewDAO implements CrudDAO<Review> {
         throw new UnsupportedOperationException("Unimplemented method 'lookupUser'");
     }
 
+    /**
+    *  Parameters: product_id - String - the product id of the product to pull the reviews for.
+    *  Description: pulls reviews for specified product_id.
+    *  Return: a list of reviews
+    *  Author: Chad Rotruck 
+    */
     public List<Optional<Review>> getReviews(String product_id){
         List<Optional<Review>> optReviews= new LinkedList<Optional<Review>>();
 
@@ -89,6 +101,13 @@ public class ReviewDAO implements CrudDAO<Review> {
         }
     }
     
+    /**
+    *  Parameters: session - Session - used to get current session's user_id.
+    *              prod - Product - used to get the product id.
+    *  Description: Checks for an existing review by user id and product id
+    *  Return: a boolean if review is found for said product by said user.
+    *  Author: Chad Rotruck 
+    */
     public boolean checkForExistingReview(Session session, Product prod){
         //connect to database
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){

@@ -22,7 +22,13 @@ public class HomeScreen implements IScreen {
         throw new UnsupportedOperationException("Unimplemented method 'start'");
     }
 
-    
+    /**
+    *  Parameters: scan - Scanner - current scanner to get user input
+    *              session - Session - current user session
+    *  Description: starts the home screen menu
+    *  Return: none
+    *  Author: Chad Rotruck 
+    */
     public void start(Scanner scan, Session session) {
         String input = "";
 
@@ -50,6 +56,13 @@ public class HomeScreen implements IScreen {
     }
     
     /* -------- Helper Methods -------- */
+    
+    /**
+    *  Parameters: none
+    *  Description: clears the console screen
+    *  Return: none
+    *  Author: Chad Rotruck 
+    */
     private void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();

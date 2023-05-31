@@ -90,9 +90,14 @@ public class ProductDetailsScreen implements IScreen {
 
         //loop through list and display each review
         int index = 0;
-        for (Review review : reviews) {
-            System.out.println(String.format("%-5s","[" + ++index + "]") + String.format("%-55s", "UserID:  " + review.getUser_id() ) + String.format("%-30s", "Rating:  " + review.getRating() + "/5 stars") + String.format("%-5s", "Comment:  " + review.getComment()));
+        if (reviews != null){
+            for (Review review : reviews) {
+                System.out.println(String.format("%-5s","[" + ++index + "]") + String.format("%-55s", "UserID:  " + review.getUser_id() ) + String.format("%-30s", "Rating:  " + review.getRating() + "/5 stars") + String.format("%-5s", "Comment:  " + review.getComment()));
+            }
+        } else {
+            System.out.println("No available reviews");
         }
+        
     }
     
     /* -------- Helper Methods -------- */

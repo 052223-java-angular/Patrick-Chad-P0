@@ -38,14 +38,24 @@ public class CategoryDAO implements CrudDAO<Category> {
         throw new UnsupportedOperationException("Unimplemented method 'lookupUser'");
     }
 
+    /**
+    *  Parameters: none
+    *  Description: gets a list of all categories from db
+    *  Return: A list of categories
+    *  Author: Chad Rotruck 
+    */
     public List<Category> getAllCategories(){
         List<Category> cats = new LinkedList<Category>();
+        //get connection
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
-            String sql = "SELECT * FROM categories";
+            //set prepared statement
 
+            String sql = "SELECT * FROM categories";            
             try(PreparedStatement ps = conn.prepareStatement(sql)){
+                //execute query
                 try(ResultSet rs = ps.executeQuery()){
                     while(rs.next()){
+                        //create list of categories
                         Category category = new Category();
                         category.setId(rs.getString("id"));
                         category.setName(rs.getString("name"));
