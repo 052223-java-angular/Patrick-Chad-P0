@@ -23,8 +23,9 @@ public class UserScreen implements IScreen {
     public void start(Scanner scan, Session session)
     {
         String input = "";
+        //System.out.println("Cart_id in session in UserScreen:" + session.getCart_id());
 
-        clearScreen();
+        //clearScreen();
         System.out.println("Welcome to YourStore where we have everything you don't need!");
         
         System.out.println("\n [1] View Products");
@@ -42,7 +43,6 @@ public class UserScreen implements IScreen {
                 break;
             case "2":
                 router.navigate("/carts", scan, session);
-                //LoginScreen.getInstance().start(scan, session);
                 break;
             case "3": 
                 RegisterScreen.getInstance().start(scan, session);

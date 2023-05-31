@@ -24,14 +24,15 @@ public class ProductDetailsScreen implements IScreen {
     private static final Logger logger = LogManager.getLogger(ProductScreen.class);
 
     public void display(Scanner scan, Product prod, Session session){
+        
         String input = "";
-        clearScreen();
+        //clearScreen();
         logger.info("Navigated to Product Details Page.");
         System.out.println("\n --- Product Listing ---");
         System.out.println("Product Name: " + prod.getName());
         System.out.println("Product Description: " + prod.getDescription());
         System.out.println("Product Price: $" + String.format("%1$.2f",prod.getPrice()));
-        displayReviews(prod);
+        //displayReviews(prod);
 
         addtocart:{
             while(true){
@@ -80,7 +81,7 @@ public class ProductDetailsScreen implements IScreen {
      *  Description: Displays the list of reviews to the console.
      *  Return: none
      */
-    private void displayReviews(Product prod){
+    /*private void displayReviews(Product prod){
         System.out.println("\n-------- Product Reviews --------");
         //get reviews from database
         ReviewService reviewService = new ReviewService();
@@ -93,7 +94,7 @@ public class ProductDetailsScreen implements IScreen {
         for (Review review : reviews) {
             System.out.println(String.format("%-5s","[" + ++index + "]") + String.format("%-55s", "UserID:  " + review.getUser_id() ) + String.format("%-30s", "Rating:  " + review.getRating() + "/5 stars") + String.format("%-5s", "Comment:  " + review.getComment()));
         }
-    }
+    }*/
     
     /* -------- Helper Methods -------- */
 

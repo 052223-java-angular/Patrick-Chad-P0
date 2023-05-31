@@ -37,13 +37,13 @@ public class ProductScreen implements IScreen {
 
     public void start(Scanner scan, Session session) {
         ProductDetailsScreen detailScreen = new ProductDetailsScreen(scan);
-        CartService cartservice = CartService.callCartServiceConstructor(new ProductDAO(), new OrderDAO(), new CartDAO());
+        CartService cartservice = CartService.getInstance();
         String input = "";
         logger.info("Navigated to Products screen.");
         exit:{
             while(true){
                 // print menu
-                clearScreen();
+                //clearScreen();
                 System.out.println("Welcome to YourStore where we have everything you don't need!");
                 System.out.println("\n [1] Browse Products");
                 System.out.println(" [2] Search products by name");
@@ -68,7 +68,8 @@ public class ProductScreen implements IScreen {
                         products = prodServ.getAllProducts();
 
                         menuExit:{
-                            while(true){                                
+                            while(true){     
+                                                     
                                 //display items
                                 displayList(products, scan);
 

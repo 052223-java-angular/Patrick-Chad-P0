@@ -1,5 +1,6 @@
 package com.revature.ecommerce.screens;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,30 +20,35 @@ public class CartScreen implements IScreen{
 
     public void start(Scanner scanner, Session session)
     {
-        String input = "";
+        
         Scanner sc = new Scanner(System.in);
-        //CartService cartService = CartService.getInstance();
+        CartService cartService = CartService.getInstance();
         
 
         List<Product> items = CartService.callGetCartItems(session.getCart_id());
+       //ArrayList<Product> items = CartService.callGetItemsFromCart(session.getCart_id());
+        
         if(items != null)
         {
-                         
-                for(int count = 0; count < items.size() - 1; count++)
-                {
-                    System.out.println(items.get(count));
-                }
-            
+            String input = "";
+            for(int count = 0; count < items.size(); count++)
+            {
+                System.out.println(items.get(count));
+            }
+        
+            while((input.equals("1")) || (input.equals("2") || input.equals("")))
+            {          
+               
                 System.out.println("[1] Delete items");
                 System.out.println("[2] Increase or decrease quantity of items");
                 System.out.println("[3] Back to the home page");
                 input = sc.nextLine();
-            
+                
                     switch(input)
                     {
                         case "1":
                             System.out.println("Type in the name of the item that you would like to delete:");
-                            sc.nextLine();
+                            input = sc.nextLine();
                             for(int count = 0; count < items.size(); count++)
                             {
                                 if(items.get(count).getName().equals(input))
@@ -93,11 +99,15 @@ public class CartScreen implements IScreen{
                         sc.close();
                         
                         break;
-                    
-                    
+                    }
             
-           }
+                    
+                      
+            
         }
+
+        new RouterService().navigate("/user", scanner, session);
+       }
         else
         {
             System.out.println("Your cart has not items in it. Press Enter to go back to the home page . . .");

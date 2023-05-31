@@ -97,23 +97,21 @@ public class LoginScreen implements IScreen{
                     if(BCrypt.checkpw(password, usr.getPassword()))
                     {
                        session.setSession(usr);
-                       Cart cart = CartService.checkifCartExists(session.getCart_id());
+                       Cart cart = CartService.checkifCartExists(usr.getId());
 
                        if(cart == null)
                        {
                             //System.out.println("Cart is null");
                             cartservice.createCart(session);
-                            session.setSession(usr);
-                            CartService.addCartToDB(cartservice.getCart(), usr.getId());
+                            
                        }
                        else 
                        {
-                          //System.out.println("Cart is not null");
+                          System.out.println("Cart is not null");
                           cartservice.setCart(cart);
                           session.setCart_id(cartservice.getCartId());
+                          //System.out.println("Cart id in session in LoginScreen" + session.getCart_id());
                           session.setUsername(usr.getUsername());
-
-                          
 
                        }
                        
