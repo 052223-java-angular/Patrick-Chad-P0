@@ -25,7 +25,7 @@ public class Session {
         Cart cart = new Cart();
         this.id = user.getId();
         this.username = user.getUsername();
-        //this.roleId = user.getRoleId();
+        this.roleId = user.getRole_id();
         this.cart_id = cart.getId();
     }
 

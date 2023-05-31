@@ -1,15 +1,11 @@
 package com.revature.ecommerce.daos;
 
 import java.io.IOException;
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,15 +15,12 @@ import com.revature.ecommerce.models.Cart;
 import com.revature.ecommerce.utils.ConnectionFactory;
 import com.revature.ecommerce.utils.Session;
 import com.revature.ecommerce.models.Product;
-import com.revature.ecommerce.services.CartService;
-import com.revature.ecommerce.utils.ConnectionFactory;
 
 public class CartDAO implements CrudDAO<Cart>
 {
 
     @Override
     public void save(Cart obj) {
-        //TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented Method 'save'");
     }
 

@@ -2,22 +2,28 @@ package com.revature.ecommerce.screens;
 
 import java.util.Scanner;
 
-import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.services.RouterService;
 import com.revature.ecommerce.utils.Session;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class HomeScreen implements IScreen {
     private final RouterService router;
 
     @Override
     public void start(Scanner scan) {
-        
+        throw new UnsupportedOperationException("Unimplemented method 'start'");
     }
-    public void start(Scanner scan, Session session)
-    {
+
+    
+    public void start(Scanner scan, Session session) {
         String input = "";
 
         clearScreen();
@@ -25,7 +31,6 @@ public class HomeScreen implements IScreen {
         
         System.out.println(" [1] Login");
         System.out.println(" [2] Register");
-        //System.out.println(" [3] Products");
 
         System.out.print("\nEnter: ");
         input = scan.nextLine();
@@ -49,4 +54,6 @@ public class HomeScreen implements IScreen {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
+
+
 }

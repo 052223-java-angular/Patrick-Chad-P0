@@ -31,12 +31,12 @@ public class ProductScreen implements IScreen {
     
     
     @Override
-    public void start(Scanner scan) {
-        
+    public void start(Scanner scan){
+
     }
-    public void start(Scanner scan, Session session)
-    {
-        ProductDetailsScreen detailScreen = new ProductDetailsScreen();
+
+    public void start(Scanner scan, Session session) {
+        ProductDetailsScreen detailScreen = new ProductDetailsScreen(scan);
         CartService cartservice = CartService.callCartServiceConstructor(new ProductDAO(), new OrderDAO(), new CartDAO());
         String input = "";
         logger.info("Navigated to Products screen.");
@@ -49,6 +49,7 @@ public class ProductScreen implements IScreen {
                 System.out.println(" [2] Search products by name");
                 System.out.println(" [3] Search products by category");
                 System.out.println(" [4] Search products by price range");
+                System.out.println(" [5] View Cart");
                 System.out.println(" [x] Exit: ");
         
                 System.out.print("\nEnter: ");
@@ -92,6 +93,7 @@ public class ProductScreen implements IScreen {
                                     // invalid entry
                                     System.out.println("Invalid Entry. Press Enter to continue...");
                                     scan.nextLine();
+                                    input = "";
                                 }
                             }
                         }
@@ -392,6 +394,7 @@ public class ProductScreen implements IScreen {
         }
         try {
             int i = Integer.parseInt(strNum);
+            logger.info("IsNumeric StrNum: " + i);
         } catch (NumberFormatException nfe) {
             return false;
         }

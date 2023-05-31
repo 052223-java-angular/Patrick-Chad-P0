@@ -3,11 +3,6 @@ package com.revature.ecommerce.screens;
 import java.util.List;
 import java.util.Scanner;
 
-
-
-import com.revature.ecommerce.daos.CartDAO;
-import com.revature.ecommerce.daos.OrderDAO;
-import com.revature.ecommerce.daos.ProductDAO;
 import com.revature.ecommerce.models.Product;
 import com.revature.ecommerce.services.CartService;
 import com.revature.ecommerce.services.RouterService;

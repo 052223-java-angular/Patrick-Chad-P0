@@ -1,14 +1,7 @@
 package com.revature.ecommerce.services;
 
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
     
@@ -21,22 +14,18 @@ import org.mindrot.jbcrypt.BCrypt;
 import com.revature.ecommerce.daos.CartDAO;
 import com.revature.ecommerce.daos.OrderDAO;
 import com.revature.ecommerce.daos.ProductDAO;
-import com.revature.ecommerce.daos.UserDAO;
 import com.revature.ecommerce.models.Cart;
 import com.revature.ecommerce.models.Order;
 import com.revature.ecommerce.models.Product;
-import com.revature.ecommerce.models.User;
 import com.revature.ecommerce.utils.Session;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 
-//@AllArgsConstructor
+@AllArgsConstructor
 public class CartService {
   private static final Logger logger = LogManager.getLogger(CartService.class);
   private Cart cart;
-  private Session session;
+  //private Session session;
   private static CartDAO cartdao;
   private static ProductDAO prodDao;
   private static OrderDAO orderDAO;
@@ -50,6 +39,17 @@ public class CartService {
     this.cartdao = cartdao;
   }
 
+  // public static void createCart(Session session)
+  // {
+
+  //   String cart_id = UUID.randomUUID().toString();
+  //   String hashed_cart_id = BCrypt.hashpw(cart_id, BCrypt.gensalt());
+  //   cart = new Cart();
+  //   cart.setId(hashed_cart_id);
+  //   session.setCart_id(hashed_cart_id);
+  //   logger.info("Cart created");
+  //   //System.out.println("Cart created");
+  // }
   public static CartService getInstance()
   {
       if(instance == null)
@@ -138,6 +138,10 @@ public class CartService {
             order = orderDAO.saveOrder(order);
 
             System.out.print("Order placed. Press enter to continue.....");
+
+            //create new cart for customer
+            createCart(session);
+            //addCartToDB(cart,user.getId());
             scan.nextLine();
             break cartInput;
           case "n":
@@ -156,47 +160,39 @@ public class CartService {
      cartdao.addToCart(product, quantity, session);
   }
 
-public static CartService callCartServiceConstructor(ProductDAO prodDao, OrderDAO orderdao, CartDAO cartdao) {
-      return new CartService(prodDao, orderdao, cartdao);
-}
+  public static CartService callCartServiceConstructor(ProductDAO prodDao, OrderDAO orderdao, CartDAO cartdao) {
+        return new CartService(prodDao, orderdao, cartdao);
+  }
 
-public static void addCartToDB(Cart cart, String user_id)
-{
-    cartdao.addCartToDB(cart, user_id);
-}
+  public static void addCartToDB(Cart cart, String user_id)
+  {
+      cartdao.addCartToDB(cart, user_id);
+  }
 
 
-public static List<Product> callGetCartItems(String cart_id)
-{
-   return CartDAO.getCartItems(cart_id);
-}
+  public static List<Product> callGetCartItems(String cart_id)
+  {
+    return CartDAO.getCartItems(cart_id);
+  }
 
-public static void deleteFromCart(String name)
-{
-  
-   
-  
-      cartdao.deleteFromCart(name);
-      
-      //new RouterService().navigate("/products", new Scanner(System.in))
-}
-
-public static void callUpdateQuantity(String name, int quantity)
-{
-    cartdao.updateQuantity(name, quantity);
-}
-
-public static Cart checkifCartExists(String user_id)
-{
+  public static void deleteFromCart(String name)
+  {
     
-   return cartdao.checkifCartExists(user_id);
-}
+    
+    
+        cartdao.deleteFromCart(name);
+        
+        //new RouterService().navigate("/products", new Scanner(System.in))
+  }
 
+  public static void callUpdateQuantity(String name, int quantity)
+  {
+      cartdao.updateQuantity(name, quantity);
+  }
 
-
-
-
-
-
-
+  public static Cart checkifCartExists(String user_id)
+  {
+      
+    return cartdao.checkifCartExists(user_id);
+  }
 }
