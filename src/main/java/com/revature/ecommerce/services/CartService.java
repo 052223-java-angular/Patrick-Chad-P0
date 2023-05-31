@@ -25,7 +25,7 @@ import lombok.AllArgsConstructor;
 public class CartService {
   private static final Logger logger = LogManager.getLogger(CartService.class);
   private Cart cart;
-  //private Session session;
+  private Session session;
   private static CartDAO cartdao;
   private static ProductDAO prodDao;
   private static OrderDAO orderDAO;
@@ -61,7 +61,7 @@ public class CartService {
   
   public void setCart(Cart cart)
   {
-    System.out.println("Setting cart . . .");
+    
      this.cart = cart;
   }
 
@@ -73,6 +73,9 @@ public class CartService {
     this.cart = new Cart();
     cart.setId(hashed_cart_id);
     session.setCart_id(hashed_cart_id);
+
+
+    cartdao.addCartToDB(cart, session.getId());
     logger.info("Cart created");
     
   }
@@ -153,9 +156,9 @@ public class CartService {
     return order;
   }
 
-  public void addToCart(Product product, int quantity, String cart_id)
+  public void addToCart(Product product, int quantity, Session session)
   {
-     cartdao.addToCart(product, quantity, cart_id);
+     cartdao.addToCart(product, quantity, session);
   }
 
   public static CartService callCartServiceConstructor(ProductDAO prodDao, OrderDAO orderdao, CartDAO cartdao) {
@@ -168,10 +171,7 @@ public class CartService {
   }
 
 
-  public static List<Product> callGetCartItems(String cart_id)
-  {
-    return CartDAO.getCartItems(cart_id);
-  }
+ 
 
   public static void deleteFromCart(String name)
   {
@@ -192,5 +192,15 @@ public class CartService {
   {
       
     return cartdao.checkifCartExists(user_id);
+  }
+
+  /*public static ArrayList<Product> callGetItemsFromCart(String cart_id)
+  {
+     return CartDAO.get(cart_id);
+  }*/
+
+  public static List<Product> callGetCartItems(String cart_id)
+  {
+      return CartDAO.getCartItems(cart_id);
   }
 }

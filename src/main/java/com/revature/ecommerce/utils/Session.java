@@ -22,11 +22,16 @@ public class Session {
     private String cart_id;
 
     public void setSession(User user) {
-        Cart cart = new Cart();
+        //System.out.println("In setSession()");
         this.id = user.getId();
         this.username = user.getUsername();
         this.roleId = user.getRole_id();
-        this.cart_id = cart.getId();
+    }
+
+    public void setCartId(String cart_id)
+    {
+       //System.out.println("Set the cart id");
+        this.cart_id = cart_id;
     }
 
 }

@@ -28,7 +28,8 @@ public class RouterService {
     *  Author: Chad Rotruck and Patrick Powers
     */
     public void navigate(String path, Scanner scan, Session session){
-        System.out.println("In routerService.navigate()");
+        //System.out.println("In routerService.navigate()");
+        //System.out.println("Session cart_id in RouterService.navigate()) " + session.getCart_id());
         switch(path){
             case "/home":
                 new HomeScreen(this).start(scan, session);

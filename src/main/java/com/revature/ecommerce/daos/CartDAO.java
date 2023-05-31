@@ -13,6 +13,7 @@ import java.util.UUID;
 
 import com.revature.ecommerce.models.Cart;
 import com.revature.ecommerce.utils.ConnectionFactory;
+import com.revature.ecommerce.utils.Session;
 import com.revature.ecommerce.models.Product;
 
 public class CartDAO implements CrudDAO<Cart>
@@ -95,14 +96,16 @@ public class CartDAO implements CrudDAO<Cart>
                 try(ResultSet rs = ps.executeQuery()){
                     while(rs.next())
                     {
-                        Product product = new Product();
-                        product.setId(rs.getString("id"));
-                        product.setName(rs.getString("name"));
-                        product.setDescription(rs.getString("description"));
-                        product.setPrice(rs.getDouble("price"));
-                        product.setQty_on_hand(rs.getInt("qty_on_hand"));
-
-                        productsOpt.add(Optional.of(product));
+      
+                            Product product = new Product();
+                            product.setId(rs.getString("id"));
+                            product.setName(rs.getString("name"));
+                            product.setDescription(rs.getString("description"));
+                            product.setPrice(rs.getDouble("price"));
+                            product.setQty_on_hand(rs.getInt("qty_on_hand"));
+                            productsOpt.add(Optional.of(product));
+                        
+                        
                     }
                 }
                 if (productsOpt.isEmpty()){
@@ -129,8 +132,9 @@ public class CartDAO implements CrudDAO<Cart>
     }
 
 
-    public void addToCart(Product product, int quantity, String cart_id)
+    public void addToCart(Product product, int quantity, Session session)
     {
+
         try(Connection conn = ConnectionFactory.getInstance().getConnection())
         {
             String sql = "INSERT INTO cartitems(id, qty, name, price, cart_id, product_id) VALUES (?,?,?,?,?,?)";
@@ -140,7 +144,7 @@ public class CartDAO implements CrudDAO<Cart>
                 ps.setInt(2, quantity);
                 ps.setString(3, product.getName());
                 ps.setDouble(4, product.getPrice());
-                ps.setString(5, cart_id);
+                ps.setString(5, session.getCart_id());
                 ps.setString(6, product.getId());
                 ps.executeUpdate();
 
@@ -160,22 +164,59 @@ public class CartDAO implements CrudDAO<Cart>
 
     }
 
-    /*public static ResultSet getItemsFromCart(String cart_id)
+    /*public static ArrayList<Product> getItemsFromCart(String cart_id)
     {
+        ArrayList<Product> list = new ArrayList<>();
         try(Connection conn = ConnectionFactory.getInstance().getConnection())
         {
+             // I learned this little trick in college. It takes the things I need from both the cartitems and products table 
+            //and leverages the fact that they both share a relationship
+            String sql = "select products.id, qty_on_hand, cartitems.price, products.name, description from products inner join cartitems on products.id = cartitems.product_id where cart_id = ?";
             
-
             try(PreparedStatement ps = conn.prepareStatement(sql))
             {
                 ps.setString(1, cart_id);
 
                 try(ResultSet rs = ps.executeQuery())
                 {
+                    ArrayList<String> namesUsed = new ArrayList<String>();
                     while(rs.next())
                     {
+                        
+                        String name = rs.getString("name");
+
+                        for(int count = 0; count < namesUsed.size(); count++)
+                        {
+                            if(namesUsed.get(count).equals(name))
+                            {
+                                for(int i = 0; i < list.size(); i++)
+                                {
+                                    if(list.get(i).getName().equals(name))
+                                    {
+                                        list.get(i).setQty_on_hand(list.get(i).getQty_on_hand() + 1);
+                                    }
+
+                                }
+                            }
+                            else
+                            {
+                                namesUsed.add(name);
+                                Product product = new Product();
+                                product.setId(rs.getString("id"));
+                                product.setQty_on_hand(rs.getInt("qty_on_hand"));
+                                product.setPrice(rs.getDouble("price"));
+                                product.setName(name);
+                                product.setDescription(rs.getString("description"));
+                                list.add(product);
+                            }
+                        }
+                        
+
+
+                        
 
                     }
+                    return list;
                 }
             }
         }
@@ -190,6 +231,8 @@ public class CartDAO implements CrudDAO<Cart>
         {
             throw new RuntimeException("Unable to load jdbc");
         }
+
+
     }*/
 
     public void addCartToDB(Cart cart, String user_id)
@@ -274,6 +317,7 @@ public class CartDAO implements CrudDAO<Cart>
 
     public Cart checkifCartExists(String user_id)
     {
+        
         try(Connection conn = ConnectionFactory.getInstance().getConnection())
         {
             String sql = "SELECT * FROM cart WHERE user_id = ?";

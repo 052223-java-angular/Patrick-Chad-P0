@@ -57,7 +57,6 @@ public class RegisterScreen implements IScreen{
                     break exit;
                 }
 
-
                 break;
             }
             

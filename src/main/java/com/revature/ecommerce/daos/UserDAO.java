@@ -89,7 +89,7 @@ public class UserDAO implements CrudDAO<User>{
                {
                     if(rs.next())
                     {
-                        System.out.println("rs hasNext");
+                        //System.out.println("rs hasNext");
                         User user = new User();
                         user.setId(rs.getString("id"));
                         user.setUsername(rs.getString("username"));

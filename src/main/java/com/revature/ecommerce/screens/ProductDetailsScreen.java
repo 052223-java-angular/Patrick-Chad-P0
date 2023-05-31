@@ -24,6 +24,7 @@ public class ProductDetailsScreen implements IScreen {
     private static final Logger logger = LogManager.getLogger(ProductScreen.class);
 
     public void display(Scanner scan, Product prod, Session session){
+        
         String input = "";
         clearScreen();
         logger.info("Navigated to Product Details Page.");
@@ -31,7 +32,7 @@ public class ProductDetailsScreen implements IScreen {
         System.out.println("Product Name: " + prod.getName());
         System.out.println("Product Description: " + prod.getDescription());
         System.out.println("Product Price: $" + String.format("%1$.2f",prod.getPrice()));
-        displayReviews(prod);
+        //displayReviews(prod);
 
         addtocart:{
             while(true){
@@ -45,8 +46,8 @@ public class ProductDetailsScreen implements IScreen {
                         input = scan.nextLine(); 
                         qty = Integer.parseInt(input);
 
-                        // send item to cart items
-                        cartservice.addToCart(prod, qty, session.getCart_id());
+                        // TODO: send item to cart items
+                        cartservice.addToCart(prod, qty, session);
                         System.out.println("added " + qty + " to your cart. Press enter to continue....");
                         scan.nextLine();                       
                     
@@ -80,7 +81,7 @@ public class ProductDetailsScreen implements IScreen {
      *  Description: Displays the list of reviews to the console.
      *  Return: none
      */
-    private void displayReviews(Product prod){
+    /*private void displayReviews(Product prod){
         System.out.println("\n-------- Product Reviews --------");
         //get reviews from database
         ReviewService reviewService = new ReviewService();
