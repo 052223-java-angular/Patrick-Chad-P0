@@ -10,8 +10,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.revature.ecommerce.models.Product;
 import com.revature.ecommerce.models.Review;
 import com.revature.ecommerce.utils.ConnectionFactory;
+import com.revature.ecommerce.utils.Session;
 
 public class ReviewDAO implements CrudDAO<Review> {
 
@@ -87,4 +89,29 @@ public class ReviewDAO implements CrudDAO<Review> {
         }
     }
     
+    public boolean checkForExistingReview(Session session, Product prod){
+        //connect to database
+        try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+            //prepare the prepared statement
+            String sql = "SELECT * FROM reviews WHERE product_id = ? AND user_id = ?";
+            try(PreparedStatement ps = conn.prepareStatement(sql)){
+                ps.setString(1, prod.getId());
+                ps.setString(2, session.getId());
+                //execute query
+                try(ResultSet rs = ps.executeQuery()){
+                    //if reviews not found return true
+                    while(rs.next()){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        } catch(SQLException e){
+            throw new RuntimeException("Unable to connect to database.");
+        } catch(IOException e){
+            throw new RuntimeException("Unable to find application.properties");
+        } catch(ClassNotFoundException e){
+            throw new RuntimeException("Unable to load jdbc");
+        }
+    }
 }

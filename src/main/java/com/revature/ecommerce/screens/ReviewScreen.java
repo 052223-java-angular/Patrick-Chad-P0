@@ -32,7 +32,7 @@ public class ReviewScreen implements IScreen{
 
     /**
      *  Parameters: scan - Scanner - used to get input from user.
-     *  Description: Displays the menu for Reviews
+     *  Description: Not Used
      *  Return: none
      */
     @Override
@@ -40,6 +40,12 @@ public class ReviewScreen implements IScreen{
 
     }
 
+        /**
+     *  Parameters: scan - Scanner - used to get input from user.
+     *              session - Session - used to house user session.
+     *  Description: Gets the list of products purchased
+     *  Return: none
+     */
     public void start(Scanner scan, Session session) {
         String input = "";
         //pull list of products purchased
@@ -80,8 +86,14 @@ public class ReviewScreen implements IScreen{
                     //set product id
                     review.setProduct_id(selectedProd.getId());
 
-                    //set user id
-                    review.setUser_id(session.getId());
+                    //set user id if user has not left a review yet
+                    if(!reviewService.checkForExistingReview(session,selectedProd)){
+                        review.setUser_id(session.getId());
+                    }else{
+                        System.out.println("Review already left for this product. Please press enter to continue.");
+                        scan.nextLine();
+                        break exit;
+                    }
 
                     System.out.print("Please enter rating: ");
                     input = scan.nextLine();
