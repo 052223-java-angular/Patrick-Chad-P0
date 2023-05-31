@@ -244,7 +244,7 @@ public class ProductDAO implements CrudDAO<Product> {
     public List<Optional<Product>> getListOfProductsPurchased(String user_id) {
         // connect to database
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
-            String sql = "SELECT products.id, products.name FROM ((products " +
+            String sql = "SELECT products.id, products.name, orders.order_date FROM ((products " +
                             "INNER JOIN cartitems ON products.id  = cartitems.product_id) " + 
                             "INNER JOIN orders ON cartitems.cart_id  = orders.cart_id) where orders.user_id = ?";
             List<Optional<Product>> prods= new LinkedList<Optional<Product>>();
@@ -261,9 +261,6 @@ public class ProductDAO implements CrudDAO<Product> {
                         Product product = new Product();
                         product.setId(rs.getString("id"));
                         product.setName(rs.getString("name"));
-                        product.setDescription(rs.getString("description"));
-                        product.setPrice(rs.getDouble("price"));
-                        product.setQty_on_hand(rs.getInt("qty_on_hand"));
 
                         prods.add(Optional.of(product));
                     }

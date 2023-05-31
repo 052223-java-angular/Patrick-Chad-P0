@@ -123,45 +123,9 @@ public class ProductScreen implements IScreen {
                                     System.out.println("No product found. Press enter to continue...");
                                     scan.nextLine();
                                 } else {
-                                    addtocart:{
-                                        while(true){
-                                            // item found
-                                            System.out.println("\n --- Product Listing ---");
-                                            System.out.println("Product Name: " + prod.getName());
-                                            System.out.println("Product Description: " + prod.getDescription());
-                                            System.out.println("Product Price: $" + prod.getPrice());
-                                            System.out.print("\nWould you like to add to your cart? (y/n): ");
-                                            input = scan.nextLine();
-
-                                            switch (input){
-                                                case "y":
-                                                    // add to cart  
-                                                    int qty = 0;                                  
-                                                    System.out.print("Please enter desired quantity: ");
-                                                    input = scan.nextLine(); 
-                                                    qty = Integer.parseInt(input);
-                                                    // TODO: send item to cart items
-                                                    cartservice.addToCart(prod, qty, session.getCart_id());
-                                                    System.out.println("added " + qty + " to your cart. Press enter to continue....");
-                                                    scan.nextLine();                       
-
-                                                    break addtocart;
-                                                case "n":
-                                                    // reload menu
-                                                    System.out.println("Item not added to cart. Press enter to continue....");
-                                                    scan.nextLine();
-        
-                                                    break addtocart;
-                                                default:
-                                                    System.out.println("Invalid entry. Must select (y/n). Press enter to continue....");
-                                                    scan.nextLine();
-                                                    break;
-                                            }
-                                            break;
-                                        }
-                                    }
-                            
-                                }  
+                                    detailScreen.display(scan, prod, session);                      
+                                }
+                        
                                 // if user wishes to exit
                                 if (input.equalsIgnoreCase("x")) {
                                     router.navigate("/products", scan, session);
@@ -306,8 +270,14 @@ public class ProductScreen implements IScreen {
                                 List<Product> priceProds = new ArrayList<Product>();
                                 priceProds = prodServ.getProductsByPriceRange(min, max);
 
-                                //display items
-                                displayList(priceProds, scan);
+                                //if not items in list
+                                if (priceProds == null){
+                                    System.out.println("No Products found in that range.");
+                                }else{
+                                   //display items
+                                displayList(priceProds, scan); 
+                                }
+                                
 
                                 //let user select which item to view
                                 System.out.print("\n Select which product to view. Enter x to exit: ");

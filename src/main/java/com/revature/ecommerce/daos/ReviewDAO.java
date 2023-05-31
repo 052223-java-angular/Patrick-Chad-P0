@@ -19,10 +19,10 @@ public class ReviewDAO implements CrudDAO<Review> {
     public void save(Review obj) {
         //save review;
         try(Connection conn = ConnectionFactory.getInstance().getConnection()){
-            String sql = "INSERT INTO reviews (id,rating,comment,user_id,product_id) VALUES (?,?,?,?,?,?)";
+            String sql = "INSERT INTO reviews (id,rating,comment,user_id,product_id) VALUES (?,?,?,?,?)";
             try(PreparedStatement ps = conn.prepareStatement(sql)){
                 ps.setString(1, UUID.randomUUID().toString());
-                ps.setInt(1, obj.getRating());
+                ps.setInt(2, obj.getRating());
                 ps.setString(3, obj.getComment());
                 ps.setString(4, obj.getUser_id());
                 ps.setString(5, obj.getProduct_id());
@@ -31,7 +31,7 @@ public class ReviewDAO implements CrudDAO<Review> {
                 ps.executeUpdate();
             }
         } catch(SQLException e){
-            throw new RuntimeException("Unable to connect to database.");
+            throw new RuntimeException("Unable to connect to database." + e.toString());
         } catch(IOException e){
             throw new RuntimeException("Unable to find application.properties");
         } catch(ClassNotFoundException e){
