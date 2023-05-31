@@ -44,8 +44,8 @@ public class ProductScreen implements IScreen {
             while(true){
                 // print menu
                 clearScreen();
-                System.out.println("Welcome to YourStore where we have everything you don't need!");
-                System.out.println("\n [1] Browse Products");
+                //System.out.println("Welcome to YourStore where we have everything you don't need!");
+                System.out.println("\n [1] Browse all products");
                 System.out.println(" [2] Search products by name");
                 System.out.println(" [3] Search products by category");
                 System.out.println(" [4] Search products by price range");
@@ -304,6 +304,10 @@ public class ProductScreen implements IScreen {
 
                             }
                         }
+                    case "5":
+                        // view cart
+                        router.navigate("/carts", scan, session);
+                        break;
                     case "x":
                        
                         break;

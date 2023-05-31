@@ -97,8 +97,6 @@ public class CartService {
 
   }
 
-  
-
   public Order Checkout(Scanner scan, Cart cart, Session session){
     logger.info("Checkout Process");
     Order order = new Order();
