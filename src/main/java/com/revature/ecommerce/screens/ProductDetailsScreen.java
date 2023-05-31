@@ -26,7 +26,7 @@ public class ProductDetailsScreen implements IScreen {
     public void display(Scanner scan, Product prod, Session session){
         
         String input = "";
-        //clearScreen();
+        clearScreen();
         logger.info("Navigated to Product Details Page.");
         System.out.println("\n --- Product Listing ---");
         System.out.println("Product Name: " + prod.getName());

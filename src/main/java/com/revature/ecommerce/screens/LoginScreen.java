@@ -65,7 +65,7 @@ public class LoginScreen implements IScreen{
         {
             while(true)
             {
-                //clearScreen();
+                clearScreen();
                 System.out.println("Login");
                 username = getUsername(scan);
 
@@ -107,7 +107,6 @@ public class LoginScreen implements IScreen{
                        }
                        else 
                        {
-                          System.out.println("Cart is not null");
                           cartservice.setCart(cart);
                           session.setCart_id(cartservice.getCartId());
                           //System.out.println("Cart id in session in LoginScreen" + session.getCart_id());
@@ -222,10 +221,10 @@ public class LoginScreen implements IScreen{
 
     
 
-    /*private void clearScreen() {
+    private void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
-    }*/
+    }
     
 }
  

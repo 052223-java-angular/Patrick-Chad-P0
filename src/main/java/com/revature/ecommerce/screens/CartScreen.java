@@ -21,7 +21,7 @@ public class CartScreen implements IScreen{
     public void start(Scanner scanner, Session session)
     {
         
-        Scanner sc = new Scanner(System.in);
+        
         CartService cartService = CartService.getInstance();
         
 
@@ -42,19 +42,19 @@ public class CartScreen implements IScreen{
                 System.out.println("[1] Delete items");
                 System.out.println("[2] Increase or decrease quantity of items");
                 System.out.println("[3] Back to the home page");
-                input = sc.nextLine();
+                input = scanner.nextLine();
                 
                     switch(input)
                     {
                         case "1":
                             System.out.println("Type in the name of the item that you would like to delete:");
-                            input = sc.nextLine();
+                            input = scanner.nextLine();
                             for(int count = 0; count < items.size(); count++)
                             {
                                 if(items.get(count).getName().equals(input))
                                 {
                                     System.out.println("Are you sure you want to delete " + items.get(count).getName() + "?(y/n)");
-                                    input = sc.nextLine();
+                                    input = scanner.nextLine();
                                     if(input.equalsIgnoreCase("y"))
                                     {
                                         CartService.deleteFromCart(items.get(count).getName());
@@ -69,34 +69,44 @@ public class CartScreen implements IScreen{
 
                         break;
                         case "2":
+                        String name = "";
                         System.out.println("Enter the name of the item whose quantity you would like to modify:");
-                        input = sc.nextLine();
+                        name = scanner.nextLine();
                         
                         for(int count = 0; count < items.size(); count++)
                         {
-                            if(items.get(count).getName().equals(input))
+                            if(items.get(count).getName().equals(name))
                             {
                                 System.out.println("Are you sure you want to change the quantity of " + items.get(count).getName() + "?(y/n)");
-                                input = sc.nextLine();
+                                input = scanner.nextLine();
                                 if(input.equalsIgnoreCase("y"))
                                 {
                                     System.out.println("Enter the quantity you want:");
-                                    input = sc.nextLine();
+                                    input = scanner.nextLine();
                                     try{
                                         int quantity = Integer.parseInt(input);
+                                        if(quantity == 0)
+                                        {
+                                            CartService.deleteFromCart(name);
+                                        }
                                         CartService.callUpdateQuantity(items.get(count).getName(), quantity);
                                     }
                                     catch(NumberFormatException ex)
                                     {
                                         System.out.println("Those were not numbers. Press Enter to Continue. . .");
-                                        sc.nextLine();
+                                        scanner.nextLine();
                                         continue;
                                     }
                                     
                                 }
+                                else
+                                {
+                                    System.out.println("Did not modify item. Press enter to continue . . .");
+                                    continue;
+                                }
                             }
                         }
-                        sc.close();
+                        
                         
                         break;
                     }

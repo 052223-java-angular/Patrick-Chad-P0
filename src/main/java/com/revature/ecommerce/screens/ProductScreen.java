@@ -43,13 +43,12 @@ public class ProductScreen implements IScreen {
         exit:{
             while(true){
                 // print menu
-                //clearScreen();
+                clearScreen();
                 System.out.println("Welcome to YourStore where we have everything you don't need!");
                 System.out.println("\n [1] Browse Products");
                 System.out.println(" [2] Search products by name");
                 System.out.println(" [3] Search products by category");
                 System.out.println(" [4] Search products by price range");
-                System.out.println(" [5] View Cart");
                 System.out.println(" [x] Exit: ");
         
                 System.out.print("\nEnter: ");

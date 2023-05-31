@@ -96,14 +96,16 @@ public class CartDAO implements CrudDAO<Cart>
                 try(ResultSet rs = ps.executeQuery()){
                     while(rs.next())
                     {
-                        Product product = new Product();
-                        product.setId(rs.getString("id"));
-                        product.setName(rs.getString("name"));
-                        product.setDescription(rs.getString("description"));
-                        product.setPrice(rs.getDouble("price"));
-                        product.setQty_on_hand(rs.getInt("qty_on_hand"));
-
-                        productsOpt.add(Optional.of(product));
+      
+                            Product product = new Product();
+                            product.setId(rs.getString("id"));
+                            product.setName(rs.getString("name"));
+                            product.setDescription(rs.getString("description"));
+                            product.setPrice(rs.getDouble("price"));
+                            product.setQty_on_hand(rs.getInt("qty_on_hand"));
+                            productsOpt.add(Optional.of(product));
+                        
+                        
                     }
                 }
                 if (productsOpt.isEmpty()){
